@@ -1,0 +1,92 @@
+/* ===== Physique Chimie en poche : page principale ===== */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background: #F6EEDF; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; color: #2E3A46; font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif; font-weight: 600; }
+body { min-height: 100vh; min-height: 100dvh; overflow-x: hidden; position: relative; }
+
+/* Fond : patchwork de carrés de tissu cousus, chacun avec un dessin scientifique (portail/patchwork.svg) */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: url("patchwork.svg") 0 0 / 600px 600px repeat;
+}
+
+.portail {
+  width: 100%; max-width: 900px; margin: 0 auto;
+  padding: calc(26px + env(safe-area-inset-top, 0px)) 16px calc(36px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Titre posé sur une étiquette cousue */
+.titre {
+  position: relative; text-align: center; margin: 0 auto 28px; max-width: 620px; padding: 18px 22px 16px;
+  border-radius: 24px; background: rgba(255,255,255,.93);
+  box-shadow: 0 12px 28px rgba(60,48,30,.18), inset 0 0 0 6px #fff, inset 0 0 0 7.5px rgba(46,58,70,.14);
+}
+.titre::after {
+  content: ''; position: absolute; inset: 11px; border-radius: 17px; pointer-events: none;
+  border: 1.6px dashed rgba(46,58,70,.25);
+}
+.titre h1 {
+  margin: 0; font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(1.9rem, 7.5vw, 2.8rem); line-height: 1.1;
+}
+.titre h1 span { color: #C77C3A; }
+.titre p { margin: 8px 0 0; font-weight: 700; font-size: 1rem; line-height: 1.35; color: #5E6A76; }
+
+/* Encadrés des applis */
+.applis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.appli {
+  position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
+  min-height: 190px; padding: 22px 22px 20px; border-radius: 26px; text-decoration: none;
+  box-shadow: 0 14px 30px rgba(40,34,24,.28), inset 0 0 0 1px rgba(255,255,255,.4);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.appli:hover { transform: translateY(-3px); box-shadow: 0 20px 36px rgba(40,34,24,.32), inset 0 0 0 1px rgba(255,255,255,.4); }
+.appli:active { transform: translateY(2px); }
+.appli:focus-visible { outline: 4px solid #2E3A46; outline-offset: 3px; }
+.appli__ico { position: absolute; top: 18px; right: 18px; width: 54px; height: 54px; }
+.appli__titre { font-size: 1.55rem; font-weight: 700; line-height: 1.15; padding-right: 30px; }
+.appli__texte { font-size: .95rem; font-weight: 700; line-height: 1.35; opacity: .85; }
+
+/* Les Bases de la Chimie : bleu ciel quadrillé */
+.appli--chimie {
+  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
+  background:
+    linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 38px 38px,
+    linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 38px 38px,
+    linear-gradient(180deg, #EAF6FD, #BFE0F2);
+}
+.appli--chimie .appli__texte { font-family: 'Nunito', sans-serif; color: #4E5C6B; }
+
+/* Entraînement aux conversions : pastel vert, mauve, pêche */
+.appli--conversions { color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif; background: linear-gradient(160deg, #EAF8F2 0%, #EEEAFD 50%, #FFF0E2 100%); }
+.appli--conversions .appli__texte { font-family: 'Nunito', sans-serif; color: #5C6A79; }
+
+/* Les Ondes Sonores : nuit, halo doré */
+.appli--ondes {
+  color: #E9EEF2; font-family: 'Sora', 'Figtree', sans-serif;
+  background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(245,200,66,.2), transparent 70%), linear-gradient(180deg, #05080B, #0A1218);
+}
+.appli--ondes .appli__texte { font-family: 'Figtree', sans-serif; color: #93A3B0; opacity: 1; }
+
+/* L'électricité : papier peint métallique gris */
+.appli--electricite {
+  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.3), transparent 70%),
+    url("../apps/electricite/img/wall.svg") 0 0 / 480px 480px repeat,
+    linear-gradient(180deg, #C7CBCF, #A6ABB1);
+}
+.appli--electricite .appli__titre, .appli--electricite .appli__texte { text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(225,229,233,.95); }
+.appli--electricite .appli__texte { font-family: 'Nunito', sans-serif; color: #2E3A46; }
+
+@media (max-width: 640px) {
+  .portail { padding-left: 14px; padding-right: 14px; }
+  .titre { padding: 16px 16px 14px; margin-bottom: 20px; }
+  .titre p { font-size: .9rem; }
+  .applis { grid-template-columns: 1fr; gap: 14px; }
+  .appli { min-height: 140px; padding: 18px 18px 16px; }
+  .appli__ico { width: 44px; height: 44px; top: 14px; right: 14px; }
+  .appli__titre { font-size: 1.35rem; padding-right: 50px; }
+  .appli__texte { font-size: .88rem; }
+}
+@media (prefers-reduced-motion: reduce) { .appli { transition: none; } }
