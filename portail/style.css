@@ -32,22 +32,21 @@ body::before {
 .titre h1 span { color: #C77C3A; }
 .titre p { margin: 8px 0 0; font-weight: 700; font-size: 1rem; line-height: 1.35; color: #5E6A76; }
 
-/* Encadrés des applis */
+/* Encadrés des applis : titre et sous-titre centrés sur le fond de l'appli */
 .applis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .appli {
-  position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
-  min-height: 190px; padding: 22px 22px 20px; border-radius: 26px; text-decoration: none;
+  position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: 190px; padding: 24px 26px; border-radius: 26px; text-align: center; text-decoration: none;
   box-shadow: 0 14px 30px rgba(40,34,24,.28), inset 0 0 0 1px rgba(255,255,255,.4);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .appli:hover { transform: translateY(-3px); box-shadow: 0 20px 36px rgba(40,34,24,.32), inset 0 0 0 1px rgba(255,255,255,.4); }
 .appli:active { transform: translateY(2px); }
 .appli:focus-visible { outline: 4px solid #2E3A46; outline-offset: 3px; }
-.appli__ico { position: absolute; top: 18px; right: 18px; width: 54px; height: 54px; }
-.appli__titre { font-size: 1.55rem; font-weight: 700; line-height: 1.15; padding-right: 30px; }
-.appli__texte { font-size: .95rem; font-weight: 700; line-height: 1.35; opacity: .85; }
+.appli__titre { font-size: 1.6rem; font-weight: 700; line-height: 1.15; }
+.appli__texte { max-width: 22em; font-size: .95rem; font-weight: 700; line-height: 1.35; opacity: .85; }
 
-/* Les Bases de la Chimie : bleu ciel quadrillé */
+/* Les Bases de la Chimie : dégradé bleu ciel quadrillé (38px), comme l'appli */
 .appli--chimie {
   color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
   background:
@@ -57,22 +56,36 @@ body::before {
 }
 .appli--chimie .appli__texte { font-family: 'Nunito', sans-serif; color: #4E5C6B; }
 
-/* Entraînement aux conversions : pastel vert, mauve, pêche */
-.appli--conversions { color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif; background: linear-gradient(160deg, #EAF8F2 0%, #EEEAFD 50%, #FFF0E2 100%); }
-.appli--conversions .appli__texte { font-family: 'Nunito', sans-serif; color: #5C6A79; }
+/* Entraînement aux conversions : tableau blanc brillant avec traces de feutre et symboles (l'appli n'a pas de papier peint) */
+.appli--conversions {
+  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
+  background:
+    linear-gradient(118deg, transparent 22%, rgba(255,255,255,.85) 34%, rgba(255,255,255,0) 46%, transparent 60%, rgba(255,255,255,.6) 68%, transparent 76%),
+    url("tableau-blanc.svg") 0 0 / 100% 100% no-repeat,
+    linear-gradient(165deg, #FFFFFF 0%, #F4F7FA 55%, #E6EBF0 100%);
+  /* cadre en aluminium */
+  box-shadow: 0 14px 30px rgba(40,34,24,.28), inset 0 0 0 5px #D5DAE0, inset 0 0 0 6.5px #A9B1BA, inset 0 3px 8px 6px rgba(80,92,108,.12);
+}
+.appli--conversions:hover { box-shadow: 0 20px 36px rgba(40,34,24,.32), inset 0 0 0 5px #D5DAE0, inset 0 0 0 6.5px #A9B1BA, inset 0 3px 8px 6px rgba(80,92,108,.12); }
+.appli--conversions .appli__titre, .appli--conversions .appli__texte { text-shadow: 0 0 6px #fff, 0 0 12px #fff; }
+.appli--conversions .appli__texte { font-family: 'Nunito', sans-serif; color: #4A5868; opacity: 1; }
 
-/* Les Ondes Sonores : nuit, halo doré */
+/* Les Ondes Sonores : nuit, papier peint de formules (360px, comme l'accueil de l'appli) */
 .appli--ondes {
   color: #E9EEF2; font-family: 'Sora', 'Figtree', sans-serif;
-  background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(245,200,66,.2), transparent 70%), linear-gradient(180deg, #05080B, #0A1218);
+  background:
+    radial-gradient(ellipse 70% 100% at 50% 0%, rgba(120,190,220,.06), transparent) 0 0 / 100% 75% no-repeat,
+    url("ondes.svg") 0 0 / 360px 360px repeat,
+    linear-gradient(180deg, #05080B, #0A1218);
 }
+.appli--ondes .appli__titre, .appli--ondes .appli__texte { text-shadow: 0 0 10px #05080B, 0 0 4px #05080B; }
 .appli--ondes .appli__texte { font-family: 'Figtree', sans-serif; color: #93A3B0; opacity: 1; }
 
-/* L'électricité : papier peint métallique gris */
+/* L'électricité : papier peint métallique gris (480px, comme l'appli) */
 .appli--electricite {
   color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.3), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.28), transparent 70%),
     url("../apps/electricite/img/wall.svg") 0 0 / 480px 480px repeat,
     linear-gradient(180deg, #C7CBCF, #A6ABB1);
 }
@@ -84,9 +97,8 @@ body::before {
   .titre { padding: 16px 16px 14px; margin-bottom: 20px; }
   .titre p { font-size: .9rem; }
   .applis { grid-template-columns: 1fr; gap: 14px; }
-  .appli { min-height: 140px; padding: 18px 18px 16px; }
-  .appli__ico { width: 44px; height: 44px; top: 14px; right: 14px; }
-  .appli__titre { font-size: 1.35rem; padding-right: 50px; }
+  .appli { min-height: 140px; padding: 20px 20px; gap: 6px; }
+  .appli__titre { font-size: 1.4rem; }
   .appli__texte { font-size: .88rem; }
 }
 @media (prefers-reduced-motion: reduce) { .appli { transition: none; } }
