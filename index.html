@@ -3,9 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F6EEDF">
-<title>Physique Chimie en poche</title>
-<link rel="icon" href="portail/icone.svg" type="image/svg+xml">
+<meta name="theme-color" content="#FBFAF6">
+<title>Physique Chimie en Poche</title>
+<!-- Icône et nom quand l'appli est ajoutée à l'écran d'accueil du téléphone -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="portail/icone-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="portail/icone-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PC en Poche">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&family=Sora:wght@600;700&family=Figtree:wght@600;700&display=swap" rel="stylesheet">
@@ -14,18 +21,18 @@
 <body>
   <main class="portail">
     <header class="titre">
-      <h1>Physique Chimie <span>en poche</span></h1>
+      <h1>Physique Chimie en Poche</h1>
       <p>Toutes les applis de physique-chimie du collège, au même endroit</p>
     </header>
 
-    <!-- Chaque encadré reprend le fond (même papier peint, même taille), la police et le titre de son appli -->
+    <!-- Chaque encadré a pour fond l'illustration de son appli (portail/encadre-*.jpg) et reprend sa police -->
     <nav class="applis" aria-label="Applis">
       <a class="appli appli--chimie" href="apps/chimie/index.html">
         <span class="appli__titre">Les Bases de la Chimie</span>
-        <span class="appli__texte">Molécules, transformations physiques, atomes et ions</span>
+        <span class="appli__texte">La chimie à maîtriser au collège, étape par étape</span>
       </a>
       <a class="appli appli--conversions" href="apps/conversions/index.html">
-        <span class="appli__titre">Entraînement aux conversions</span>
+        <span class="appli__titre">Entraînement aux Conversions</span>
         <span class="appli__texte">Masses, longueurs, volumes, temps, vitesses… convertis sans te tromper</span>
       </a>
       <a class="appli appli--ondes" href="apps/ondes/index.html">
@@ -33,7 +40,7 @@
         <span class="appli__texte">Apprends à comprendre le comportement du son dans notre univers</span>
       </a>
       <a class="appli appli--electricite" href="apps/electricite/index.html">
-        <span class="appli__titre">L'électricité</span>
+        <span class="appli__titre">L'Électricité</span>
         <span class="appli__texte">Tout ce qu'il faut savoir sur l'électricité au collège</span>
       </a>
     </nav>

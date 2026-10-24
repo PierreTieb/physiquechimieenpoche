@@ -1,104 +1,98 @@
-/* ===== Physique Chimie en poche : page principale ===== */
+/* ===== Physique Chimie en Poche : page principale ===== */
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { background: #F6EEDF; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html, body { margin: 0; padding: 0; color: #2E3A46; font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif; font-weight: 600; }
+html { background: #FBFAF6; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; color: #2E4057; font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif; font-weight: 600; }
 body { min-height: 100vh; min-height: 100dvh; overflow-x: hidden; position: relative; }
 
-/* Fond : patchwork de carrés de tissu cousus, chacun avec un dessin scientifique (portail/patchwork.svg) */
+/* Fond : motifs scientifiques pastel sur papier crème (portail/fond-motifs.jpg, se raccorde sans couture) */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: url("patchwork.svg") 0 0 / 600px 600px repeat;
+  background: url("fond-motifs.jpg") 0 0 / 640px 640px repeat;
 }
 
 .portail {
-  width: 100%; max-width: 900px; margin: 0 auto;
-  padding: calc(26px + env(safe-area-inset-top, 0px)) 16px calc(36px + env(safe-area-inset-bottom, 0px));
+  width: 100%; max-width: 940px; margin: 0 auto;
+  padding: calc(30px + env(safe-area-inset-top, 0px)) 16px calc(36px + env(safe-area-inset-bottom, 0px));
 }
 
-/* Titre posé sur une étiquette cousue */
-.titre {
-  position: relative; text-align: center; margin: 0 auto 28px; max-width: 620px; padding: 18px 22px 16px;
-  border-radius: 24px; background: rgba(255,255,255,.93);
-  box-shadow: 0 12px 28px rgba(60,48,30,.18), inset 0 0 0 6px #fff, inset 0 0 0 7.5px rgba(46,58,70,.14);
-}
-.titre::after {
-  content: ''; position: absolute; inset: 11px; border-radius: 17px; pointer-events: none;
-  border: 1.6px dashed rgba(46,58,70,.25);
-}
+/* Titre sans encadré, d'une seule couleur : bleu ardoise sombre (halo crème pour rester lisible sur les motifs) */
+.titre { text-align: center; margin: 0 auto 30px; max-width: 680px; }
 .titre h1 {
-  margin: 0; font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; font-weight: 700;
-  font-size: clamp(1.9rem, 7.5vw, 2.8rem); line-height: 1.1;
+  margin: 0; color: #2E4057; font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(1.5rem, 6.8vw, 3.1rem); line-height: 1.1; text-wrap: balance;
+  text-shadow: 0 0 6px #FBFAF6, 0 0 14px #FBFAF6, 0 0 24px #FBFAF6;
 }
-.titre h1 span { color: #C77C3A; }
-.titre p { margin: 8px 0 0; font-weight: 700; font-size: 1rem; line-height: 1.35; color: #5E6A76; }
+.titre p {
+  margin: 8px 0 0; color: #2E4057; font-weight: 700; font-size: 1.05rem; line-height: 1.35; text-wrap: balance;
+  text-shadow: 0 0 5px #FBFAF6, 0 0 12px #FBFAF6;
+}
 
-/* Encadrés des applis : titre et sous-titre centrés sur le fond de l'appli */
-.applis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+/* Encadrés des applis : l'illustration de l'appli en fond, titre et sous-titre centrés par-dessus */
+.applis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .appli {
-  position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-  min-height: 190px; padding: 24px 26px; border-radius: 26px; text-align: center; text-decoration: none;
-  box-shadow: 0 14px 30px rgba(40,34,24,.28), inset 0 0 0 1px rgba(255,255,255,.4);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: 230px; padding: 24px 26px; border-radius: 26px; text-align: center; text-decoration: none;
+  border: 2.5px solid #262B33; /* liseré sombre, à peine plus clair que le noir, pour détacher l'encadré du fond */
+  background: var(--fond) center / cover no-repeat;
+  box-shadow: 0 14px 30px rgba(40,46,60,.25), inset 0 0 0 1px rgba(255,255,255,.35);
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.appli:hover { transform: translateY(-3px); box-shadow: 0 20px 36px rgba(40,34,24,.32), inset 0 0 0 1px rgba(255,255,255,.4); }
+/* Voile au centre de l'illustration pour que le texte reste lisible */
+.appli::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--voile); }
+.appli:hover { transform: translateY(-3px); box-shadow: 0 20px 36px rgba(40,46,60,.3), inset 0 0 0 1px rgba(255,255,255,.35); }
 .appli:active { transform: translateY(2px); }
-.appli:focus-visible { outline: 4px solid #2E3A46; outline-offset: 3px; }
-.appli__titre { font-size: 1.6rem; font-weight: 700; line-height: 1.15; }
-.appli__texte { max-width: 22em; font-size: .95rem; font-weight: 700; line-height: 1.35; opacity: .85; }
+.appli:focus-visible { outline: 4px solid #2E4057; outline-offset: 3px; }
+.appli__titre { font-size: 1.65rem; font-weight: 700; line-height: 1.15; }
+.appli__texte { max-width: 22em; font-size: .97rem; font-weight: 700; line-height: 1.35; text-wrap: balance; }
 
-/* Les Bases de la Chimie : dégradé bleu ciel quadrillé (38px), comme l'appli */
+/* Les Bases de la Chimie : laboratoire bleu clair lumineux */
 .appli--chimie {
-  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
-  background:
-    linear-gradient(rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 38px 38px,
-    linear-gradient(90deg, rgba(255,255,255,.55) 1px, transparent 1px) 0 0 / 38px 38px,
-    linear-gradient(180deg, #EAF6FD, #BFE0F2);
+  --fond: url("encadre-chimie.jpg");
+  --voile: radial-gradient(ellipse 62% 58% at 50% 50%, rgba(240,248,255,.88), rgba(225,240,252,.55) 60%, rgba(225,240,252,0) 100%);
+  color: #1F4466; font-family: 'Fredoka', 'Nunito', sans-serif;
 }
-.appli--chimie .appli__texte { font-family: 'Nunito', sans-serif; color: #4E5C6B; }
+.appli--chimie .appli__titre, .appli--chimie .appli__texte { text-shadow: 0 0 8px rgba(240,248,255,.95); }
+.appli--chimie .appli__texte { font-family: 'Nunito', sans-serif; color: #33587A; }
 
-/* Entraînement aux conversions : tableau blanc brillant avec traces de feutre et symboles (l'appli n'a pas de papier peint) */
+/* Entraînement aux conversions : tableau blanc couvert de formules au feutre */
 .appli--conversions {
-  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
-  background:
-    linear-gradient(118deg, transparent 22%, rgba(255,255,255,.85) 34%, rgba(255,255,255,0) 46%, transparent 60%, rgba(255,255,255,.6) 68%, transparent 76%),
-    url("tableau-blanc.svg") 0 0 / 100% 100% no-repeat,
-    linear-gradient(165deg, #FFFFFF 0%, #F4F7FA 55%, #E6EBF0 100%);
-  /* cadre en aluminium */
-  box-shadow: 0 14px 30px rgba(40,34,24,.28), inset 0 0 0 5px #D5DAE0, inset 0 0 0 6.5px #A9B1BA, inset 0 3px 8px 6px rgba(80,92,108,.12);
+  --fond: url("encadre-conversions.jpg");
+  --voile: radial-gradient(ellipse 62% 55% at 50% 48%, rgba(255,255,255,.9), rgba(255,255,255,.6) 60%, rgba(255,255,255,0) 100%);
+  color: #2B3A4A; font-family: 'Fredoka', 'Nunito', sans-serif;
+  background-position: center 35%;
 }
-.appli--conversions:hover { box-shadow: 0 20px 36px rgba(40,34,24,.32), inset 0 0 0 5px #D5DAE0, inset 0 0 0 6.5px #A9B1BA, inset 0 3px 8px 6px rgba(80,92,108,.12); }
 .appli--conversions .appli__titre, .appli--conversions .appli__texte { text-shadow: 0 0 6px #fff, 0 0 12px #fff; }
-.appli--conversions .appli__texte { font-family: 'Nunito', sans-serif; color: #4A5868; opacity: 1; }
+.appli--conversions .appli__texte { font-family: 'Nunito', sans-serif; color: #46566A; }
 
-/* Les Ondes Sonores : nuit, papier peint de formules (360px, comme l'accueil de l'appli) */
+/* Les Ondes Sonores : nuit bleutée traversée d'ondes orange lumineuses */
 .appli--ondes {
-  color: #E9EEF2; font-family: 'Sora', 'Figtree', sans-serif;
-  background:
-    radial-gradient(ellipse 70% 100% at 50% 0%, rgba(120,190,220,.06), transparent) 0 0 / 100% 75% no-repeat,
-    url("ondes.svg") 0 0 / 360px 360px repeat,
-    linear-gradient(180deg, #05080B, #0A1218);
+  --fond: url("encadre-ondes.jpg");
+  --voile: radial-gradient(ellipse 62% 55% at 50% 50%, rgba(18,24,34,.72), rgba(18,24,34,.35) 65%, rgba(18,24,34,0) 100%);
+  color: #FFF4E8; font-family: 'Sora', 'Figtree', sans-serif;
 }
-.appli--ondes .appli__titre, .appli--ondes .appli__texte { text-shadow: 0 0 10px #05080B, 0 0 4px #05080B; }
-.appli--ondes .appli__texte { font-family: 'Figtree', sans-serif; color: #93A3B0; opacity: 1; }
+.appli--ondes .appli__titre, .appli--ondes .appli__texte { text-shadow: 0 0 10px #121822, 0 0 4px #121822; }
+.appli--ondes .appli__titre { color: #FFE2C2; }
+.appli--ondes .appli__texte { font-family: 'Figtree', sans-serif; color: #F1D9C4; }
 
-/* L'électricité : papier peint métallique gris (480px, comme l'appli) */
+/* L'électricité : tableau électrique en métal brossé, câbles rouges, bleus et jaunes */
 .appli--electricite {
-  color: #2E3A46; font-family: 'Fredoka', 'Nunito', sans-serif;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.28), transparent 70%),
-    url("../apps/electricite/img/wall.svg") 0 0 / 480px 480px repeat,
-    linear-gradient(180deg, #C7CBCF, #A6ABB1);
+  --fond: url("encadre-electricite.jpg");
+  --voile: radial-gradient(ellipse 62% 55% at 50% 50%, rgba(236,239,242,.9), rgba(220,224,228,.6) 60%, rgba(220,224,228,0) 100%);
+  color: #2B3540; font-family: 'Fredoka', 'Nunito', sans-serif;
 }
-.appli--electricite .appli__titre, .appli--electricite .appli__texte { text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(225,229,233,.95); }
-.appli--electricite .appli__texte { font-family: 'Nunito', sans-serif; color: #2E3A46; }
+.appli--electricite .appli__titre, .appli--electricite .appli__texte { text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(236,239,242,.95); }
+.appli--electricite .appli__texte { font-family: 'Nunito', sans-serif; color: #36424E; }
 
+/* Smartphone : les 4 encadrés les uns sous les autres */
 @media (max-width: 640px) {
-  .portail { padding-left: 14px; padding-right: 14px; }
-  .titre { padding: 16px 16px 14px; margin-bottom: 20px; }
-  .titre p { font-size: .9rem; }
-  .applis { grid-template-columns: 1fr; gap: 14px; }
-  .appli { min-height: 140px; padding: 20px 20px; gap: 6px; }
-  .appli__titre { font-size: 1.4rem; }
-  .appli__texte { font-size: .88rem; }
+  body::before { background-size: 460px 460px; }
+  .portail { padding-left: 16px; padding-right: 16px; }
+  .titre { margin-bottom: 22px; }
+  .titre p { font-size: .95rem; }
+  .applis { grid-template-columns: 1fr; gap: 16px; }
+  .appli { min-height: 170px; padding: 20px 20px; gap: 6px; }
+  .appli__titre { font-size: 1.45rem; }
+  .appli__texte { font-size: .9rem; }
 }
 @media (prefers-reduced-motion: reduce) { .appli { transition: none; } }

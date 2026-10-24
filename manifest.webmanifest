@@ -1,0 +1,16 @@
+{
+  "name": "Physique Chimie en Poche",
+  "short_name": "PC en Poche",
+  "description": "Toutes les applis de physique-chimie du collège, au même endroit",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FBFAF6",
+  "theme_color": "#FBFAF6",
+  "icons": [
+    { "src": "portail/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "portail/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "portail/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

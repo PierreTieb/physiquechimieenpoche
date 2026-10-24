@@ -10,7 +10,7 @@ VS_CODE = ICI.parent
 # dossier d'origine, page d'accueil de l'appli (où placer le lien de retour), classe du lien (style de l'appli)
 APPLIS = {
     'chimie':      ('Les Bases de la chimie', '#screen-home', 'btn-back'),
-    'conversions': ('Conversion training', '#screen-level-select .home-inner', 'btn-text home-back'),
+    'conversions': ('Conversion training', '#screen-home .home-inner', 'btn-text home-back'),
     'ondes':       ('Les Ondes Sonores', '#screen-home', 'btn-back'),
     'electricite': ('Electricité', '#screen-home', 'btn-back'),
 }

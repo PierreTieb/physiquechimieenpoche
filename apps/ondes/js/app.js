@@ -5,7 +5,7 @@ window.App=(function(){
   function showScreen(id){
     document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});$(id).classList.add('active');
     document.body.setAttribute('data-theme',TH[id]);
-    document.body.style.setProperty('--wall',Utils.wall(id==='screen-home'?Utils.WALL_HOME:id==='screen-measure'?Utils.WALL_GOLD:id==='screen-freq'?Utils.WALL_ORANGE:id==='screen-music'?Utils.WALL_MUSIC:Utils.WALL_YELLOW)); // papier peint jaune partout sauf à l'accueil
+    document.body.style.setProperty('--wall',Utils.wall(id==='screen-home'?Utils.WALL_HOME:id==='screen-measure'?Utils.WALL_GOLD:id==='screen-freq'?Utils.WALL_ORANGE:id==='screen-music'?Utils.WALL_MUSIC:Utils.WALL_YELLOW)); // teinte des icônes du papier peint selon l'écran
     window.scrollTo(0,0);
     if(id!=='screen-freq')Freq.stop();
     if(id!=='screen-music')Music.stop();
@@ -25,6 +25,7 @@ window.App=(function(){
   Free=createLab($('lab-free'),{});
   Free.ctrls.appendChild($('calc-wrap'));
   document.body.style.setProperty('--wall',Utils.wall(Utils.WALL_HOME));
+  document.body.style.setProperty('--waves',Utils.waves());
   // Pas de zoom par double-tap / double-clic
   var lastTouch=0;
   document.addEventListener('touchend',function(e){var n=Date.now();if(n-lastTouch<350&&!/INPUT|TEXTAREA/.test(e.target.tagName))e.preventDefault();lastTouch=n},{passive:false});
