@@ -9,16 +9,16 @@ from pathlib import Path
 ICI = Path(__file__).resolve().parent
 VS_CODE = ICI.parent
 
-# dossier d'origine, page d'accueil de l'appli (où placer le lien de retour), classe du lien (style de l'appli),
-# style en plus quand l'appli n'a pas de bouton « Retour » à imiter
+# dossier d'origine, page d'accueil de l'appli (où placer le lien de retour), classe du lien (police de l'appli),
+# couleurs du lien par-dessus la pastille en verre dépoli de portail/retour.js
 APPLIS = {
     'chimie':      ('Les Bases de la chimie', '#screen-home', 'btn-back', ''),
     'conversions': ('Conversion training', '#screen-home .home-inner', 'btn-text home-back', ''),
-    'ondes':       ('Les Ondes Sonores', '#screen-home', 'btn-back', ''),
+    'ondes':       ('Les Ondes Sonores', '#screen-home', 'btn-back',
+                    'color:#FFE2C2;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);'
+                    'box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)'),
     'electricite': ('Electricité', '#screen-home', 'btn-back', ''),
-    'questions':   ('Questions', '#start .start-in', '',
-                    'gap:4px;margin:0 0 4px;padding:9px 16px;border-radius:999px;font-weight:800;font-size:.95rem;'
-                    'color:#24502E;background:rgba(255,255,255,.85);box-shadow:0 3px 0 rgba(36,80,46,.25)'),
+    'questions':   ('Questions', '#start .start-in', '', 'color:#24502E'),
 }
 # '*.mid' : morceaux MIDI d'origine des Ondes Sonores, déjà transcrits dans songs.js
 IGNORER = shutil.ignore_patterns('.git', '.github', '.claude', '.vscode', '__pycache__', '*.md', '*.py', '*.bat', '*.mid', 'Thumbs.db', '.DS_Store')
