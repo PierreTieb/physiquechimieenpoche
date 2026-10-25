@@ -2,6 +2,7 @@
 # et ajoute dans chacune le lien de retour vers la page principale.
 # À lancer quand une petite appli est validée : double-clic sur « Mettre à jour les applis.bat ».
 # Pour n'en recopier que certaines : python mettre_a_jour.py chimie ondes
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -23,6 +24,26 @@ APPLIS = {
 # '*.mid' : morceaux MIDI d'origine des Ondes Sonores, déjà transcrits dans songs.js
 IGNORER = shutil.ignore_patterns('.git', '.github', '.claude', '.vscode', '__pycache__', '*.md', '*.py', '*.bat', '*.mid', 'Thumbs.db', '.DS_Store')
 
+# Les polices Google sont copiées dans portail/polices/ pour que tout marche sans internet :
+# les liens vers fonts.googleapis.com de chaque appli sont remplacés par la copie locale
+POLICES = ICI / 'portail' / 'polices' / 'polices.css'
+PRECONNECT = re.compile(r'[ \t]*<link rel="preconnect" href="https://fonts\.(googleapis|gstatic)\.com"[^>]*>\s*', re.I)
+GOOGLE_FONTS = re.compile(r'<link[^>]*href="https://fonts\.googleapis\.com/css2\?([^"]*)"[^>]*>', re.I)
+
+
+def polices_locales(html, nom):
+    locales = set(re.findall(r"font-family: '([^']+)'", POLICES.read_text(encoding='utf-8')))
+
+    def remplacer(m):
+        familles = {f.replace('+', ' ') for f in re.findall(r'family=([^:&]+)', m.group(1))}
+        if familles - locales:
+            print('  !! %s : polices absentes de portail/polices (gardées en ligne) : %s' % (nom, ', '.join(sorted(familles - locales))))
+            return m.group(0)
+        return '<link rel="stylesheet" href="../../portail/polices/polices.css">'
+
+    html = GOOGLE_FONTS.sub(remplacer, html)
+    return html if 'fonts.googleapis.com/css2' in html else PRECONNECT.sub('', html)
+
 
 def copier(nom, source, accueil, classe, style):
     src, dst = VS_CODE / source, ICI / 'apps' / nom
@@ -33,7 +54,7 @@ def copier(nom, source, accueil, classe, style):
         shutil.rmtree(dst)
     shutil.copytree(src, dst, ignore=IGNORER)
     page = dst / 'index.html'
-    html = page.read_text(encoding='utf-8')
+    html = polices_locales(page.read_text(encoding='utf-8'), nom)
     lien = '<script src="../../portail/retour.js" data-home="%s" data-class="%s"%s></script>\n' % (
         accueil, classe, ' data-style="%s"' % style if style else '')
     i = html.lower().rfind('</body>')
