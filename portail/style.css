@@ -84,13 +84,25 @@ body::before {
 .appli--electricite .appli__titre, .appli--electricite .appli__texte { text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(236,239,242,.95); }
 .appli--electricite .appli__texte { font-family: 'Nunito', sans-serif; color: #36424E; }
 
-/* Smartphone : les 4 encadrés les uns sous les autres */
+/* Questions Scientifiques : fond vert pomme couvert de « ? » clairs et sombres, comme l'accueil de l'appli.
+   Toujours le dernier encadré : seul sur sa ligne (nombre impair d'encadrés), il est centré, de la largeur d'une colonne */
+.appli--questions {
+  --fond: url("encadre-questions.svg");
+  --voile: radial-gradient(ellipse 62% 55% at 50% 50%, rgba(240,251,224,.9), rgba(226,245,198,.6) 60%, rgba(226,245,198,0) 100%);
+  color: #24502E; font-family: 'Fredoka', 'Nunito', sans-serif;
+}
+.appli--questions:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 11px); }
+.appli--questions .appli__titre, .appli--questions .appli__texte { text-shadow: 0 0 6px #F0FBE0, 0 0 12px #F0FBE0; }
+.appli--questions .appli__texte { font-family: 'Nunito', sans-serif; color: #3F6339; }
+
+/* Smartphone : les encadrés les uns sous les autres */
 @media (max-width: 640px) {
   body::before { background-size: 460px 460px; }
   .portail { padding-left: 16px; padding-right: 16px; }
   .titre { margin-bottom: 22px; }
   .titre p { font-size: .95rem; }
   .applis { grid-template-columns: 1fr; gap: 16px; }
+  .appli--questions:nth-child(odd) { width: auto; justify-self: stretch; }
   .appli { min-height: 170px; padding: 20px 20px; gap: 6px; }
   .appli__titre { font-size: 1.45rem; }
   .appli__texte { font-size: .9rem; }

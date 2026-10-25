@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
+<!-- Encadré « Questions Scientifiques » : fond vert pomme couvert de points d'interrogation clairs et sombres (comme l'accueil de l'appli) -->
+<defs><linearGradient id="v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8F2AE"/><stop offset="1" stop-color="#B5E07E"/></linearGradient></defs>
+<rect width="640" height="320" fill="url(#v)"/>
+<g font-weight="700" text-anchor="middle" dominant-baseline="central">
+<text x="18.5" y="13.6" font-family="Georgia,serif" font-size="42" fill="#5E8C2E" fill-opacity="0.22" transform="rotate(-6 18.5 13.6)">?</text>
+<text x="64.0" y="11.2" font-family="'Courier New',monospace" font-size="43" fill="#FAFFF2" fill-opacity="0.79" transform="rotate(-22 64.0 11.2)">?</text>
+<text x="127.6" y="29.8" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="20" fill="#FAFFF2" fill-opacity="0.88" transform="rotate(-13 127.6 29.8)">?</text>
+<text x="165.1" y="13.4" font-family="Impact,'Arial Black',sans-serif" font-size="55" fill="#F2FBE4" fill-opacity="0.81" transform="rotate(-15 165.1 13.4)">?</text>
+<text x="207.7" y="34.6" font-family="'Trebuchet MS',sans-serif" font-size="40" fill="#3C6C44" fill-opacity="0.35" transform="rotate(1 207.7 34.6)">?</text>
+<text x="273.7" y="24.9" font-family="'Times New Roman',serif" font-size="50" fill="#EEF9DD" fill-opacity="0.94" transform="rotate(-12 273.7 24.9)">?</text>
+<text x="319.8" y="20.8" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="21" fill="#F2FBE4" fill-opacity="0.89" transform="rotate(0 319.8 20.8)">?</text>
+<text x="357.2" y="26.3" font-family="'Trebuchet MS',sans-serif" font-size="53" fill="#F2FBE4" fill-opacity="0.91" transform="rotate(3 357.2 26.3)">?</text>
+<text x="425.2" y="30.2" font-family="Verdana,sans-serif" font-size="56" fill="#22502E" fill-opacity="0.31" transform="rotate(22 425.2 30.2)">?</text>
+<text x="473.3" y="10.3" font-family="'Times New Roman',serif" font-size="63" fill="#22502E" fill-opacity="0.36" transform="rotate(16 473.3 10.3)">?</text>
+<text x="513.0" y="33.0" font-family="Georgia,serif" font-size="25" fill="#FAFFF2" fill-opacity="0.85" transform="rotate(-19 513.0 33.0)">?</text>
+<text x="575.4" y="12.8" font-family="Verdana,sans-serif" font-size="58" fill="#F6FDEB" fill-opacity="0.83" transform="rotate(-20 575.4 12.8)">?</text>
+<text x="617.1" y="41.0" font-family="'Trebuchet MS',sans-serif" font-size="30" fill="#22502E" fill-opacity="0.41" transform="rotate(-4 617.1 41.0)">?</text>
+<text x="37.9" y="97.1" font-family="Verdana,sans-serif" font-size="28" fill="#EEF9DD" fill-opacity="0.77" transform="rotate(-13 37.9 97.1)">?</text>
+<text x="62.9" y="71.9" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="46" fill="#EEF9DD" fill-opacity="0.87" transform="rotate(-9 62.9 71.9)">?</text>
+<text x="138.6" y="85.8" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="58" fill="#3C6C44" fill-opacity="0.31" transform="rotate(22 138.6 85.8)">?</text>
+<text x="168.8" y="76.0" font-family="Verdana,sans-serif" font-size="26" fill="#FAFFF2" fill-opacity="0.83" transform="rotate(24 168.8 76.0)">?</text>
+<text x="208.1" y="83.8" font-family="Georgia,serif" font-size="42" fill="#FFFFFF" fill-opacity="0.88" transform="rotate(22 208.1 83.8)">?</text>
+<text x="283.7" y="84.3" font-family="'Courier New',monospace" font-size="33" fill="#FFFFFF" fill-opacity="0.79" transform="rotate(-6 283.7 84.3)">?</text>
+<text x="332.0" y="98.4" font-family="'Trebuchet MS',sans-serif" font-size="21" fill="#F2FBE4" fill-opacity="0.86" transform="rotate(-19 332.0 98.4)">?</text>
+<text x="368.5" y="87.2" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="61" fill="#24501E" fill-opacity="0.25" transform="rotate(-6 368.5 87.2)">?</text>
+<text x="427.4" y="72.5" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="56" fill="#4E7F2E" fill-opacity="0.22" transform="rotate(0 427.4 72.5)">?</text>
+<text x="477.1" y="81.2" font-family="Impact,'Arial Black',sans-serif" font-size="28" fill="#486E22" fill-opacity="0.28" transform="rotate(15 477.1 81.2)">?</text>
+<text x="507.9" y="76.3" font-family="Georgia,serif" font-size="40" fill="#486E22" fill-opacity="0.25" transform="rotate(11 507.9 76.3)">?</text>
+<text x="558.6" y="71.0" font-family="'Trebuchet MS',sans-serif" font-size="38" fill="#4E7F2E" fill-opacity="0.43" transform="rotate(21 558.6 71.0)">?</text>
+<text x="600.9" y="65.1" font-family="Georgia,serif" font-size="40" fill="#F6FDEB" fill-opacity="0.81" transform="rotate(24 600.9 65.1)">?</text>
+<text x="38.7" y="127.5" font-family="Impact,'Arial Black',sans-serif" font-size="23" fill="#3C6C44" fill-opacity="0.40" transform="rotate(-5 38.7 127.5)">?</text>
+<text x="87.3" y="130.9" font-family="Verdana,sans-serif" font-size="61" fill="#3C6C44" fill-opacity="0.22" transform="rotate(11 87.3 130.9)">?</text>
+<text x="131.5" y="117.8" font-family="Verdana,sans-serif" font-size="19" fill="#FAFFF2" fill-opacity="1.00" transform="rotate(4 131.5 117.8)">?</text>
+<text x="176.2" y="136.9" font-family="Georgia,serif" font-size="25" fill="#FFFFFF" fill-opacity="0.98" transform="rotate(2 176.2 136.9)">?</text>
+<text x="231.9" y="141.8" font-family="Impact,'Arial Black',sans-serif" font-size="24" fill="#FAFFF2" fill-opacity="0.93" transform="rotate(24 231.9 141.8)">?</text>
+<text x="254.5" y="122.6" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="32" fill="#24501E" fill-opacity="0.38" transform="rotate(2 254.5 122.6)">?</text>
+<text x="334.1" y="127.9" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="59" fill="#FAFFF2" fill-opacity="0.88" transform="rotate(-3 334.1 127.9)">?</text>
+<text x="370.3" y="134.2" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="26" fill="#FAFFF2" fill-opacity="0.84" transform="rotate(-24 370.3 134.2)">?</text>
+<text x="406.1" y="137.8" font-family="Verdana,sans-serif" font-size="49" fill="#FFFFFF" fill-opacity="0.74" transform="rotate(1 406.1 137.8)">?</text>
+<text x="480.9" y="116.8" font-family="Georgia,serif" font-size="22" fill="#FFFFFF" fill-opacity="0.73" transform="rotate(-2 480.9 116.8)">?</text>
+<text x="515.0" y="137.5" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="49" fill="#486E22" fill-opacity="0.32" transform="rotate(-2 515.0 137.5)">?</text>
+<text x="565.4" y="149.8" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="61" fill="#335F24" fill-opacity="0.41" transform="rotate(-12 565.4 149.8)">?</text>
+<text x="627.1" y="119.8" font-family="'Courier New',monospace" font-size="21" fill="#FAFFF2" fill-opacity="0.84" transform="rotate(-12 627.1 119.8)">?</text>
+<text x="30.5" y="197.3" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="50" fill="#4E7F2E" fill-opacity="0.24" transform="rotate(8 30.5 197.3)">?</text>
+<text x="87.0" y="204.1" font-family="Impact,'Arial Black',sans-serif" font-size="36" fill="#FAFFF2" fill-opacity="0.99" transform="rotate(0 87.0 204.1)">?</text>
+<text x="130.2" y="205.1" font-family="'Trebuchet MS',sans-serif" font-size="34" fill="#FFFFFF" fill-opacity="0.84" transform="rotate(-20 130.2 205.1)">?</text>
+<text x="166.7" y="185.1" font-family="'Courier New',monospace" font-size="41" fill="#24501E" fill-opacity="0.29" transform="rotate(-10 166.7 185.1)">?</text>
+<text x="238.3" y="197.4" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="30" fill="#4E7F2E" fill-opacity="0.23" transform="rotate(-23 238.3 197.4)">?</text>
+<text x="279.6" y="198.6" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="61" fill="#5E8C2E" fill-opacity="0.36" transform="rotate(-4 279.6 198.6)">?</text>
+<text x="322.4" y="194.1" font-family="'Courier New',monospace" font-size="49" fill="#F2FBE4" fill-opacity="0.74" transform="rotate(-3 322.4 194.1)">?</text>
+<text x="384.3" y="191.7" font-family="'Courier New',monospace" font-size="57" fill="#3C6C44" fill-opacity="0.22" transform="rotate(-21 384.3 191.7)">?</text>
+<text x="401.6" y="205.1" font-family="Impact,'Arial Black',sans-serif" font-size="46" fill="#FFFFFF" fill-opacity="0.98" transform="rotate(-22 401.6 205.1)">?</text>
+<text x="483.9" y="177.8" font-family="Impact,'Arial Black',sans-serif" font-size="46" fill="#F2FBE4" fill-opacity="0.98" transform="rotate(1 483.9 177.8)">?</text>
+<text x="515.1" y="193.1" font-family="Georgia,serif" font-size="63" fill="#EEF9DD" fill-opacity="0.95" transform="rotate(-23 515.1 193.1)">?</text>
+<text x="567.9" y="175.1" font-family="'Brush Script MT',cursive" font-size="22" fill="#F6FDEB" fill-opacity="0.98" transform="rotate(15 567.9 175.1)">?</text>
+<text x="617.0" y="201.2" font-family="Impact,'Arial Black',sans-serif" font-size="27" fill="#486E22" fill-opacity="0.27" transform="rotate(-13 617.0 201.2)">?</text>
+<text x="37.8" y="248.5" font-family="Georgia,serif" font-size="63" fill="#FFFFFF" fill-opacity="1.00" transform="rotate(16 37.8 248.5)">?</text>
+<text x="78.2" y="254.2" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="48" fill="#F2FBE4" fill-opacity="0.74" transform="rotate(-5 78.2 254.2)">?</text>
+<text x="126.5" y="247.2" font-family="'Trebuchet MS',sans-serif" font-size="30" fill="#F2FBE4" fill-opacity="0.77" transform="rotate(-24 126.5 247.2)">?</text>
+<text x="188.6" y="241.8" font-family="Georgia,serif" font-size="32" fill="#F2FBE4" fill-opacity="0.99" transform="rotate(-7 188.6 241.8)">?</text>
+<text x="217.5" y="239.1" font-family="'Times New Roman',serif" font-size="41" fill="#486E22" fill-opacity="0.25" transform="rotate(-24 217.5 239.1)">?</text>
+<text x="256.6" y="236.2" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="31" fill="#FAFFF2" fill-opacity="0.73" transform="rotate(-13 256.6 236.2)">?</text>
+<text x="325.4" y="248.1" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="33" fill="#4E7F2E" fill-opacity="0.29" transform="rotate(24 325.4 248.1)">?</text>
+<text x="377.0" y="245.3" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="59" fill="#FAFFF2" fill-opacity="0.95" transform="rotate(6 377.0 245.3)">?</text>
+<text x="432.6" y="249.4" font-family="Impact,'Arial Black',sans-serif" font-size="18" fill="#24501E" fill-opacity="0.40" transform="rotate(9 432.6 249.4)">?</text>
+<text x="451.5" y="226.3" font-family="Georgia,serif" font-size="56" fill="#EEF9DD" fill-opacity="0.75" transform="rotate(2 451.5 226.3)">?</text>
+<text x="523.1" y="239.6" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="52" fill="#FFFFFF" fill-opacity="0.94" transform="rotate(0 523.1 239.6)">?</text>
+<text x="571.6" y="223.8" font-family="Impact,'Arial Black',sans-serif" font-size="21" fill="#335F24" fill-opacity="0.26" transform="rotate(-11 571.6 223.8)">?</text>
+<text x="623.6" y="257.8" font-family="Georgia,serif" font-size="40" fill="#EEF9DD" fill-opacity="0.83" transform="rotate(9 623.6 257.8)">?</text>
+<text x="29.2" y="282.1" font-family="'Comic Sans MS','Chalkboard SE',cursive" font-size="47" fill="#24501E" fill-opacity="0.28" transform="rotate(9 29.2 282.1)">?</text>
+<text x="73.2" y="292.8" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="28" fill="#4E7F2E" fill-opacity="0.22" transform="rotate(0 73.2 292.8)">?</text>
+<text x="121.9" y="292.1" font-family="Verdana,sans-serif" font-size="27" fill="#FFFFFF" fill-opacity="0.97" transform="rotate(23 121.9 292.1)">?</text>
+<text x="165.1" y="277.5" font-family="Impact,'Arial Black',sans-serif" font-size="63" fill="#24501E" fill-opacity="0.44" transform="rotate(-5 165.1 277.5)">?</text>
+<text x="224.3" y="280.0" font-family="'Arial Rounded MT Bold',Arial,sans-serif" font-size="24" fill="#4E7F2E" fill-opacity="0.43" transform="rotate(16 224.3 280.0)">?</text>
+<text x="284.1" y="300.9" font-family="Georgia,serif" font-size="40" fill="#F6FDEB" fill-opacity="0.97" transform="rotate(-23 284.1 300.9)">?</text>
+<text x="326.3" y="289.8" font-family="'Trebuchet MS',sans-serif" font-size="35" fill="#24501E" fill-opacity="0.30" transform="rotate(-18 326.3 289.8)">?</text>
+<text x="363.2" y="287.3" font-family="'Times New Roman',serif" font-size="27" fill="#F2FBE4" fill-opacity="0.98" transform="rotate(-24 363.2 287.3)">?</text>
+<text x="414.1" y="289.3" font-family="'Times New Roman',serif" font-size="34" fill="#486E22" fill-opacity="0.34" transform="rotate(-3 414.1 289.3)">?</text>
+<text x="452.1" y="278.5" font-family="'Times New Roman',serif" font-size="61" fill="#3C6C44" fill-opacity="0.27" transform="rotate(-12 452.1 278.5)">?</text>
+<text x="517.3" y="281.8" font-family="'Brush Script MT',cursive" font-size="58" fill="#EEF9DD" fill-opacity="0.99" transform="rotate(15 517.3 281.8)">?</text>
+<text x="567.9" y="301.5" font-family="'Times New Roman',serif" font-size="38" fill="#F6FDEB" fill-opacity="0.93" transform="rotate(12 567.9 301.5)">?</text>
+<text x="599.8" y="309.3" font-family="'Times New Roman',serif" font-size="33" fill="#F6FDEB" fill-opacity="0.85" transform="rotate(-10 599.8 309.3)">?</text>
+</g>
+</svg>
