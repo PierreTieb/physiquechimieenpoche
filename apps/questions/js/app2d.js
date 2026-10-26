@@ -39,7 +39,10 @@ const B=x=>105*x*x*x*(1/3-x+1.2*x*x-2/3*x*x*x+x*x*x*x/7);
 let W,H,DPR,S,sky;
 function rs(){W=innerWidth;H=innerHeight;DPR=Math.min(2,devicePixelRatio||1);cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);S=Math.min(W,H)/10;
   sky=off(cv.width,cv.height,(x,w,h)=>{for(let i=0;i<w*h/2500;i++){const k=rnd(.3,1);x.fillStyle=`rgba(${255*k|0},${245*k|0},${(Math.random()<.2?200:255)*k|0},${rnd(.4,1)})`;const s=rnd(.6,1.8)*DPR;x.fillRect(rnd(0,w),rnd(0,h),s,s)}})}
-rs();addEventListener('resize',rs);
+/* Safari sur iPhone, en appli web : en revenant du paysage au portrait, la page peut rester défilée, et les touchers tombent alors à côté des boutons ;
+   à chaque changement de taille, on la remet en place (une deuxième fois un peu après, car les dimensions n'y sont à jour qu'avec retard) */
+const unshift=()=>{if(scrollX||scrollY)scrollTo(0,0);document.documentElement.scrollTop=document.body.scrollTop=document.documentElement.scrollLeft=document.body.scrollLeft=0};
+rs();addEventListener('resize',()=>{unshift();rs();setTimeout(()=>{unshift();if(innerWidth!=W||innerHeight!=H)rs()},350)});
 const BG=LV.map(v=>rgb(v.bg));
 
 let LS=null,u=M[0],p=0,pT=0,vel=0,fl=null,t0=performance.now(),tp=0,run=0;
