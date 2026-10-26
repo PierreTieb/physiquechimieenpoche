@@ -125,8 +125,8 @@ const lyPop=$('ly-pop'),lyOpen=o=>{lyPop.hidden=!o;if(o)$('ly-ok').focus();else 
 $('ly-q').onclick=()=>lyOpen(1);$('ly-ok').onclick=()=>lyOpen(0);lyPop.onclick=e=>{if(e.target===lyPop)lyOpen(0)};
 addEventListener('keydown',e=>{if(e.key=='Escape'&&!lyPop.hidden)lyOpen(0)});
 $('quit').onclick=()=>{run=0;$('ui').hidden=true;$('start').hidden=false;$('hint').classList.remove('off')};
-/* les boutons (croix, jauge, « ? ») répondent à la position du doigt, même quand Safari sur iPhone attribue le toucher au dessin qui est dessous
-   (après la pièce en 3D du ciel) : on suit le doigt lui-même, car Safari n'envoie alors aucun clic */
+/* les boutons (croix, jauge, « ? ») répondent à la position du doigt, même si un navigateur mobile attribue le toucher au dessin qui est dessous :
+   on suit le doigt lui-même, car Safari n'envoie aucun clic quand le toucher tombe sur le dessin */
 let hit=null,hitT=0;
 const under=e=>[...$('ui').querySelectorAll('button')].find(b=>{const r=b.getBoundingClientRect();return r.width&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom});
 addEventListener('pointerdown',e=>{hit=null;if($('ui').hidden||!lyPop.hidden)return;const b=under(e);if(b&&!b.contains(e.target)){hit=b;e.stopPropagation()}},true);
