@@ -23,7 +23,7 @@ if ($navigateur) {
   $lnk.TargetPath = Join-Path $racine 'index.html'
 }
 $lnk.WorkingDirectory = $racine
-$lnk.IconLocation = (Join-Path $racine 'portail\icone.ico') + ',0'
+$lnk.IconLocation = (Join-Path $racine 'portail\icone-arrondie.ico') + ',0'
 $lnk.Description = 'Physique Chimie en Poche'
 $lnk.Save()
 

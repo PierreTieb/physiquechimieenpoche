@@ -1,0 +1,153 @@
+/* « D'où viennent les couleurs du ciel ? » : la pièce aux quatre murs (tableau d'enquête en liège, cadres, fiches, fil rouge) */
+#room{position:fixed;inset:0;z-index:35;overflow:hidden;background:#2a2119;-webkit-user-select:none;user-select:none}
+#room-scene{position:absolute;inset:0;overflow:hidden;touch-action:none}
+/* la pièce (placée en avant du mur regardé) et les murs qu'on ne regarde pas laissent passer les clics jusqu'au mur regardé */
+.room{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.45,.05,.25,1);pointer-events:none}
+.wall.cur{pointer-events:auto}
+.room.drag{transition:none}
+/* à plat (au repos) : le mur regardé est affiché sans 3D, les autres sont cachés */
+.room.flat{transform:none!important;transition:none}
+/* à plat : le mur regardé, agrandi pour remplir l'écran ; le reste est caché */
+.room.flat .wall.cur{transform:scale(var(--fs))!important}
+.room.flat .face{visibility:hidden}
+.room.flat .wall.cur{visibility:visible}
+/* la caméra est à l'intérieur de la pièce fermée : on voit toujours les faces de l'avant, inutile de cacher leur dos (ce test se trompe pour les faces qui passent à côté de la caméra) */
+.face{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden}
+/* mur peint, légèrement plus sombre dans les angles */
+/* murs tapissés : papier peint à petits motifs, un peu plus sombres que le mur */
+.wall{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56'><g fill='%23a8946f' fill-opacity='.32'><path d='M28 15c3.5 5 3.5 8 0 13c-3.5-5-3.5-8 0-13zM28 41c3.5-5 3.5-8 0-13c-3.5 5-3.5 8 0 13zM15 28c5-3.5 8-3.5 13 0c-5 3.5-8 3.5-13 0zM41 28c-5-3.5-8-3.5-13 0c5 3.5 8 3.5 13 0z'/><circle cx='0' cy='0' r='2.6'/><circle cx='56' cy='0' r='2.6'/><circle cx='0' cy='56' r='2.6'/><circle cx='56' cy='56' r='2.6'/></g><path d='M0 28H56M28 0V56' stroke='%23a8946f' stroke-opacity='.12' stroke-dasharray='2 5'/></svg>"),radial-gradient(ellipse at 50% 40%,#efe6d4 0%,#e2d6bf 60%,#cbbda3 100%)}
+/* contenu du mur : repère fixe de 1200 × 680, mis à l'échelle (et zoomé) par une transformation douce */
+.wall-in{position:absolute;left:0;top:0;width:1200px;height:680px;transform-origin:0 0;transition:transform .9s cubic-bezier(.65,0,.35,1)}
+.board{position:absolute;inset:0;border-radius:8px;background-color:#c08a55;background-image:var(--cork);
+  box-shadow:inset 0 0 0 14px #7a4e2b,inset 0 0 0 16px #5d3a1f,inset 0 0 40px 14px rgba(60,30,10,.45),0 10px 30px rgba(0,0,0,.35)}
+/* cadres cliquables */
+.el{position:absolute;cursor:zoom-in;box-shadow:0 8px 16px rgba(0,0,0,.38),0 2px 4px rgba(0,0,0,.3);transition:box-shadow .3s}
+.el:hover{box-shadow:0 12px 24px rgba(0,0,0,.42),0 2px 4px rgba(0,0,0,.3)}
+.el.on{cursor:default}
+.el:focus-visible,.note:focus-visible{outline:3px solid #ffd84d;outline-offset:4px}
+.el svg{display:block;width:100%;height:100%}
+.polaroid{background:#fbfaf5;padding:10px 10px 0}
+.polaroid img{display:block;width:100%;height:auto;border-radius:2px}
+.polaroid span{display:block;padding:7px 0 9px;text-align:center;font:600 17px/1.1 var(--font-display);color:#3a2a1e}
+/* cadres des expériences : la bordure est un anneau d'ombre, pour que le dessin garde toute la place (sans bandes sur les côtés) */
+.exp{background:#07080f;border-radius:2px;box-shadow:0 0 0 7px #2b2f38,0 0 0 8px #4b5160,0 10px 18px 6px rgba(0,0,0,.4)}
+.exp--sky{box-shadow:0 0 0 8px #f4f1ea,0 0 0 9px #d8d2c4,0 10px 18px 6px rgba(0,0,0,.35)}
+/* tableau du Soleil : cadre doré mouluré */
+.painting{border:12px solid #c9a24a;border-image:linear-gradient(135deg,#f3dc8c,#b8862e 30%,#f1d27a 50%,#a5741f 75%,#e9c76c) 1;background:#05060f}
+/* fiches de lecture : papier, titre, texte court ; un clic les ouvre en grand */
+.note{position:absolute;padding:12px 15px 13px;background:#fffdf6;color:#2E3A46;font:600 15.5px/1.38 var(--font-body);cursor:pointer;
+  box-shadow:0 5px 12px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);transition:transform .2s}
+.note h3{margin:0 0 5px;font:600 17.5px/1.2 var(--font-display);color:#8a1c1c}
+.note p{margin:0}
+.note--wide{padding:9px 16px 10px;background:#fff9e3}
+.note--wide h3{display:inline;margin-right:8px}.note--wide p{display:inline}
+.note--plaque{padding:7px 12px 8px;text-align:center;background:linear-gradient(180deg,#efe2bd,#d9c48f);border:1px solid #a88a45;box-shadow:0 3px 6px rgba(0,0,0,.35);font-size:14px;color:#3d2f12}
+.note--plaque h3{display:none}
+/* fiche de titre du mur : grand papier coloré, une couleur par mur */
+.card-title{position:absolute;padding:18px 22px 18px;background:#ffe066;box-shadow:0 8px 18px rgba(0,0,0,.32),inset 0 -18px 30px rgba(0,0,0,.05);color:#2a2410}
+.card-title h2{margin:0 0 8px;font:700 31px/1.12 var(--font-display);color:#1f2a36}
+.card-title p{margin:0;font:700 15.5px/1.35 var(--font-body);color:#3a3216}
+.card-title--c1{background:linear-gradient(160deg,#ffb38a,#ff8f6b)}.card-title--c2{background:linear-gradient(160deg,#9ddcff,#6cc1f5)}.card-title--c3{background:linear-gradient(160deg,#ffd36b,#ffab45)}
+.card-title--soon{text-align:center}
+/* fil rouge et punaises, par-dessus les papiers */
+.threads{position:absolute;left:0;top:0;width:1200px;height:680px;pointer-events:none;overflow:visible}
+/* textes dans les expériences */
+.p-lbl text{font:700 12px var(--font-body);fill:#e9eef6;paint-order:stroke;stroke:#07080f;stroke-width:3px}
+.r-lbl text{fill:#24384f;stroke:rgba(255,255,255,.85)}
+.s-lbl{font:700 11px var(--font-body);fill:#f2f4fa}.s-t{font-weight:600;fill:#c9cfe0}.s-sun{font-size:13px;fill:#fff}
+/* œil déplaçable et sa bulle */
+.eye{cursor:grab;outline:none}.eye.grab{cursor:grabbing}
+.eye:focus-visible ellipse{stroke:#ffd84d;stroke-width:3}
+.b-box,.b-tail{fill:#fff;stroke:#2b2b2b;stroke-width:1.6}
+.b-tail2{stroke:none}
+.b-view{stroke:#555;stroke-width:.8}
+.b-mark{fill:#2b2b2b}
+.b-txt{font:700 10.5px var(--font-body);fill:#222}
+.b-ttl{font:800 10px var(--font-body);fill:#6E7C8C;letter-spacing:.02em}
+.p-view .b-box{fill:#fff;stroke:#2b2b2b;stroke-width:1.4}
+/* animations : la lumière qui avance, la lampe qui vibre, le Soleil qui rayonne, la pluie qui tombe */
+.flow{fill:none;stroke-width:2;stroke-dasharray:3 16;stroke-linecap:round;animation:flow .9s linear infinite;opacity:.85}
+@keyframes flow{to{stroke-dashoffset:-19}}
+.flow--soft{opacity:.35}
+.p-bulb,.p-halo{animation:bulb 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bulb{50%{opacity:.82}}
+.r-rays{animation:spin 24s linear infinite}
+.r-glow{animation:glow 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{50%{transform:scale(1.12);opacity:.8}}
+.r-drops path{animation:rain .7s linear infinite}
+@keyframes rain{to{stroke-dashoffset:-18}}
+/* commandes : quitter, murs voisins, retour à la vue du mur entier, nom du mur */
+#room-quit{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:25;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  font-size:1.1rem;font-weight:800;color:var(--ink);background:rgba(255,255,255,.92);box-shadow:0 4px 0 rgba(46,58,70,.3),0 6px 14px rgba(0,0,0,.3)}
+#room-quit:active{transform:translateY(2px)}
+.room-arrow{position:fixed;top:50%;z-index:5;display:grid;place-items:center;width:48px;height:132px;margin-top:-66px;padding:0;border:none;border-radius:16px;cursor:pointer;
+  color:#fff;background:rgba(30,22,16,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s}
+.room-arrow svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.room-arrow:hover{background:rgba(30,22,16,.65)}
+#room-prev{left:calc(10px + env(safe-area-inset-left,0px))}#room-next{right:calc(10px + env(safe-area-inset-right,0px))}
+#room-back{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:5;padding:10px 18px;border:none;border-radius:999px;cursor:pointer;
+  font:800 .92rem var(--font-body);color:#2E3A46;background:rgba(255,255,255,.92);box-shadow:0 4px 0 rgba(46,58,70,.3),0 6px 14px rgba(0,0,0,.3)}
+.room-arrow:focus-visible,#room-quit:focus-visible,#room-back:focus-visible{outline:3px solid #ffd84d;outline-offset:2px}
+/* invitation à tourner le téléphone */
+#room-rot{position:fixed;inset:0;z-index:20;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;color:#fff;background:rgba(20,15,10,.88)}
+#room-rot[hidden]{display:none}
+#room-rot svg{width:110px;height:110px;animation:turn 2.4s ease-in-out infinite}
+@keyframes turn{0%,20%{transform:rotate(0)}55%,80%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+#room-rot p{margin:0;max-width:min(22em,100%);font:700 1.15rem/1.4 var(--font-body)}
+/* mur 2 : affiche encadrée de bois, tableau périodique posé de biais sur son coin, coupe de l'humain, diffusion */
+.poster{border:10px solid #7a5434;border-radius:2px;box-shadow:inset 0 0 0 1px #4d3220,0 8px 16px rgba(0,0,0,.38),0 2px 4px rgba(0,0,0,.3)}
+.el svg.mendel{position:absolute;left:-26px;top:-44px;width:150px;height:auto;transform:rotate(-11deg);box-shadow:0 5px 10px rgba(0,0,0,.35)}
+.po-t{font:700 15px var(--font-display);fill:#2E3A46}.po-n{font:700 10.5px var(--font-body);fill:#2E3A46}.po-f{font:800 12px var(--font-body);fill:#6E7C8C}
+.po-p{font:700 22px var(--font-display)}.po-s{font:600 10px var(--font-body);fill:#6E7C8C}
+.md-t{font:700 6.2px var(--font-body);fill:#2E3A46}.md-h{font:800 5.4px var(--font-body);fill:#1e2a36}
+.exp--body{background:#eaf3fb;box-shadow:0 0 0 8px #f4f1ea,0 0 0 9px #d8d2c4,0 10px 18px 6px rgba(0,0,0,.35)}
+.b-lbl text{font:700 10.5px var(--font-body);fill:#7a3b3b}
+.b-leg text{font:700 9.5px var(--font-body);fill:#2E3A46}
+.b-count text{font:800 11px var(--font-body);fill:#2E3A46}#b-phase{font:700 15px var(--font-display);fill:#1F6E40}.b-small{font-weight:600!important;font-size:9.5px!important;fill:#6E7C8C!important}
+.b-count tspan.chg{fill:#c4161c}
+/* mur 3 : tableau blanc au feutre (et sa rigole à feutres), animation du coucher, fiche des planètes, cartes postales */
+.veleda{background:#fdfdfb;border:8px solid #c3c9d0;border-radius:4px;box-shadow:inset 0 0 0 1px #9aa1aa,0 8px 16px rgba(0,0,0,.35)}
+.veleda::after{content:'';position:absolute;left:14px;right:14px;bottom:-16px;height:9px;border-radius:0 0 5px 5px;background:linear-gradient(#d0d5db,#9ea5ad);box-shadow:0 3px 5px rgba(0,0,0,.3)}
+.mk{position:absolute;bottom:-14px;z-index:1;width:34px;height:6px;border-radius:3px}
+.mk1{left:40px;background:linear-gradient(90deg,#1e5fd6 0 22%,#f4f4f4 22%)}.mk2{left:84px;background:linear-gradient(90deg,#d6332a 0 22%,#f4f4f4 22%)}.mk3{left:200px;background:linear-gradient(90deg,#1f2a36 0 22%,#f4f4f4 22%)}
+.v-txt text{font:600 9.5px 'Segoe Print','Bradley Hand','Comic Sans MS','Chalkboard SE',cursive;fill:#1f2a36}.v-txt .v-small{font-size:8px}
+.c-lbl text{font:700 10.5px var(--font-body);fill:#fff;paint-order:stroke;stroke:rgba(10,14,30,.55);stroke-width:3px}
+.c-t{font:800 12px var(--font-body);fill:#fff}.c-s{font:700 9.5px var(--font-body);fill:#c9d2e6}.c-i{font:700 10.5px var(--font-body);fill:#ffe9a8}
+.card-title--center{text-align:center}
+.note--planets h3{margin-bottom:8px}
+.note--planets{padding:10px 13px 11px}.note--planets .pl{margin:0 0 7px}.note--planets .pl:last-child{margin:0}
+.note--planets b{display:block;font:700 15.5px/1.2 var(--font-display);color:#2E3A46}
+.note--planets span{display:block;font-size:12.5px;line-height:1.25}.note--planets i{display:block;font-size:12px;line-height:1.3;color:#6E7C8C}
+.note--planets em{display:block;font-size:12.5px;font-style:normal;font-weight:800;color:#8a1c1c}
+.pl-spec{display:block;width:100%;height:12px;margin:4px 0 3px;border-radius:2px}
+.pop-spec{display:block;width:100%;height:16px;margin:-2px 0 10px;border-radius:3px}
+.postcard{background:#fff;padding:7px 7px 0;box-shadow:0 6px 14px rgba(0,0,0,.38)}
+.postcard svg{height:auto!important}
+.postcard span{display:block;padding:5px 0 7px;font:600 12.5px/1.15 'Segoe Print','Bradley Hand','Comic Sans MS',cursive;color:#3a2a1e}
+.postcard small{display:block;font:600 9px var(--font-body);color:#8b8f96}
+/* plancher en lattes (texture dessinée au chargement), plafond blanc à quatre spots, et la lumière des spots sur le haut des murs */
+.floor{background:var(--floor) center/100% 100%}
+.floor::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,240,210,.12),rgba(30,15,5,.35) 75%)}
+.ceil{background:radial-gradient(circle at 25% 25%,#fff 0 1.6%,rgba(255,248,226,.95) 2.2%,rgba(255,240,205,.35) 5%,transparent 13%),radial-gradient(circle at 75% 25%,#fff 0 1.6%,rgba(255,248,226,.95) 2.2%,rgba(255,240,205,.35) 5%,transparent 13%),radial-gradient(circle at 25% 75%,#fff 0 1.6%,rgba(255,248,226,.95) 2.2%,rgba(255,240,205,.35) 5%,transparent 13%),radial-gradient(circle at 75% 75%,#fff 0 1.6%,rgba(255,248,226,.95) 2.2%,rgba(255,240,205,.35) 5%,transparent 13%),#eeeae3}
+.wall::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 20% 60% at 25% 0%,rgba(255,247,222,.5),transparent 70%),radial-gradient(ellipse 20% 60% at 75% 0%,rgba(255,247,222,.5),transparent 70%)}
+/* le mur de la fenêtre : un ciel bleu où passent des nuages, encadré de bois peint, rideaux, rebord et plante */
+.win{position:absolute;left:400px;top:110px;width:400px;height:370px;border:18px solid #f6f3ec;box-shadow:inset 0 0 0 2px #d8d2c4,0 6px 14px rgba(0,0,0,.25);overflow:hidden}
+.win-sky{position:absolute;inset:0;background:linear-gradient(180deg,#2f7fd8 0%,#5ea6ea 55%,#b5dcf7 100%)}
+.cl{position:absolute;display:block;border-radius:50px;background:#fff;opacity:.92;filter:blur(1px);box-shadow:30px -14px 0 4px #fff,62px 2px 0 -2px #fff;animation:cloud linear infinite}
+.cl1{top:60px;width:90px;height:34px;animation-duration:46s;animation-delay:-8s}.cl2{top:150px;width:70px;height:26px;opacity:.8;animation-duration:62s;animation-delay:-35s}.cl3{top:240px;width:110px;height:38px;opacity:.7;animation-duration:54s;animation-delay:-20s}
+@keyframes cloud{from{transform:translateX(-200px)}to{transform:translateX(420px)}}
+.win-bar{position:absolute;display:block;background:#f6f3ec;box-shadow:0 0 0 1px #d8d2c4}.win-v{left:50%;top:0;bottom:0;width:12px;margin-left:-6px}.win-h{top:50%;left:0;right:0;height:12px;margin-top:-6px}
+.win-sill{position:absolute;left:370px;top:496px;width:460px;height:20px;border-radius:3px;background:linear-gradient(#fbf8f2,#ddd5c6);box-shadow:0 6px 10px rgba(0,0,0,.22)}
+.rod{position:absolute;left:290px;top:84px;width:620px;height:9px;border-radius:5px;background:linear-gradient(#8a6440,#5a3d24);box-shadow:0 3px 5px rgba(0,0,0,.25)}
+.curtain{position:absolute;top:90px;width:130px;height:500px;border-radius:0 0 18px 18px;box-shadow:0 8px 14px rgba(0,0,0,.25);
+  background:repeating-linear-gradient(90deg,#c9574a 0 14px,#b4453a 14px 22px,#d4685a 22px 30px)}
+.curtain--l{left:300px;clip-path:polygon(0 0,100% 0,62% 100%,0 100%)}.curtain--r{left:770px;clip-path:polygon(0 0,100% 0,100% 100%,38% 100%)}
+.plant{position:absolute;left:570px;top:430px;width:60px;height:68px}
+.pot{position:absolute;left:12px;bottom:0;width:36px;height:30px;border-radius:0 0 8px 8px;background:linear-gradient(90deg,#c8633a,#a84d2a)}
+.lf{position:absolute;bottom:24px;width:16px;height:40px;border-radius:50% 50% 50% 50%/70% 70% 30% 30%;background:linear-gradient(90deg,#4f9a3c,#2f6e2a);transform-origin:50% 100%}
+.lf1{left:22px;transform:rotate(-30deg)}.lf2{left:22px;transform:rotate(25deg)}.lf3{left:22px;height:48px;transform:rotate(-4deg)}.lf4{left:22px;height:34px;transform:rotate(55deg)}
+/* fenêtre de lecture en grand */
+.note-card{max-width:620px}
+.note-card .pop-body p{font-size:1.05rem}
+.note-card .petit{font-size:.88rem;color:var(--ink-soft)}
