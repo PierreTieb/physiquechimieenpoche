@@ -1,5 +1,5 @@
 /* PROVISOIRE : diagnostic du toucher sur iPhone (croix inactive en portrait après un passage en paysage). À retirer une fois le bug compris.
-   Toucher l'écran avec 3 doigts affiche ou cache le diagnostic : un point rouge là où le navigateur croit que le doigt est posé,
+   Toucher l'écran 5 fois de suite, rapidement, affiche ou cache le diagnostic : un point rouge là où le navigateur croit que le doigt est posé,
    un cadre pointillé là où il croit que sont les croix, et les dimensions de l'écran */
 (()=>{let on=0,last=null;const mk=css=>{const e=document.createElement('div');e.style.cssText='position:fixed;pointer-events:none;z-index:2147483647;'+css;document.body.appendChild(e);e.hidden=true;return e};
   const panel=mk('left:4px;right:4px;bottom:4px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,.82);color:#fff;font:600 11px/1.35 ui-monospace,Menlo,monospace;white-space:pre-wrap'),
@@ -15,7 +15,8 @@ défilement fenêtre ${r(scrollX)},${r(scrollY)} · html ${de.scrollLeft},${de.s
 marges sûres h${cs.paddingTop} d${cs.paddingRight} b${cs.paddingBottom} g${cs.paddingLeft}
 croix ${r(q.left)},${r(q.top)} ${r(q.width)}×${r(q.height)}
 dernier toucher ${last?`${r(last.clientX)},${r(last.clientY)} (écran ${r(last.screenX)},${r(last.screenY)}) sur ${last.t}`:'—'}`};
-  addEventListener('touchstart',e=>{if(e.touches.length<3)return;on=!on;[panel,dot,...boxes].forEach(x=>x.hidden=!on);show()},{capture:true,passive:true});
-  addEventListener('pointerdown',e=>{const t=e.target;last={clientX:e.clientX,clientY:e.clientY,screenX:e.screenX,screenY:e.screenY,t:t.id?'#'+t.id:t.tagName.toLowerCase()+(t.className&&typeof t.className=='string'?'.'+t.className.split(' ')[0]:'')};
+  let taps=[];
+  addEventListener('pointerdown',e=>{const now=performance.now();taps=taps.filter(t=>now-t<2000);taps.push(now);if(taps.length>=5){taps=[];on=!on;[panel,dot,...boxes].forEach(x=>x.hidden=!on)}
+    const t=e.target;last={clientX:e.clientX,clientY:e.clientY,screenX:e.screenX,screenY:e.screenY,t:t.id?'#'+t.id:t.tagName.toLowerCase()+(t.className&&typeof t.className=='string'?'.'+t.className.split(' ')[0]:'')};
     dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';show()},true);
   addEventListener('resize',()=>setTimeout(show,400));setInterval(show,700)})();
