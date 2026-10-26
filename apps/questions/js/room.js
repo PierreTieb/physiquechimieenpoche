@@ -557,7 +557,7 @@ function open(){build();$('start').hidden=true;room.hidden=false;zoomed=null;roo
 /* en quittant, la pièce est entièrement démontée (elle sera reconstruite à la prochaine ouverture) : certains navigateurs mobiles gardaient sinon
    l'image de la scène 3D à l'écran, qui réapparaissait ensuite derrière les autres pages */
 function close(){room.hidden=true;$('start').hidden=false;cancelAnimationFrame(raf);raf=0;zoomed=null;room.classList.remove('zoomed');pop.hidden=true;
-  box.innerHTML='';box.style.transform='';built=0;arrows=[];sArrows=[];DOTS=[];bCycle=-1;sLast=0;$('go-sky').focus({preventScroll:true})}
+  box.innerHTML='';box.style.transform='';scene.style.perspective='';built=0;arrows=[];sArrows=[];DOTS=[];bCycle=-1;sLast=0;$('go-sky').focus({preventScroll:true})}
 $('go-sky').onclick=open;$('room-quit').onclick=()=>mode=='wall'?leave():close();
 /* les boutons de commande répondent à la position du doigt, même si le navigateur attribue le toucher à la scène 3D qui est dessous */
 room.addEventListener('click',e=>{const b=['room-quit','room-back','room-prev','room-next'].map($).find(b=>{if(b.hidden)return false;const r=b.getBoundingClientRect();return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom});

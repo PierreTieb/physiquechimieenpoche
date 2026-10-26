@@ -122,6 +122,11 @@ const lyPop=$('ly-pop'),lyOpen=o=>{lyPop.hidden=!o;if(o)$('ly-ok').focus();else 
 $('ly-q').onclick=()=>lyOpen(1);$('ly-ok').onclick=()=>lyOpen(0);lyPop.onclick=e=>{if(e.target===lyPop)lyOpen(0)};
 addEventListener('keydown',e=>{if(e.key=='Escape'&&!lyPop.hidden)lyOpen(0)});
 $('quit').onclick=()=>{run=0;$('ui').hidden=true;$('start').hidden=false;$('hint').classList.remove('off')};
-/* la croix répond à la position du doigt, même si un navigateur mobile attribue le toucher au dessin qui est dessous */
-document.addEventListener('click',e=>{if($('ui').hidden||!lyPop.hidden)return;const q=$('quit'),r=q.getBoundingClientRect();
-  if(!q.contains(e.target)&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){e.stopPropagation();e.preventDefault();q.click()}},true);
+/* les boutons (croix, jauge, « ? ») répondent à la position du doigt, même quand Safari sur iPhone attribue le toucher au dessin qui est dessous
+   (après la pièce en 3D du ciel) : on suit le doigt lui-même, car Safari n'envoie alors aucun clic */
+let hit=null,hitT=0;
+const under=e=>[...$('ui').querySelectorAll('button')].find(b=>{const r=b.getBoundingClientRect();return r.width&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom});
+addEventListener('pointerdown',e=>{hit=null;if($('ui').hidden||!lyPop.hidden)return;const b=under(e);if(b&&!b.contains(e.target)){hit=b;e.stopPropagation()}},true);
+addEventListener('pointerup',e=>{const b=hit;hit=null;if(b&&under(e)===b){e.stopPropagation();hitT=performance.now();b.click()}},true);
+/* le vrai clic qui suit ce toucher ne doit pas atteindre ce qui apparaît dessous (l'accueil, après la croix) */
+addEventListener('click',e=>{if(e.isTrusted&&performance.now()-hitT<300){hitT=0;e.stopPropagation();e.preventDefault()}},true);
