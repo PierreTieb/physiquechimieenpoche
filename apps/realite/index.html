@@ -21,6 +21,26 @@
   <section class="screen screen--home screen--active" id="screen-home">
     <div id="home-bg" aria-hidden="true"></div>
     <div class="home-in">
+      <!-- Bouton du repère : l'afficher en grand (à viser avec un autre appareil) ou télécharger le PDF à imprimer -->
+      <div class="home-top">
+        <button type="button" class="marker-btn" id="marker-btn" aria-label="Le repère : l'afficher ou l'imprimer" aria-expanded="false" aria-controls="marker-menu">
+          <img src="repere/repere.png" alt="">
+        </button>
+        <div class="marker-menu" id="marker-menu" hidden>
+          <button type="button" class="marker-menu__item" id="marker-show-open">
+            <b>Afficher le repère</b>
+            <span>En grand sur cet écran, pour le viser avec la caméra d'un autre appareil</span>
+          </button>
+          <button type="button" class="marker-menu__item" data-pdf="repere/repere-a-imprimer.pdf" data-name="Repère de réalité augmentée.pdf">
+            <b>Imprimer le repère</b>
+            <span>Télécharge le PDF : atomes, Soleil/Terre/Lune, chronophotographie</span>
+          </button>
+          <button type="button" class="marker-menu__item" data-pdf="repere/reperes-reactifs.pdf" data-name="Repères des réactifs.pdf">
+            <b>Imprimer les repères des réactifs</b>
+            <span>Télécharge le PDF à découper : transformation chimique</span>
+          </button>
+        </div>
+      </div>
       <h1 class="app-title">La réalité augmentée</h1>
       <p class="app-subtitle">Travailler et découvrir avec une vue 3D en temps réel</p>
 
@@ -147,25 +167,15 @@
       <button class="chip" id="camera-switch" hidden>Changer de caméra</button>
     </div>
     <div class="ar-controls" id="ar-controls"></div>
-
-    <!-- Repères à montrer ou à imprimer : fenêtre dans l'appli, avec de quoi la fermer -->
-    <div class="marker-viewer" id="marker-viewer" hidden>
-      <div class="marker-viewer__box">
-        <div class="marker-viewer__head">
-          <h2 id="mv-title"></h2>
-          <button type="button" class="marker-viewer__close" id="mv-close" aria-label="Fermer">✕</button>
-        </div>
-        <p class="marker-viewer__tip" id="mv-tip"></p>
-        <div class="marker-viewer__pages" id="mv-pages"></div>
-        <button type="button" class="btn btn--main" id="mv-print">Imprimer</button>
-        <button type="button" class="btn btn--ghost" id="mv-back">Fermer</button>
-      </div>
-    </div>
   </section>
 
-  <!-- Pages A4 des repères, remplies au moment d'imprimer : seules visibles à l'impression -->
-  <div id="print-sheet" aria-hidden="true"></div>
+  <!-- Repère affiché en grand (menu du repère > Afficher) -->
+  <div class="marker-show" id="marker-show" hidden>
+    <img src="repere/repere.png" alt="Repère de réalité augmentée">
+    <p>Vise ce repère avec la caméra d'un autre appareil</p>
+    <button type="button" class="marker-show__close" id="marker-show-close">✕ Fermer</button>
+  </div>
 
-<script src="../../portail/retour.js" data-home="#screen-home .home-in" data-class="" data-style="color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)"></script>
+<script src="../../portail/retour.js" data-home="#screen-home .home-top" data-class="" data-style="color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)"></script>
 </body>
 </html>
