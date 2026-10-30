@@ -73,7 +73,7 @@ export class ReactionView {
     title: 'Les repères des réactifs',
     tip: 'Imprime la page à 100 % et découpe les repères le long des pointillés.',
     images: ['repere/reperes-reactifs-1.png'],
-    pdf: 'repere/reperes-reactifs.pdf'
+    print: ['repere/reperes-reactifs-1.png']
   };
 
   constructor(stage, ui) {

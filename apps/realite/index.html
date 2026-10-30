@@ -157,11 +157,14 @@
         </div>
         <p class="marker-viewer__tip" id="mv-tip"></p>
         <div class="marker-viewer__pages" id="mv-pages"></div>
-        <a class="btn btn--main" id="mv-pdf" target="_blank" rel="noopener">Ouvrir le PDF à imprimer</a>
+        <button type="button" class="btn btn--main" id="mv-print">Imprimer</button>
         <button type="button" class="btn btn--ghost" id="mv-back">Fermer</button>
       </div>
     </div>
   </section>
+
+  <!-- Pages A4 des repères, remplies au moment d'imprimer : seules visibles à l'impression -->
+  <div id="print-sheet" aria-hidden="true"></div>
 
 <script src="../../portail/retour.js" data-home="#screen-home .home-in" data-class="" data-style="color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)"></script>
 </body>

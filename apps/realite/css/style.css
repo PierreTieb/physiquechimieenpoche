@@ -129,7 +129,7 @@ button, a.btn { font: inherit; touch-action: manipulation; }
 }
 .ar-search.is-hidden .ar-search__link { pointer-events: none; }
 
-/* Fenêtre des repères : à viser sur un autre écran, ou à imprimer (le PDF s'ouvre dans un nouvel onglet) */
+/* Fenêtre des repères : à viser sur un autre écran, ou à imprimer depuis l'appli (sans ouvrir le PDF, qui faisait quitter l'appli installée) */
 .marker-viewer {
   position: absolute; inset: 0; z-index: 6; display: flex; align-items: center; justify-content: center;
   padding: 16px; background: rgba(0, 0, 0, .6); touch-action: pan-y;
@@ -139,16 +139,31 @@ button, a.btn { font: inherit; touch-action: manipulation; }
   width: min(460px, 100%); max-height: calc(100% - 16px); overflow-y: auto;
   display: flex; flex-direction: column; gap: 10px;
   padding: 16px 16px 12px; border-radius: 22px; background: #fff; color: #1d2433; text-align: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, .45); animation: label-in .3s cubic-bezier(.34, 1.56, .64, 1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .45); animation: viewer-in .3s cubic-bezier(.34, 1.56, .64, 1);
 }
+/* pas de fondu : le repère affiché doit rester bien net pour être visé par une autre caméra */
+@keyframes viewer-in { from { scale: .8; } }
+.marker-viewer:not([hidden]) ~ .ar-search, .ar-search:has(~ .marker-viewer:not([hidden])) { visibility: hidden; }
 .marker-viewer__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .marker-viewer__head h2 { margin: 0; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; text-align: left; }
 .marker-viewer__close {
   flex: none; width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer;
   background: #EEF0F4; color: #1d2433; font-size: 1.1rem; font-weight: 800;
 }
+/* sans ça, la fenêtre trop haute écrasait la feuille de repères à une hauteur nulle (image en largeur 100 %) */
+.marker-viewer__box > * { flex-shrink: 0; }
 .marker-viewer__tip { margin: 0; font-size: .88rem; color: #566074; }
 .marker-viewer__pages img { display: block; width: 100%; height: auto; border: 1px solid #e3e6ec; border-radius: 6px; background: #fff; }
+
+/* Impression des repères : seules les pages A4 de #print-sheet, à 100 % */
+#print-sheet { display: none; }
+@media print {
+  @page { size: A4; margin: 0; }
+  body > :not(#print-sheet) { display: none !important; }
+  #print-sheet { display: block; }
+  #print-sheet img { display: block; width: 210mm; height: 297mm; break-after: page; }
+  #print-sheet img:last-child { break-after: auto; }
+}
 .marker-viewer .btn--ghost { color: #566074; }
 .ar-search img { width: 64px; height: 64px; border-radius: 4px; animation: search 1.6s ease-in-out infinite; }
 .ar-search.is-hidden { opacity: 0; }

@@ -30,5 +30,6 @@ export const UNIVERSAL_MARKERS = {
   title: 'Le repère',
   tip: "Imprime-le, ou affiche cette page sur un autre écran (téléphone d'un camarade, ordinateur) et vise-la avec la caméra.",
   images: ['repere/repere.png'],
-  pdf: 'repere/repere-a-imprimer.pdf'
+  // pages A4 imprimées depuis l'appli (image de repere-a-imprimer.pdf) : ouvrir le PDF faisait quitter l'appli installée
+  print: ['repere/repere-a-imprimer-1.png']
 };

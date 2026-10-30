@@ -120,11 +120,20 @@ function showMarkers(open) {
     $('mv-title').textContent = m.title;
     $('mv-tip').textContent = m.tip;
     $('mv-pages').innerHTML = m.images.map(src => `<img src="${src}" alt="">`).join('');
-    $('mv-pdf').href = m.pdf;
   }
   $('marker-viewer').hidden = !(open && m);
 }
+// Impression sans quitter l'appli : les pages A4 sont mises dans #print-sheet, seul imprimé (voir @media print).
+async function printMarkers() {
+  const m = view && view.constructor.markers;
+  if (!m) return;
+  const sheet = $('print-sheet');
+  sheet.innerHTML = m.print.map(src => `<img src="${src}" alt="">`).join('');
+  await Promise.all([...sheet.querySelectorAll('img')].map(img => img.decode().catch(() => {})));
+  window.print();
+}
 $('ar-search-link').addEventListener('click', () => showMarkers(true));
+$('mv-print').addEventListener('click', printMarkers);
 ['mv-close', 'mv-back'].forEach(id => $(id).addEventListener('click', () => showMarkers(false)));
 $('marker-viewer').addEventListener('click', e => { if (e.target.id === 'marker-viewer') showMarkers(false); });
 
