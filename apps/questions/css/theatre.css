@@ -1,0 +1,129 @@
+/* « C'est quoi l'orage ? » : le petit théâtre (scène de 1200 × 680, mise à l'échelle par theatre.js) */
+#theatre{position:fixed;inset:0;z-index:36;overflow:hidden;background:#120a08}
+#th-stage{position:absolute;left:0;top:0;width:1200px;height:680px;transform-origin:0 0;overflow:hidden}
+.th-set{position:absolute;left:0;top:0;width:1200px;height:680px}
+.th-svg{display:block;width:100%;height:100%;overflow:visible}
+
+/* fond de scène : un grand rideau de fond bleu nuit, éclairé au centre ; plancher en planches vu en perspective */
+.th-back{position:absolute;inset:0 0 200px 0;background:radial-gradient(ellipse 55% 70% at 50% 75%,#3c4a78 0%,#253058 45%,#141a33 100%)}
+.th-back::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.16) 0 18px,rgba(255,255,255,.03) 18px 40px,rgba(0,0,0,.08) 40px 56px)}
+.th-floor{position:absolute;left:0;right:0;bottom:0;height:210px}
+.th-floor-svg{display:block;width:100%;height:100%}
+
+/* décors : ils arrivent de leur position de départ (--out : coulisse ou cintres) et y repartent à la fin de l'étape */
+.th-prop{position:absolute;transform:var(--out);transition:transform 1.6s cubic-bezier(.3,.7,.3,1)}
+.th-prop.in{transform:none}
+.th-hang .th-svg{transform-origin:50% 0;animation:th-sway 5s ease-in-out infinite}
+@keyframes th-sway{50%{transform:rotate(1.2deg)}}
+.ta-lbl{font:700 22px var(--font-display)}
+.flk{animation:th-snow 6s linear infinite}@keyframes th-snow{from{transform:translateY(-10px)}to{transform:translateY(160px)}}
+.wav{stroke-dasharray:16 12;animation:th-heat 1.4s linear infinite}@keyframes th-heat{to{stroke-dashoffset:56}}
+/* bulles d'air qui montent et descendent */
+.th-conv{position:absolute;inset:0;opacity:0;transition:opacity .8s;pointer-events:none}.conv .th-conv{opacity:1}
+.pu,.pd{animation:4.5s linear infinite}.pu{animation-name:th-up}.pd{animation-name:th-down}
+@keyframes th-up{0%{transform:translateY(0);opacity:0}12%,85%{opacity:1}100%{transform:translateY(-290px);opacity:0}}
+@keyframes th-down{0%{transform:translateY(0);opacity:0}12%,85%{opacity:1}100%{transform:translateY(290px);opacity:0}}
+/* étincelle au choc de deux particules */
+.spk{transform-box:fill-box;transform-origin:center;animation:th-spk .6s ease-out forwards}
+@keyframes th-spk{0%{transform:scale(.2);opacity:1}40%{transform:scale(1.15);opacity:1}100%{transform:scale(1.3);opacity:0}}
+
+/* rampe de lumière au bord de la scène, et poursuite sur le narrateur : son cône tombe exactement sur le cercle de lumière au sol */
+.th-foot{position:absolute;left:0;right:0;bottom:0;height:70px;background:radial-gradient(ellipse 40% 100% at 50% 100%,rgba(255,210,140,.28),transparent 70%);pointer-events:none}
+.th-spot{position:absolute;left:48px;top:0;width:320px;height:666px;opacity:0;transition:opacity 1.2s;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,244,214,.02),rgba(255,244,214,.16));clip-path:path('M144 0H176L320 627A160 39 0 0 1 0 627Z')}
+.opening .th-spot{opacity:1;transition-delay:1.4s}
+
+/* cercle de lumière du projecteur sur le plancher, aux pieds du narrateur */
+.th-pool{position:absolute;left:48px;top:588px;width:320px;height:78px;border-radius:50%;opacity:0;transition:opacity 1.2s;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,250,232,.8) 0%,rgba(255,246,220,.5) 45%,rgba(255,240,205,.22) 80%,rgba(255,240,205,.08) 100%)}
+.opening .th-pool{opacity:1;transition-delay:1.4s}
+/* éclairs dans le nuage gris : deux lueurs qui s'allument de temps en temps, à des rythmes différents */
+.th-flash circle{opacity:0;animation:th-flash 7s linear infinite}.th-flash .f2{animation-duration:11s;animation-delay:-4.3s}
+@keyframes th-flash{0%,88%{opacity:0}89%{opacity:.95}90.5%{opacity:.15}92%{opacity:.8}94%,100%{opacity:0}}
+/* le narrateur, sur le côté de la scène, qui se dandine ; sa bulle de BD */
+.th-narr{position:absolute;left:88px;top:430px;width:240px;height:200px;animation:th-bob 2.4s ease-in-out infinite}
+@keyframes th-bob{50%{transform:translateY(-8px) rotate(-1.5deg)}}
+.th-arm{transform-origin:222px 128px;animation:th-wave 1.6s ease-in-out infinite}
+@keyframes th-wave{50%{transform:rotate(-14deg)}}
+.th-bubble{position:absolute;left:238px;bottom:270px;max-width:380px;padding:16px 22px;border:4px solid #1f2a36;border-radius:28px;background:#fff;
+  box-shadow:0 8px 0 rgba(0,0,0,.25);font:700 22px/1.3 var(--font-display);color:#1f2a36;transform:scale(.3);transform-origin:10% 100%;opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+.th-bubble::before,.th-bubble::after{content:'';position:absolute;left:34px;border-style:solid}
+.th-bubble::before{bottom:-34px;border-width:34px 26px 0 0;border-color:#1f2a36 transparent transparent}
+.th-bubble::after{bottom:-24px;left:39px;border-width:24px 17px 0 0;border-color:#fff transparent transparent}
+.th-bubble.on{transform:scale(1);opacity:1}
+.th-bubble p{margin:0}
+
+/* cadre de scène : piliers drapés et lambrequin à festons frangés d'or */
+.th-frame{position:absolute;top:0;bottom:0;width:70px;z-index:3;background:linear-gradient(90deg,#4a0b0e,#8e1a1f 40%,#5a0e12);box-shadow:inset 0 0 0 3px #c9a24a}
+.th-frame--l{left:0}.th-frame--r{right:0}
+.th-valance{position:absolute;left:0;right:0;top:0;height:110px;z-index:5;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+
+/* le grand rideau rouge : plis verticaux, il se ramasse sur les côtés à l'ouverture */
+.th-curtain{position:absolute;top:0;bottom:0;width:50%;z-index:4;transition:transform 2.2s cubic-bezier(.6,0,.3,1);
+  background:linear-gradient(180deg,rgba(0,0,0,.25),transparent 25%,transparent 80%,rgba(0,0,0,.35)),
+    repeating-linear-gradient(90deg,#6a0f14 0,#b3232a 22px,#d03a3f 34px,#a11c23 48px,#6a0f14 64px)}
+.th-curtain--l{left:0;transform-origin:0 50%;border-right:3px solid #4a0a0d}
+.th-curtain--r{right:0;transform-origin:100% 50%;border-left:3px solid #4a0a0d}
+.opening .th-curtain{transform:scaleX(.16)}
+.th-curtain::after{content:'';position:absolute;left:0;right:0;bottom:0;height:14px;background:repeating-linear-gradient(90deg,#e6c25a 0 4px,#b98a26 4px 8px);opacity:.9}
+
+#th-quit{position:fixed;left:calc(12px + env(safe-area-inset-left,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:25;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  font-size:1.1rem;font-weight:800;color:var(--ink);background:rgba(255,255,255,.92);box-shadow:0 4px 0 rgba(46,58,70,.3),0 6px 14px rgba(0,0,0,.3)}
+/* bouton pour passer à la phrase suivante, en bas de l'écran */
+#th-next{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:25;min-width:170px;padding:12px 30px;border:3px solid #2f9e5e;border-radius:999px;cursor:pointer;
+  font:800 1.1rem var(--font-body);color:#1F6E40;background:#fff;box-shadow:0 4px 0 #1F6E40,0 8px 16px rgba(0,0,0,.35);transition:opacity .2s}
+#th-next:active{transform:translate(-50%,3px);box-shadow:0 1px 0 #1F6E40}
+#th-next:disabled{opacity:.55;cursor:default}
+#th-next:focus-visible{outline:3px solid #ffd84d;outline-offset:3px}
+#th-quit:focus-visible{outline:3px solid #ffd84d;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.th-prop,.th-curtain{transition-duration:.01s}}
+
+/* étapes 3 et 4 : cartons des charges (déplacés comme sur une maquette), halos de charge, flèches « tension », lueurs et éclairs */
+.tk{transition:transform 1.5s cubic-bezier(.45,.05,.35,1.25),opacity .6s}
+.tk-sh.shake,.build .tk-sh{animation:th-shake .2s linear infinite}
+@keyframes th-shake{25%{transform:translate(-2px,1px) rotate(-4deg)}75%{transform:translate(2px,-1px) rotate(4deg)}}
+.hl{opacity:0;transition:opacity 1.2s}.hl.on{opacity:1}.hl.on.spent{opacity:.35}
+.build .hl.on{animation:th-pulse .8s ease-in-out infinite alternate}@keyframes th-pulse{from{opacity:.55}to{opacity:1}}
+.tens{opacity:0;transition:opacity .8s}.tens.on{opacity:1;animation:th-tens .5s steps(2) infinite}@keyframes th-tens{50%{opacity:.65}}
+.ts-lbl{font:700 19px var(--font-display);fill:#6b4e00}
+.ic{opacity:0}.ic.go{animation:th-ic 1.1s ease-out}
+@keyframes th-ic{0%{opacity:0}8%{opacity:.95}18%{opacity:.2}28%{opacity:.85}100%{opacity:0}}
+.th-fx{position:absolute;inset:0;pointer-events:none}
+.trace .mn path{stroke-dasharray:1 1;stroke-dashoffset:1;animation:th-trace 1.7s ease-out forwards}
+@keyframes th-trace{0%{stroke-dashoffset:1;opacity:1}40%{stroke-dashoffset:0;opacity:1}48%{opacity:.25}56%{opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.trace .br{opacity:0;animation:th-br 1.7s ease-out forwards}@keyframes th-br{0%,30%{opacity:0}40%{opacity:1}48%{opacity:.25}56%{opacity:1}100%{opacity:0}}
+.hit{animation:th-hit 2s ease-out forwards}@keyframes th-hit{0%{opacity:1}7%{opacity:.15}13%{opacity:1}55%{opacity:.9}100%{opacity:0}}
+/* l'orage approche : la scène s'assombrit ; la foudre : flash blanc et la scène tremble */
+.th-dark{position:absolute;inset:-1500px;background:#050814;opacity:0;transition:opacity 3s;pointer-events:none}
+.dark .th-dark{opacity:.72}.dim .th-dark{opacity:.3;transition-duration:4s}
+.th-white{position:absolute;inset:0;z-index:6;background:#f4f7ff;opacity:0;pointer-events:none}
+.strike .th-white{animation:th-white 1.3s ease-out}@keyframes th-white{0%{opacity:.95}8%{opacity:.15}14%{opacity:.85}100%{opacity:0}}
+.strike .th-set{animation:th-quake .6s linear}@keyframes th-quake{10%{transform:translate(-9px,5px)}25%{transform:translate(8px,-6px)}40%{transform:translate(-6px,3px)}60%{transform:translate(4px,-2px)}80%{transform:translate(-2px,1px)}}
+/* le trou brûlé dans le contreplaqué de la colline, ses flammèches et sa fumée */
+.burn{opacity:0;transition:opacity .3s}.burn.on{opacity:1}
+.flm{transform-box:fill-box;transform-origin:50% 100%;animation:th-flame .45s ease-in-out infinite alternate}
+@keyframes th-flame{from{transform:scale(.85,1.08) skewX(-5deg)}to{transform:scale(1.08,.86) skewX(6deg)}}
+.smk{transform-box:fill-box;transform-origin:center;opacity:0;animation:th-smoke 2.8s ease-out infinite}
+@keyframes th-smoke{0%{transform:translate(0,0) scale(.5);opacity:.55}100%{transform:translate(14px,-90px) scale(2.2);opacity:0}}
+/* le narrateur : visage terrifié qui tremble, puis le salut final */
+.tn-scared{display:none}.scared .tn-scared{display:inline}.scared .tn-happy{display:none}
+.scared .th-narr{animation:th-shiver .14s linear infinite}@keyframes th-shiver{25%{transform:translate(-2px,1px)}75%{transform:translate(2px,-1px)}}
+.th-narr{transform-origin:50% 92%}
+.bow .th-narr{animation:th-bow 2.4s ease-in-out}@keyframes th-bow{0%,100%{transform:none}35%,62%{transform:translateY(16px) rotate(9deg) scaleY(.84)}}
+.bow .th-arm{animation:none}
+
+/* son : bouton en haut à droite */
+#th-snd{position:fixed;right:calc(12px + env(safe-area-inset-right,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:25;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  font-size:1.15rem;line-height:1;background:rgba(255,255,255,.92);box-shadow:0 4px 0 rgba(46,58,70,.3),0 6px 14px rgba(0,0,0,.3)}
+#th-snd:focus-visible{outline:3px solid #ffd84d;outline-offset:2px}
+/* menu de fin, posé sur le rideau fermé : un carton de programme crème bordé d'or */
+#th-end{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:25;width:min(380px,calc(100% - 32px));padding:24px 24px 26px;border:4px solid #c9a24a;border-radius:20px;
+  background:#fff8e6;box-shadow:0 0 0 3px #6a0f14,0 14px 34px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:12px;text-align:center;animation:th-endin .5s cubic-bezier(.34,1.56,.64,1)}
+#th-end[hidden]{display:none}
+@keyframes th-endin{from{transform:translate(-50%,-50%) scale(.6);opacity:0}}
+.th-end-t{margin:0 0 6px;font:700 1.5rem/1.2 var(--font-display);color:#8e1a1f}
+#th-end button{padding:12px 20px;border-radius:999px;cursor:pointer;font:800 1.05rem var(--font-body)}
+#th-again{border:3px solid #2f9e5e;color:#1F6E40;background:#fff;box-shadow:0 4px 0 #1F6E40}
+#th-out{border:3px solid #8e1a1f;color:#fff;background:#b3232a;box-shadow:0 4px 0 #6a0f14}
+#th-end button:active{transform:translateY(3px);box-shadow:none}
+#th-end button:focus-visible{outline:3px solid #ffd84d;outline-offset:3px}

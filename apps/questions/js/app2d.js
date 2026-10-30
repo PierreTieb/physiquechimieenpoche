@@ -11,7 +11,7 @@ const LV=[
   {n:'Micro-organisme',b:L6,m:3e-5,bg:LUMEN,inn:[.8,.3],out:[.5,.8]},
   {n:'Intestin de la fourmi',b:L7,m:2e-4,fr:.15,bg:'#7a5a3a',inn:[.7,.3],out:[.4,.7],leg:[['#f2c94c','Jabot (réserve de nourriture)'],['#e0957f','Intestin'],['#c7d65a','Tubes de Malpighi (reins)'],['#f3d79a','Corps gras (réserves)'],['#e9a0a0','Cœur'],['#f4efe0','Chaîne nerveuse'],['#8fd6a6','Micro-organisme']]},
   {n:'Fourmi',b:L8,m:1e-3,bg:'#b9d3a4',inn:[1,.45],out:[2,2.5]},
-  {n:'Deux enfants en forêt',b:L9,m:.35,bg:'#c4dccb',inn:[1.4,.7],out:[1.4,1.9]},
+  {n:'Deux personnes en forêt',b:L9,m:.35,bg:'#c4dccb',inn:[1.4,.7],out:[1.4,1.9]},
   {n:'Les grands arbres',b:L10,m:4,bg:'#a9d3ee',inn:[1,.4],out:[.5,1]},
   {n:'La forêt',b:L11,m:300,bg:'#9cc25a',inn:[1.4,.9],out:[.5,.9]},
   {n:'France',b:L12,m:1.1e5,bg:'#1E78D8',inn:[1.8,1.2],out:[.4,.9]},

@@ -1,45 +1,10 @@
 /* Étages 9 à 19 : des enfants en forêt au Superamas de la Vierge (même contrat que levels-micro2d.js). */
 
-/* 9 · deux enfants de 1,50 m en forêt (1 unité = 0,35 m) ; la fourmi est à leurs pieds, le garçon la montre du doigt */
-/* enfant debout, pieds en (x,0), 1,50 m (environ 6,5 têtes) ; o : peau, cheveux, haut, bas, chaussures, sac à dos, fille, salut, cible de la main tendue */
-function kid(c,x,o,t){const sk=o.skin,hy=-4.0,HR=.33,ds=shade(o.shirt),sd=mix(sk,'#000000',.25);c.save();c.translate(x,0);c.lineCap='round';c.lineJoin='round';
-  c.beginPath();c.ellipse(.05,0,.8,.12,0,0,TAU);c.fillStyle='rgba(30,20,10,.28)';c.fill();
-  /* sac à dos : on en voit les bords de chaque côté du buste */
-  const bag=new Path2D();rrect(bag,-.6,-3.4,1.2,1.3,.22);const gb=c.createLinearGradient(-.6,0,.6,0);gb.addColorStop(0,mix(o.bag,'#ffffff',.2));gb.addColorStop(1,mix(o.bag,'#000000',.4));fill(c,bag,gb);
-  /* jambes (jean) et baskets à semelle claire */
-  [-.17,.17].forEach(dx=>taper(c,dx,-2.12,dx*1.12,-.28,.31,.23,o.pants));
-  [-.19,.19].forEach(dx=>{const sx=dx*1.12+.07;egg(c,sx,-.15,.26,.13,o.shoes);c.beginPath();c.ellipse(sx+.01,-.05,.27,.055,0,0,TAU);c.fillStyle='#eef0f2';c.fill()});
-  /* buste : sweat ou veste, plus large aux épaules, éclairé à gauche */
-  const tor=new Path2D();tor.moveTo(-.38,-3.5);tor.quadraticCurveTo(-.56,-3.46,-.53,-3.2);tor.lineTo(-.47,-2.2);tor.quadraticCurveTo(-.46,-2.02,-.3,-2.0);tor.lineTo(.3,-2.0);
-  tor.quadraticCurveTo(.46,-2.02,.47,-2.2);tor.lineTo(.53,-3.2);tor.quadraticCurveTo(.56,-3.46,.38,-3.5);tor.quadraticCurveTo(0,-3.58,-.38,-3.5);tor.closePath();
-  const gt=c.createLinearGradient(-.6,0,.6,0);gt.addColorStop(0,mix(o.shirt,'#ffffff',.28));gt.addColorStop(.45,o.shirt);gt.addColorStop(1,ds[2]);fill(c,tor,gt);
-  c.save();c.clip(tor);c.strokeStyle=rgba(ds[2],.6);c.lineWidth=.04;
-  if(o.girl){c.beginPath();c.moveTo(0,-3.5);c.lineTo(.02,-2);c.stroke();[-.22,.22].forEach(k=>{c.beginPath();c.moveTo(k*.4,-3.5);c.lineTo(k,-3.15);c.lineTo(k*.2,-3.0);c.stroke()});
-    [-3.0,-2.6,-2.25].forEach(y=>orb(c,.09,y,.035,'#f2e6d0'))}
-  else{c.beginPath();c.moveTo(-.3,-2.75);c.quadraticCurveTo(0,-2.6,.3,-2.75);c.lineTo(.27,-2.25);c.lineTo(-.27,-2.25);c.closePath();c.stroke();
-    c.beginPath();c.ellipse(0,-3.48,.3,.1,0,0,Math.PI);c.lineWidth=.06;c.stroke();[-.1,.1].forEach(k=>{c.beginPath();c.moveTo(k,-3.42);c.lineTo(k*1.1,-3.1);c.strokeStyle='#f2f2f2';c.lineWidth=.025;c.stroke()})}
-  c.fillStyle=rgba(ds[2],.5);c.fillRect(-.6,-2.12,1.2,.12);c.restore();
-  /* bretelles du sac */
-  [-.27,.27].forEach(k=>taper(c,k*1.15,-3.45,k,-2.55,.12,.1,mix(o.bag,'#000000',.2)));
-  /* bras : manche jusqu'au poignet, puis la main ; l'un tendu vers la cible (ou qui salue), l'autre le long du corps */
-  const arm=(sx,hx,hy2)=>{const mx=lerp(sx,hx,.45),my=lerp(-3.3,hy2,.45),wx=lerp(sx,hx,.88),wy=lerp(-3.3,hy2,.88);
-    taper(c,sx,-3.3,mx,my,.25,.21,o.shirt);taper(c,mx,my,wx,wy,.21,.18,o.shirt);taper(c,wx,wy,hx,hy2,.11,.1,sk);orb(c,hx,hy2,.1,sk)};
-  const tg=o.pt?[o.pt[0]-x,o.pt[1]]:null,wave=Math.sin(t*3)*.25;
-  arm(.45,.6,-1.75);if(tg){const d=Math.hypot(tg[0]+.45,tg[1]+3.3),L=1.8;arm(-.45,-.45+(tg[0]+.45)/d*L,-3.3+(tg[1]+3.3)/d*L)}
-  else o.wave?arm(-.45,-1.1+wave*.3,-4.45):arm(-.45,-.6,-1.75);
-  /* cou, queue de cheval, tête, cheveux, visage */
-  taper(c,0,-3.55,0,-3.7,.17,.17,sd);
-  if(o.girl){taper(c,-.15,-4.05,-.55,-3.55+Math.sin(t*2)*.03,.26,.12,o.hair);orb(c,-.25,-4.05,.07,'#e8483c')}
-  orb(c,-.32,hy+.02,.07,sk);orb(c,.32,hy+.02,.07,sk);egg(c,0,hy,HR*.94,HR*1.04,sk);
-  const hp=new Path2D();hp.arc(0,hy-.03,HR*1.02,Math.PI*1.0,Math.PI*2.0);
-  if(o.girl){hp.quadraticCurveTo(.3,hy-.1,.1,hy-.2);hp.quadraticCurveTo(-.1,hy-.12,-.33,hy+.08)}else{hp.quadraticCurveTo(.25,hy-.16,.05,hy-.18);hp.quadraticCurveTo(-.15,hy-.24,-.25,hy-.12);hp.quadraticCurveTo(-.32,hy-.05,-.34,hy+.02)}
-  hp.closePath();const gh=c.createLinearGradient(-.3,hy-.4,.3,hy);gh.addColorStop(0,mix(o.hair,'#ffffff',.25));gh.addColorStop(1,mix(o.hair,'#000000',.2));fill(c,hp,gh);
-  c.beginPath();c.arc(0,hy-.03,HR*.82,Math.PI*1.2,Math.PI*1.45);c.strokeStyle='rgba(255,255,255,.3)';c.lineWidth=.035;c.stroke();
-  [-.12,.12].forEach(ex=>{c.beginPath();c.ellipse(ex,hy+.03,.055,.045,0,0,TAU);c.fillStyle='#fdfdfd';c.fill();disc(c,ex+.01,hy+.035,.032,'#3b2a1e');disc(c,ex+.002,hy+.022,.011,'#fff');
-    c.beginPath();c.moveTo(ex-.06,hy-.06);c.quadraticCurveTo(ex,hy-.095,ex+.06,hy-.065);c.strokeStyle=mix(o.hair,'#000000',.2);c.lineWidth=.022;c.stroke()});
-  c.beginPath();c.moveTo(.0,hy+.06);c.quadraticCurveTo(.035,hy+.13,-.01,hy+.14);c.strokeStyle=sd;c.lineWidth=.02;c.stroke();
-  disc(c,-.2,hy+.13,.05,'rgba(230,110,100,.22)');disc(c,.2,hy+.13,.05,'rgba(230,110,100,.22)');
-  c.strokeStyle='#8a3e30';c.lineWidth=.026;c.beginPath();c.arc(0,hy+.15,.075,.2*Math.PI,.8*Math.PI);c.stroke();c.restore()}
+/* 9 · une enfant (1,30 m) et un adulte (1,75 m) en forêt (1 unité = 0,35 m) ; la fourmi est à leurs pieds, entre les deux */
+/* les deux personnages sont des images posées dans le décor : source, partie visible de l'image (haut et bas, en pixels), taille réelle (m), place des pieds (x) */
+const PEOPLE=[['img/fille.png',22,394,1.3,-.9],['img/mineur.png',94,656,1.75,1.75]].map(([src,top,bot,m,x])=>{const img=new Image();img.src=src;return{img,top,bot,m,x}});
+function people(c){PEOPLE.forEach(({img,top,bot,m,x})=>{if(!img.complete||!img.naturalWidth)return;const k=m/.35/(bot-top),w=img.naturalWidth*k;
+  c.beginPath();c.ellipse(x+.05,0,w*.42,.12,0,0,TAU);c.fillStyle='rgba(30,20,10,.28)';c.fill();c.drawImage(img,x-w/2,-bot*k,w,img.naturalHeight*k)})}
 /* tronc cylindrique : dégradé de gauche (éclairé) à droite (ombre) */
 function trunk(c,x,w,y0,y1,col){const g=c.createLinearGradient(x-w/2,0,x+w/2,0),s=shade(col);g.addColorStop(0,mix(col,'#ffffff',.18));g.addColorStop(.35,col);g.addColorStop(1,s[2]);c.fillStyle=g;c.fillRect(x-w/2,y0,w,y1-y0)}
 function L9(){const far=Array.from({length:30},(_,i)=>[rnd(-28,28),rnd(.4,1.5),i%3]),FC=['#b2c8b4','#97b09a','#7d9580'],
@@ -69,8 +34,7 @@ function L9(){const far=Array.from({length:30},(_,i)=>[rnd(-28,28),rnd(.4,1.5),i
       ['#b5651d','#d08a3a','#8a5a2a','#c7a04a'].forEach((col,i)=>drawRelief(c,litter[i],col,.3));stroke(c,fern,'#3f7a2c',.05);
       [[2.7,.45],[3.1,.3]].forEach(([x,s])=>{trunk(c,x,.12*s/.3,-s*.9,0,'#efe4cf');c.save();c.beginPath();c.ellipse(x,-s*.9,s*.55,s*.42,0,Math.PI,TAU);c.closePath();
         const gm=c.createRadialGradient(x-s*.2,-s*1.15,0,x,-s*.9,s*.6);gm.addColorStop(0,'#ff7a5c');gm.addColorStop(1,'#a8281c');c.fillStyle=gm;c.fill();c.restore();disc(c,x-s*.2,-s*1.05,s*.07,'#fff');disc(c,x+s*.18,-s*1.0,s*.06,'#fff')})},
-    main:(c,v)=>{kid(c,-.85,{skin:'#8D5A3B',hair:'#2a1a12',shirt:'#D9534F',pants:'#3a3f5c',shoes:'#f4f4f4',bag:'#E8A33A',girl:1,wave:1},v.t);
-      kid(c,1.5,{skin:'#F0C29A',hair:'#9a5a26',shirt:'#3B6FB6',pants:'#33507a',shoes:'#3a414c',bag:'#2BA39A',pt:[.62,-.15]},v.t)}}}
+    main:c=>people(c)}}
 
 /* 10 · les grands arbres (1 unité = 4 m) : des chênes de 25 à 32 m ; les enfants, au pied, mesurent moins d'un vingtième de leur hauteur */
 function L10(){const T=[[-13,6.8,.32,2],[-9.5,7.2,.35,2.2],[-6,6.4,.3,1.9],[-2.8,7.9,.4,2.3],[3.6,7.5,.38,2.2],[6.8,6.2,.3,1.8],[10,7,.33,2],[13.5,7.4,.36,2.1]],cr=[],hi=[],
@@ -129,9 +93,13 @@ function L11(){const edge=Array.from({length:40},(_,i)=>{const a=i/40*TAU,r=10+M
       v.tag('Forêt de Tronçais',0,-6,.9);v.tag('Clairière',.3,0,sm(-.6,-.2,v.d)*(1-sm(.4,.7,v.d)))}}}
 
 /* 12 · la France (1 unité ≈ 110 km, soit un degré de latitude) */
-const LON0=2.5,LAT0=46.5,KF=111.32e3/1.1e5,FX=lo=>(lo-LON0)*KF*Math.cos(LAT0*R),FY=la=>-(la-LAT0)*KF;
+/* même projection que le globe de l'étage suivant (vue de l'espace au-dessus du centre de la France), pour que la carte s'y superpose exactement en dézoomant ;
+   FP donne la position d'un lieu (longitude, latitude) en unités de cet étage, FI fait l'inverse */
+const LON0=2.5,LAT0=46.5,EK=6.371e6/1.1e5,SP0=Math.sin(LAT0*R),CP0=Math.cos(LAT0*R),
+  FP=(lo,la)=>{const l=(lo-LON0)*R,f=la*R;return[EK*Math.cos(f)*Math.sin(l),-EK*(CP0*Math.sin(f)-SP0*Math.cos(f)*Math.cos(l))]},
+  FI=(x,y)=>{const X=x/EK,Y=y/EK,z=Math.sqrt(Math.max(0,1-X*X-Y*Y));return[LON0+Math.atan2(X,z*CP0+Y*SP0)/R,Math.asin(cl(z*SP0-Y*CP0))/R]};
 function L12(){const land=path(p=>LAND.forEach(r=>{let a=1e9,b=-1e9,d=1e9,e=-1e9;for(let i=0;i<r.length;i+=2){a=Math.min(a,r[i]);b=Math.max(b,r[i]);d=Math.min(d,r[i+1]);e=Math.max(e,r[i+1])}
-      if(b<-30||a>45||e<25||d>75)return;for(let i=0;i<r.length;i+=2)i?p.lineTo(FX(r[i]),FY(r[i+1])):p.moveTo(FX(r[i]),FY(r[i+1]));p.closePath()})),
+      if(b<-30||a>45||e<25||d>75)return;for(let i=0;i<r.length;i+=2)p[i?'lineTo':'moveTo'](...FP(r[i],r[i+1]));p.closePath()})),
     /* relief : chaînes de montagnes (lignes de crête en lon/lat, hauteur en km, largeur en degrés) et massifs, rendus rugueux par du bruit */
     RID=[[[[5.6,44],[6.6,44.5],[6.9,45.3],[6.9,45.9],[7.6,46],[8.6,46.5],[10,46.5],[11.5,46.7],[13,47]],2.7,.95],[[[-1.8,43.1],[-.5,42.85],[.7,42.7],[1.8,42.55],[2.9,42.45]],2.2,.5],
       [[[5.6,46.2],[6.2,46.8],[7,47.4]],.75,.35],[[[6.85,47.8],[7.2,48.5]],.75,.4],[[[3.6,44.1],[4.1,44.6]],.8,.45]],
@@ -141,36 +109,39 @@ function L12(){const land=path(p=>LAND.forEach(r=>{let a=1e9,b=-1e9,d=1e9,e=-1e9
       /* crêtes et vallées : bruit « en arêtes », plus marqué en altitude */
       const rg=1-Math.abs(2*fbm(lo*3.1,la*3.1,4)-1);return e*(.35+.85*rg*rg+.25*fbm(lo*7,la*7,2))},
     /* image du relief ombré (éclairé du nord-ouest), teintes selon l'altitude, taches de forêts et de cultures */
-    LO=[-6,11.5],LA=[41,52],RW=600,RH=Math.round(RW*(FY(LA[0])-FY(LA[1]))/(FX(LO[1])-FX(LO[0]))),
-    lof=i=>LO[0]+(LO[1]-LO[0])*i/RW,laf=j=>LA[1]-(LA[1]-LA[0])*j/RH,EL=new Float32Array(RW*(RH+2)),
+    /* l'image couvre le rectangle (dans la carte) qui contient la région de 6° O à 11,5° E et de 41° à 52° N ; ses bords se fondent dans le vert uni des terres */
+    LO=[-6,11.5],LA=[41,52],BX=(()=>{const P=[];for(let k=0;k<=8;k++)P.push(FP(lerp(LO[0],LO[1],k/8),LA[0]),FP(lerp(LO[0],LO[1],k/8),LA[1]),FP(LO[0],lerp(LA[0],LA[1],k/8)),FP(LO[1],lerp(LA[0],LA[1],k/8)));
+      const xs=P.map(p=>p[0]),ys=P.map(p=>p[1]);return[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)]})(),
+    RX=BX[0],RY=BX[1],RWu=BX[2]-BX[0],RHu=BX[3]-BX[1],RW=600,RH=Math.round(RW*RHu/RWu),
+    ll=(i,j)=>FI(RX+RWu*(i+.5)/RW,RY+RHu*(j+.5)/RH),edge=(i,j)=>sm(0,.07,Math.min(i/RW,1-i/RW))*sm(0,.07,Math.min(j/RH,1-j/RH)),EL=new Float32Array(RW*(RH+2)),
     T=[[0,[92,162,78]],[.25,[128,170,88]],[.6,[176,176,116]],[1.1,[160,136,100]],[1.9,[142,124,110]],[2.4,[178,170,166]],[2.9,[244,246,250]]],tint=e=>{let k=0;while(k<T.length-2&&e>T[k+1][0])k++;const[a,A]=T[k],[b,B]=T[k+1],t=cl((e-a)/(b-a));return A.map((v,m)=>v+(B[m]-v)*t)},
     /* l'altitude d'une ligne est calculée juste avant d'en avoir besoin (une ligne d'avance pour la pente) */
-    elRow=j=>{if(j<0||j>RH+1||EL[j*RW+1])return;for(let i=0;i<RW;i++)EL[j*RW+i]=elev(lof(i),laf(j))+1e-6},
+    elRow=j=>{if(j<0||j>RH+1||EL[j*RW+1])return;for(let i=0;i<RW;i++)EL[j*RW+i]=elev(...ll(i,j))+1e-6},
     rel=bake(RW,RH,(d,j,w)=>{elRow(j);elRow(j+1);elRow(j+2);const E=(i,jj)=>EL[Math.max(0,jj)*w+Math.min(w-1,Math.max(0,i))];
       for(let i=0;i<w;i++){const gx=(E(i+1,j)-E(i-1,j))*3.2,gy=(E(i,j+1)-E(i,Math.max(0,j-1)))*3.2,n=Math.hypot(gx,gy,1),sh=cl((gx*.6+gy*.6+1)/n*.75+.3),
         /* plaines : grandes taches douces de forêts (plus sombres) et de cultures (plus claires) */
-        f=fbm(lof(i)*4.5,laf(j)*4.5,3),e=E(i,j),C=tint(e),k=e<.5?lerp(.88,1.06,sm(.3,.7,f)):1,o=(j*w+i)*4;
-        d[o]=C[0]*sh*k;d[o+1]=C[1]*sh*k;d[o+2]=C[2]*sh*k;d[o+3]=255}}),RX=FX(LO[0]),RY=FY(LA[1]),RWu=FX(LO[1])-RX,RHu=FY(LA[0])-RY,
+        q=ll(i,j),f=fbm(q[0]*4.5,q[1]*4.5,3),e=E(i,j),C=tint(e),k=e<.5?lerp(.88,1.06,sm(.3,.7,f)):1,o=(j*w+i)*4;
+        d[o]=C[0]*sh*k;d[o+1]=C[1]*sh*k;d[o+2]=C[2]*sh*k;d[o+3]=255*edge(i,j)}}),
     /* fleuves (lon, lat) */
     RIV=[[[4.72,47.48],[4.4,48.1],[4.07,48.3],[3.4,48.4],[2.95,48.38],[2.66,48.54],[2.35,48.86],[2.05,48.95],[1.7,48.99],[1.48,49.09],[1.1,49.44],[.6,49.42],[.15,49.47]],
       [[4.22,44.84],[3.95,45.15],[4.08,45.6],[4.07,46.04],[3.98,46.48],[3.46,46.83],[3.16,46.99],[2.95,47.4],[2.63,47.69],[1.9,47.9],[1.33,47.59],[.69,47.39],[-.08,47.26],[-.55,47.42],[-1.55,47.21],[-2.2,47.27]],
       [[.7,42.8],[.72,43.1],[1.44,43.6],[1.1,43.95],[.62,44.2],[.17,44.5],[-.3,44.7],[-.57,44.84],[-.75,45.1],[-1.1,45.6]],[[2.8,45.5],[1.7,44.9],[.48,44.85],[-.24,44.92],[-.6,45.02]],
       [[6.15,46.2],[5.8,45.9],[4.83,45.76],[4.82,45.2],[4.89,44.93],[4.75,44.3],[4.81,43.95],[4.63,43.68],[4.6,43.35]],[[6,47.9],[5.4,47.4],[4.85,46.78],[4.83,46.3],[4.83,45.76]],
       [[7.59,47.56],[7.8,48.58],[8.2,49],[8.27,50],[7.6,50.4]],[[6.9,47.9],[6.45,48.17],[5.9,48.68],[6.18,49.12],[6.17,49.36],[6.4,49.7],[7.6,50.36]],[[5.6,48],[5.38,49.16],[4.94,49.7],[4.8,50.2],[4.86,50.47]]],
-    rivers=path(p=>RIV.forEach(P=>curve(p,P.map(([lo,la])=>[FX(lo),FY(la)])))),
+    rivers=path(p=>RIV.forEach(P=>curve(p,P.map(([lo,la])=>FP(lo,la))))),
     /* nuages au-dessus de la mer : quelques amas doux */
-    CLD=[[-4.5,46.2],[-3.2,50.2],[6,41.9],[-7.5,48.5]].flatMap(([lo,la])=>Array.from({length:9},()=>[FX(lo)+rnd(-.5,.5),FY(la)+rnd(-.25,.25),rnd(.15,.38)])),
+    CLD=[[-4.5,46.2],[-3.2,50.2],[6,41.9],[-7.5,48.5]].flatMap(([lo,la])=>{const[x,y]=FP(lo,la);return Array.from({length:9},()=>[x+rnd(-.5,.5),y+rnd(-.25,.25),rnd(.15,.38)])}),
     CITY=[['Paris',48.86,2.35],['Lyon',45.76,4.83],['Marseille',43.3,5.37],['Bordeaux',44.84,-.58],['Toulouse',43.6,1.44],['Lille',50.63,3.06],['Strasbourg',48.58,7.75],['Nantes',47.22,-1.55]];
-  return{a:[FX(2.69),FY(46.63)],main:(c,v)=>{
+  return{a:FP(2.69,46.63),main:(c,v)=>{
       /* mer : plus claire près des côtes (hauts-fonds) */
       c.lineJoin='round';[[.7,.06],[.42,.08],[.22,.1],[.1,.14]].forEach(([w,a])=>stroke(c,land,`rgba(140,210,245,${a})`,w));
       fill(c,land,'#5aa04c');c.save();c.clip(land);if(rel.ready)c.drawImage(rel,RX,RY,RWu,RHu);
       /* la forêt de Tronçais : une dizaine de kilomètres de chênes */
-      const tx=FX(2.69),ty=FY(46.63),gt=c.createRadialGradient(tx,ty,0,tx,ty,.07);gt.addColorStop(0,'rgba(31,74,28,.95)');gt.addColorStop(.6,'rgba(31,74,28,.7)');gt.addColorStop(1,'rgba(31,74,28,0)');c.fillStyle=gt;c.fillRect(tx-.07,ty-.07,.14,.14);
+      const[tx,ty]=FP(2.69,46.63),gt=c.createRadialGradient(tx,ty,0,tx,ty,.07);gt.addColorStop(0,'rgba(31,74,28,.95)');gt.addColorStop(.6,'rgba(31,74,28,.7)');gt.addColorStop(1,'rgba(31,74,28,0)');c.fillStyle=gt;c.fillRect(tx-.07,ty-.07,.14,.14);
       c.lineCap='round';stroke(c,rivers,'#3d86cf',Math.max(.02,1.3*v.px));c.restore();
-      c.beginPath();c.ellipse(FX(6.55),FY(46.43),.28,.08,-.25,0,TAU);c.fillStyle='#3d86cf';c.fill();stroke(c,land,'rgba(255,255,255,.35)',Math.max(.008,.8*v.px));
+      c.beginPath();c.ellipse(...FP(6.55,46.43),.28,.08,-.25,0,TAU);c.fillStyle='#3d86cf';c.fill();stroke(c,land,'rgba(255,255,255,.35)',Math.max(.008,.8*v.px));
       CLD.forEach(([x,y,r])=>glow(c,x,y,r,'#ffffff',.4));
-      CITY.forEach(([n,la,lo])=>{disc(c,FX(lo),FY(la),2.6*v.px,'#ffffff');v.tag(n,FX(lo),FY(la))})}}}
+      CITY.forEach(([n,la,lo])=>{const[x,y]=FP(lo,la);disc(c,x,y,2.6*v.px,'#ffffff');v.tag(n,x,y)})}}}
 
 /* 13 · la Terre (rayon 6 371 km = 3,6 unités), vue au-dessus de la France ; peinte une fois dans une image (océans, terres, déserts, glaces, nuages, ombre) */
 function L13(){const p0=LAT0*R,pr=(lo,la)=>{const l=(lo-LON0)*R,f=la*R,x=Math.cos(f)*Math.sin(l),y=-(Math.cos(p0)*Math.sin(f)-Math.sin(p0)*Math.cos(f)*Math.cos(l)),

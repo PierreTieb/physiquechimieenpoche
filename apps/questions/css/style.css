@@ -27,6 +27,7 @@ button.q-card:active{transform:translateY(4px);box-shadow:0 2px 0 var(--c-dark),
 .q-card--sky{--c-dark:#0e1430;background:#1c2547}
 /* carte de l'orage : lueurs dans les nuages en continu ; cycle de 14 s : un éclair à 6 s, l'autre à 13 s, chacun avec un flash blanc de moins d'une seconde */
 .q-card--storm{--c-dark:#05070f;background:#141a2e}
+button.q-card--storm{cursor:pointer}
 .storm .gl{opacity:0;animation:stormGlow ease-in-out infinite}
 @keyframes stormGlow{0%,100%{opacity:0}8%{opacity:.9}11%{opacity:.2}14%{opacity:.75}22%{opacity:0}}
 .storm .tw{animation:winTw 6s steps(1) infinite}
