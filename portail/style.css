@@ -84,16 +84,35 @@ body::before {
 .appli--electricite .appli__titre, .appli--electricite .appli__texte { text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(236,239,242,.95); }
 .appli--electricite .appli__texte { font-family: 'Nunito', sans-serif; color: #36424E; }
 
-/* Questions Scientifiques : fond vert pomme couvert de « ? » clairs et sombres, comme l'accueil de l'appli.
-   Toujours le dernier encadré : seul sur sa ligne (nombre impair d'encadrés), il est centré, de la largeur d'une colonne */
+/* Un encadré seul sur la dernière ligne (nombre impair dans une liste) : centré, de la largeur d'une colonne */
+.applis > .appli:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 11px); }
+
+/* Modules supplémentaires : sous les modules de cours, annoncés par un petit texte entre deux traits */
+.bonus { margin-top: 40px; }
+.bonus__titre {
+  display: flex; align-items: center; gap: 14px; margin: 0 0 18px;
+  color: #2E4057; font-family: 'Fredoka', 'Nunito', sans-serif; font-weight: 600; font-size: 1.15rem; line-height: 1.25; text-align: center;
+  text-shadow: 0 0 5px #FBFAF6, 0 0 12px #FBFAF6;
+}
+.bonus__titre::before, .bonus__titre::after { content: ''; flex: 1; height: 2px; border-radius: 2px; background: rgba(46,64,87,.35); }
+
+/* Questions Scientifiques : fond vert pomme couvert de « ? » clairs et sombres, comme l'accueil de l'appli */
 .appli--questions {
   --fond: url("encadre-questions.svg");
   --voile: radial-gradient(ellipse 62% 55% at 50% 50%, rgba(240,251,224,.9), rgba(226,245,198,.6) 60%, rgba(226,245,198,0) 100%);
   color: #24502E; font-family: 'Fredoka', 'Nunito', sans-serif;
 }
-.appli--questions:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 11px); }
 .appli--questions .appli__titre, .appli--questions .appli__texte { text-shadow: 0 0 6px #F0FBE0, 0 0 12px #F0FBE0; }
 .appli--questions .appli__texte { font-family: 'Nunito', sans-serif; color: #3F6339; }
+
+/* Réalité augmentée : tableau noir, figures en 3D dessinées à la craie, grosse sphère derrière le titre */
+.appli--realite {
+  --fond: url("encadre-realite.svg");
+  --voile: radial-gradient(ellipse 56% 48% at 50% 50%, rgba(24,29,32,.62), rgba(24,29,32,.3) 65%, rgba(24,29,32,0) 100%);
+  color: #fff; font-family: 'Fredoka', 'Nunito', sans-serif;
+}
+.appli--realite .appli__titre, .appli--realite .appli__texte { text-shadow: 0 2px 10px rgba(0,0,0,.75), 0 0 4px #181D20; }
+.appli--realite .appli__texte { font-family: 'Nunito', sans-serif; color: #D5DDE2; }
 
 /* Smartphone : les encadrés les uns sous les autres */
 @media (max-width: 640px) {
@@ -102,7 +121,9 @@ body::before {
   .titre { margin-bottom: 22px; }
   .titre p { font-size: .95rem; }
   .applis { grid-template-columns: 1fr; gap: 16px; }
-  .appli--questions:nth-child(odd) { width: auto; justify-self: stretch; }
+  .applis > .appli:last-child:nth-child(odd) { width: auto; justify-self: stretch; }
+  .bonus { margin-top: 30px; }
+  .bonus__titre { font-size: 1.02rem; gap: 10px; }
   .appli { min-height: 170px; padding: 20px 20px; gap: 6px; }
   .appli__titre { font-size: 1.45rem; }
   .appli__texte { font-size: .9rem; }

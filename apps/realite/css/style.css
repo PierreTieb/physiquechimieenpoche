@@ -1,0 +1,326 @@
+:root {
+  --bg: #0d1424;
+  --ink: #f4f6fb;
+  --ink-soft: #b9c2d6;
+  --accent: #39a0ff;
+  /* pastels des particules, comme dans « Les Bases de la chimie » */
+  --proton: linear-gradient(160deg, #F58A87, #E0554F);
+  --neutron: linear-gradient(160deg, #7ED3A3, #43A874);
+  --electron: linear-gradient(160deg, #8FA9F0, #5677D9);
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --font: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius-lg: 26px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }   /* pas de texte agrandi en paysage */
+html, body {
+  margin: 0; height: 100%; overflow: hidden;
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font); font-weight: 600;
+  touch-action: manipulation;              /* pas de zoom au double appui */
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+button, a.btn { font: inherit; touch-action: manipulation; }
+
+/* ===== Écrans ===== */
+.screen {
+  position: fixed; inset: 0; display: none;
+  align-items: center; justify-content: center;
+  padding: 16px;
+  background: radial-gradient(ellipse at 50% 30%, #1d2b4f 0%, var(--bg) 70%);
+}
+.screen--active { display: flex; }
+
+/* ===== Fenêtres (fond sombre transparent) ===== */
+.panel {
+  width: min(440px, 100%);
+  padding: 26px 22px;
+  border-radius: 22px;
+  background: rgba(8, 12, 24, .72);
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  text-align: center;
+}
+.panel[hidden] { display: none; }
+.panel h1, .panel h2 { margin: 0 0 12px; font-weight: 800; }
+.panel h1 { font-size: 1.7rem; }
+.panel h2 { font-size: 1.35rem; }
+.panel p { margin: 0 0 14px; line-height: 1.45; color: var(--ink-soft); }
+.panel p strong { color: var(--ink); }
+.panel__marker { width: 110px; height: 110px; margin: 4px auto 18px; display: block; border-radius: 6px; }
+.panel__tip { font-size: .92rem; }
+.panel__actions { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 12px; }
+.panel__actions:last-child { margin-bottom: 0; }
+
+.btn {
+  display: block; width: 100%;
+  padding: 13px 18px; border-radius: 14px; border: none;
+  background: rgba(255, 255, 255, .1); color: var(--ink);
+  font-size: 1.05rem; font-weight: 700; text-decoration: none; text-align: center;
+  cursor: pointer; transition: transform .1s, background .2s;
+}
+.btn:active { transform: scale(.97); }
+.btn--main { background: linear-gradient(180deg, #4fb0ff, #1f78e6); box-shadow: 0 4px 14px rgba(31, 120, 230, .45); }
+.btn--ghost { background: transparent; color: var(--ink-soft); }
+
+/* ===== Accueil (même présentation que les autres applis) : tableau noir couvert de figures à la craie, une carte par module ===== */
+.screen--home {
+  align-items: flex-start; overflow: auto;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 16px calc(32px + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(255, 255, 255, .06), transparent 45%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, .05), transparent 50%),
+    linear-gradient(180deg, #232a2e, #171c1f);
+  -webkit-user-select: none; user-select: none;
+}
+#home-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+#home-bg svg { display: block; }
+#home-bg .v { marker-end: url(#arrow); }
+#home-bg text { fill: #f4f4ee; stroke: none; font: italic 15px Georgia, 'Times New Roman', serif; }
+.home-in { position: relative; width: 100%; max-width: 560px; margin: auto 0; }
+.app-title {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 7vw, 2.5rem); line-height: 1.12;
+  text-align: center; margin: 14px 0 10px; color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, .6);
+}
+.app-subtitle { text-align: center; color: #D5DDE2; font-weight: 700; font-size: 1rem; line-height: 1.35; margin: 0 auto 26px; max-width: 34ch; text-shadow: 0 1px 6px rgba(0, 0, 0, .7); }
+/* Un module = sa carte (les repères se proposent à l'ouverture du module) */
+.module { margin: 0 0 22px; }
+.module .q-card { margin: 0; }
+.q-card {
+  display: flex; flex-direction: column; align-items: stretch; width: 100%; margin: 0 0 22px; padding: 0 0 18px;
+  border: none; border-radius: var(--radius-lg); overflow: hidden; text-align: left; color: #fff; cursor: pointer;
+  font-family: var(--font); box-shadow: 0 6px 0 var(--c-dark), 0 12px 20px rgba(0, 0, 0, .22);
+  transition: transform .12s, box-shadow .12s;
+}
+.q-card:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--c-dark), 0 6px 12px rgba(0, 0, 0, .22); }
+.q-card:focus-visible { outline: 3px solid #1F2D6B; outline-offset: 3px; }
+.q-card__art { display: block; width: 100%; height: auto; }
+.q-card__title { padding: 2px 20px 0; font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
+.q-card__sub { padding: 6px 20px 0; font-size: .85rem; font-weight: 700; opacity: .85; }
+.q-card--atom { --c-dark: #04051a; background: linear-gradient(180deg, #252c6b, #070a1f); }
+.q-card--reaction { --c-dark: #1a0710; background: linear-gradient(180deg, #6b2546, #200a17); }
+.q-card--sky { --c-dark: #000005; background: linear-gradient(180deg, #0b1236, #01020a); }
+.q-card--chrono { --c-dark: #0b1a14; background: linear-gradient(180deg, #2c5a48, #0f2219); }
+
+/* ===== Vue en réalité augmentée ===== */
+.screen--ar { padding: 0; background: #000; }
+.ar-video, .ar-layer, .ar-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ar-video { object-fit: cover; }
+.ar-layer { transition: opacity .4s; pointer-events: none; }
+.ar-layer.is-hidden { opacity: 0; }
+
+.ar-search {
+  position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 18px 22px; border-radius: 18px;
+  background: rgba(8, 12, 24, .7); text-align: center;
+  transition: opacity .3s; pointer-events: none;
+}
+.ar-search img[hidden], .ar-search__link[hidden] { display: none; }
+.ar-search__link {
+  pointer-events: auto; border: none; background: none; padding: 4px; cursor: pointer;
+  color: #9fd0ff; font-size: .9rem; font-weight: 700; text-decoration: underline;
+}
+.ar-search.is-hidden .ar-search__link { pointer-events: none; }
+
+/* Fenêtre des repères : à viser sur un autre écran, ou à imprimer (le PDF s'ouvre dans un nouvel onglet) */
+.marker-viewer {
+  position: absolute; inset: 0; z-index: 6; display: flex; align-items: center; justify-content: center;
+  padding: 16px; background: rgba(0, 0, 0, .6); touch-action: pan-y;
+}
+.marker-viewer[hidden] { display: none; }
+.marker-viewer__box {
+  width: min(460px, 100%); max-height: calc(100% - 16px); overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 16px 16px 12px; border-radius: 22px; background: #fff; color: #1d2433; text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .45); animation: label-in .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+.marker-viewer__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.marker-viewer__head h2 { margin: 0; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; text-align: left; }
+.marker-viewer__close {
+  flex: none; width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer;
+  background: #EEF0F4; color: #1d2433; font-size: 1.1rem; font-weight: 800;
+}
+.marker-viewer__tip { margin: 0; font-size: .88rem; color: #566074; }
+.marker-viewer__pages img { display: block; width: 100%; height: auto; border: 1px solid #e3e6ec; border-radius: 6px; background: #fff; }
+.marker-viewer .btn--ghost { color: #566074; }
+.ar-search img { width: 64px; height: 64px; border-radius: 4px; animation: search 1.6s ease-in-out infinite; }
+.ar-search.is-hidden { opacity: 0; }
+@keyframes search { 50% { transform: scale(.85) rotate(-6deg); } }
+
+.ar-top {
+  position: absolute; left: 0; right: 0; top: 0;
+  display: flex; justify-content: space-between; gap: 8px;
+  /* un peu plus bas que le bord : la barre repliée du navigateur capte les touchers tout en haut */
+  padding: calc(max(12px, env(safe-area-inset-top)) + 10px) 12px 0;
+}
+.chip {
+  padding: 11px 16px; border-radius: 999px; border: none;
+  background: rgba(8, 12, 24, .7); color: var(--ink);
+  font-size: .95rem; font-weight: 700; cursor: pointer;
+}
+.chip[hidden] { display: none; }
+
+/* Fiche flottante au-dessus de l'atome */
+.card {
+  position: absolute; left: 0; top: 0;
+  min-width: 118px; padding: 8px 14px 9px;
+  border-radius: 14px; text-align: center;
+  background: rgba(255, 255, 255, .92); color: #14203a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  will-change: transform;
+}
+.card:empty { display: none; }
+.card__name { font-size: .95rem; font-weight: 800; white-space: nowrap; }
+.card__formula { display: flex; align-items: center; justify-content: center; margin: 2px 0 1px; }
+.card__nota { display: flex; flex-direction: column; align-items: flex-end; font-size: .8rem; line-height: 1.05; margin-right: 2px; }
+.card__sym { font-size: 2rem; font-weight: 800; line-height: 1; }
+.card__charge { align-self: flex-start; font-size: 1rem; font-weight: 800; margin-left: 1px; }
+.card__charge--pos { color: #d81f1f; }
+.card__charge--neg { color: #1650d8; }
+.card__status { font-size: .8rem; font-weight: 700; }
+.card__status--ok { color: #1a8a3a; }
+.card__status--pos { color: #d81f1f; }
+.card__status--neg { color: #1650d8; }
+.card__noion { margin-top: 4px; font-size: .95rem; font-weight: 700; font-style: italic; color: #8a93a6; white-space: nowrap; }
+
+/* Message du mode libre (module Transformation chimique) */
+.ar-hint {
+  position: absolute; left: 50%; bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px);
+  padding: 9px 14px; border-radius: 14px; text-align: center;
+  background: rgba(8, 12, 24, .72); color: var(--ink); font-size: .85rem;
+}
+.ar-hint[hidden] { display: none; }
+.screen--ar { touch-action: none; }   /* glisser le doigt fait tourner la molécule, pas la page */
+
+/* Formule et nom flottant au-dessus d'une molécule */
+.mol-label {
+  position: absolute; left: 0; top: 0;
+  padding: 6px 12px 7px; border-radius: 12px; text-align: center;
+  background: rgba(255, 255, 255, .92); color: #14203a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  white-space: nowrap; will-change: transform;
+  animation: label-in .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+.mol-label__formula { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+.mol-label__name { font-size: .8rem; font-weight: 700; color: #4a5770; }
+.mol-label[hidden] { display: none; }
+.mol-label--small { padding: 3px 9px 4px; border-radius: 9px; font-size: 1rem; font-weight: 800; background: rgba(255, 255, 255, .85); }
+@keyframes label-in { from { opacity: 0; scale: .6; } }
+
+/* Bandeau du module « Transformation chimique » */
+.rx-banner {
+  position: absolute; left: 50%; top: calc(max(12px, env(safe-area-inset-top)) + 64px);
+  transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px);
+  padding: 10px 18px; border-radius: 16px; text-align: center;
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .2), 0 8px 18px rgba(0, 0, 0, .3);
+  animation: label-in .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+.rx-banner[hidden] { display: none; }
+.rx-banner--ok { background: linear-gradient(160deg, #7ED3A3, #3E9F6C); }
+.rx-banner--ko { background: linear-gradient(160deg, #F58A87, #D2443E); }
+/* Panneau de réglages (modules Soleil/Terre/Lune et Chronophotographie) */
+.ctl-panel {
+  width: min(520px, 100%); display: flex; flex-direction: column; gap: 8px;
+  padding: 10px 12px; border-radius: 18px; background: rgba(8, 12, 24, .72);
+}
+.ctl-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.opt {
+  padding: 8px 14px; border: none; border-radius: 999px; cursor: pointer;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: .9rem; font-weight: 800; white-space: nowrap;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .25);
+}
+.opt--small { padding: 6px 11px; font-size: .8rem; }
+.opt--on { background: linear-gradient(160deg, #8FA9F0, #5677D9); }
+.opt--play { background: linear-gradient(160deg, #FFD27A, #E8A33A); color: #3a2400; min-width: 98px; }
+.opt:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, .25); }
+.ctl-slider { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 2px; font-size: .82rem; font-weight: 700; color: #dfe6f2; text-align: center; }
+.ctl-slider input { width: 100%; accent-color: #8FA9F0; }
+.ctl-note { font-size: .75rem; font-weight: 700; color: #b9c2d6; text-align: center; }
+
+/* Médaillon « Vue depuis la Terre » (phases de la Lune) */
+.moon-inset {
+  position: absolute; right: 12px; top: calc(max(12px, env(safe-area-inset-top)) + 64px);
+  width: 124px; padding: 8px 8px 9px; border-radius: 16px; text-align: center;
+  background: rgba(8, 12, 24, .78); color: #fff; pointer-events: none;
+}
+.moon-inset canvas { display: block; width: 108px; height: 108px; }
+.moon-inset__title { font-size: .7rem; font-weight: 700; color: #b9c2d6; }
+.moon-inset__name { font-size: .82rem; font-weight: 800; line-height: 1.15; }
+
+/* Bouton « Réactions possibles » et sa fenêtre (réactifs seulement, sans coefficients ni produits) */
+.rx-catalog-btn {
+  position: absolute; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+  padding: 12px 20px; font-size: 1rem; font-weight: 800; color: #fff; white-space: nowrap;
+  background: linear-gradient(160deg, #F0A0C0, #C2557F); box-shadow: 0 4px 0 rgba(0, 0, 0, .25);
+}
+.rx-catalog-btn:active { transform: translate(-50%, 2px); box-shadow: 0 2px 0 rgba(0, 0, 0, .25); }
+.screen--ar .ar-hint { bottom: calc(max(18px, env(safe-area-inset-bottom)) + 58px); }
+.rx-catalog {
+  position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center;
+  padding: 16px; background: rgba(0, 0, 0, .55); touch-action: pan-y;
+}
+.rx-catalog[hidden] { display: none; }
+.rx-catalog__box {
+  width: min(440px, 100%); max-height: calc(100% - 20px); overflow-y: auto;
+  padding: 22px 18px 18px; border-radius: 22px; background: #fff; color: #1d2433; text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .45); animation: label-in .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+.rx-catalog__box h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; color: #7A2448; }
+.rx-catalog__box p { margin: 0 0 14px; font-size: .9rem; color: #566074; }
+.rx-catalog__box ul { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rx-catalog__box li {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 8px 10px; border-radius: 14px; background: #F6EEF2;
+}
+.rx-catalog__sp { display: flex; flex-direction: column; align-items: center; min-width: 96px; }
+.rx-catalog__sp b { font-size: 1.3rem; font-weight: 800; line-height: 1.1; }
+.rx-catalog__sp small { font-size: .75rem; font-weight: 700; color: #6a7386; }
+.rx-catalog__plus { font-size: 1.3rem; font-weight: 800; color: #C2557F; }
+.rx-banner--info { background: rgba(8, 12, 24, .72); font-family: var(--font); font-size: .95rem; font-weight: 700; }
+
+/* Commandes : ▲ + / nom (nombre) / ▼ − */
+.ar-controls {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: center; gap: 10px;
+  padding: 10px 10px max(14px, env(safe-area-inset-bottom));
+  background: linear-gradient(transparent, rgba(0, 0, 0, .45));
+}
+.ctrl { flex: 1; max-width: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.ctrl--p { --c: var(--proton); }
+.ctrl--n { --c: var(--neutron); }
+.ctrl--e { --c: var(--electron); }
+/* boutons pastel arrondis, comme les boutons « + Proton » de « Les Bases de la chimie » */
+.ctrl__label {
+  width: 100%; padding: 8px 4px; border-radius: 999px;
+  background: var(--c); color: #fff;
+  font-size: .92rem; font-weight: 800; text-align: center; white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .2); text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+.ctrl__btn {
+  position: relative; width: 74px; height: 48px; padding: 0; border: none; cursor: pointer;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .3), transparent 60%), var(--c);
+  color: #fff; font-size: 1.5rem; font-weight: 800; line-height: 1;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .2));
+  transition: transform .08s;
+}
+.ctrl__btn--up { clip-path: polygon(50% 0, 100% 100%, 0 100%); border-radius: 0; }
+.ctrl__btn--down { clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.ctrl__btn span { position: absolute; left: 0; right: 0; text-shadow: 0 1px 1px rgba(0, 0, 0, .25); }
+.ctrl__btn--up span { bottom: 6px; }
+.ctrl__btn--down span { top: 4px; }
+.ctrl__btn:active:not(:disabled) { transform: scale(.9); }
+.ctrl__btn:disabled { opacity: .3; cursor: default; }
+
+@media (max-width: 360px) {
+  .ctrl__label { font-size: .78rem; }
+  .ctrl__btn { width: 62px; height: 44px; }
+}

@@ -24,7 +24,7 @@
     </header>
 
     <!-- Chaque encadré a pour fond l'illustration de son appli (portail/encadre-*.jpg) et reprend sa police -->
-    <nav class="applis" aria-label="Applis">
+    <nav class="applis" aria-label="Modules de cours">
       <a class="appli appli--chimie" href="apps/chimie/index.html">
         <span class="appli__titre">Les Bases de la Chimie</span>
         <span class="appli__texte">La chimie à maîtriser au collège, étape par étape</span>
@@ -41,12 +41,22 @@
         <span class="appli__titre">L'Électricité</span>
         <span class="appli__texte">Tout ce qu'il faut savoir sur l'électricité au collège</span>
       </a>
-      <!-- Questions Scientifiques : toujours le DERNIER encadré, ajouter les nouvelles applis au-dessus -->
-      <a class="appli appli--questions" href="apps/questions/index.html">
-        <span class="appli__titre">Questions Scientifiques</span>
-        <span class="appli__texte">Les petites questions que tu te poses en science</span>
-      </a>
     </nav>
+
+    <!-- Modules supplémentaires : toujours SOUS les modules de cours (ajouter les nouvelles applis de cours dans la liste au-dessus) -->
+    <section class="bonus">
+      <h2 class="bonus__titre">Des applications supplémentaires pour les curieux</h2>
+      <nav class="applis" aria-label="Applications supplémentaires">
+        <a class="appli appli--questions" href="apps/questions/index.html">
+          <span class="appli__titre">Questions Scientifiques</span>
+          <span class="appli__texte">Les petites questions que tu te poses en science</span>
+        </a>
+        <a class="appli appli--realite" href="apps/realite/index.html">
+          <span class="appli__titre">Réalité augmentée</span>
+          <span class="appli__texte">Pour voir quelques phénomènes en 3D sur ton téléphone</span>
+        </a>
+      </nav>
+    </section>
   </main>
 </body>
 </html>

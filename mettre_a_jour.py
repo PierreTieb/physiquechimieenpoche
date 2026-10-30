@@ -20,6 +20,9 @@ APPLIS = {
                     'box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)'),
     'electricite': ('Electricité', '#screen-home', 'btn-back', ''),
     'questions':   ('Questions', '#start .start-in', '', 'color:#24502E'),
+    'realite':     ('Réalité augmentée', '#screen-home .home-in', '',
+                    'color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);'
+                    'box-shadow:0 4px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.18)'),
 }
 # '*.mid' : morceaux MIDI d'origine des Ondes Sonores, déjà transcrits dans songs.js
 IGNORER = shutil.ignore_patterns('.git', '.github', '.claude', '.vscode', '__pycache__', '*.md', '*.py', '*.bat', '*.mid', 'Thumbs.db', '.DS_Store')

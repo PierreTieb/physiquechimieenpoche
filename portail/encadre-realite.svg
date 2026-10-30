@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" preserveAspectRatio="xMidYMid slice">
+  <!-- Encadré « Réalité augmentée » : tableau noir, figures en 3D dessinées à la craie (même trait que l'accueil de l'appli).
+       Une grosse sphère au premier plan derrière le titre, de plus petites figures autour : pyramide, cube, cône, cylindre… -->
+  <defs>
+    <linearGradient id="ardoise" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#262d31"/><stop offset="1" stop-color="#181d20"/>
+    </linearGradient>
+    <!-- traces de craie mal effacées -->
+    <radialGradient id="trace"><stop offset="0" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .05 0"/>
+    </filter>
+    <filter id="craie" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" result="d"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -2.2 1.9" result="g"/>
+      <feComposite in="d" in2="g" operator="in"/>
+    </filter>
+    <marker id="fleche" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#f1f1ea" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <!-- ombre de la sphère : hachures sur le croissant en bas à droite -->
+    <pattern id="hachures" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
+      <path d="M0 0V7" stroke="#f1f1ea" stroke-width="1.3"/>
+    </pattern>
+    <mask id="croissant">
+      <circle cx="240" cy="122" r="92" fill="#fff"/>
+      <circle cx="218" cy="98" r="96" fill="#000"/>
+    </mask>
+  </defs>
+
+  <rect width="480" height="240" fill="url(#ardoise)"/>
+  <ellipse cx="90" cy="60" rx="120" ry="50" fill="url(#trace)"/>
+  <ellipse cx="400" cy="190" rx="130" ry="55" fill="url(#trace)"/>
+  <ellipse cx="330" cy="40" rx="90" ry="30" fill="url(#trace)"/>
+  <rect width="480" height="240" filter="url(#grain)"/>
+
+  <g fill="none" stroke="#f1f1ea" stroke-linecap="round" stroke-linejoin="round" filter="url(#craie)">
+    <!-- Petites figures (chacune dessinée dans un carré de 100 × 100, arêtes cachées en pointillés) -->
+    <g stroke-width="2.4" opacity=".72">
+      <!-- pyramide à base carrée, en haut à gauche -->
+      <g transform="translate(26 16) scale(.86)">
+        <path d="M50 12L16 72l34 14 36-24zM50 12l36 50M50 12L50 86"/><path stroke-dasharray="4 5" d="M16 72l36-22 34 12"/>
+      </g>
+      <!-- cube, en bas à droite -->
+      <g transform="translate(368 124) scale(.84)">
+        <path d="M18 38h44v44H18zM18 38l20-20h44l-20 20M62 82l20-20V18"/><path stroke-dasharray="4 5" d="M18 82l20-20h44M38 62V18"/>
+      </g>
+    </g>
+    <g stroke-width="2.6" opacity=".55">
+      <!-- cône, en haut à droite -->
+      <g transform="translate(386 14) scale(.62)">
+        <path d="M50 12L20 78M50 12L80 78M20 78a30 9 0 0 0 60 0"/><path stroke-dasharray="4 5" d="M20 78a30 9 0 0 1 60 0M50 12v66"/>
+      </g>
+      <!-- cylindre, en bas à gauche -->
+      <g transform="translate(36 140) rotate(-8 50 50) scale(.6)">
+        <ellipse cx="50" cy="22" rx="28" ry="9"/><path d="M22 22v56M78 22v56M22 78a28 9 0 0 0 56 0"/><path stroke-dasharray="4 5" d="M22 78a28 9 0 0 1 56 0"/>
+      </g>
+      <!-- tétraèdre -->
+      <g transform="translate(98 168) rotate(10 50 50) scale(.46)">
+        <path d="M50 10L14 78l60 8zM50 10l36 52-12 24"/><path stroke-dasharray="4 5" d="M14 78l72-16"/>
+      </g>
+      <!-- prisme à base triangulaire -->
+      <g transform="translate(318 6) scale(.44)">
+        <path d="M16 34l22-16 22 16zM16 34v46l22-14M60 34v46L38 66M16 80h44"/><path stroke-dasharray="4 5" d="M38 18v48"/>
+      </g>
+      <!-- axes x, y, z -->
+      <g transform="translate(118 10) scale(.44)">
+        <path marker-end="url(#fleche)" d="M30 70H88"/><path marker-end="url(#fleche)" d="M30 70V12"/><path marker-end="url(#fleche)" d="M30 70L8 92"/>
+      </g>
+    </g>
+
+    <!-- Grosse sphère au premier plan, derrière le titre -->
+    <g opacity=".9">
+      <rect x="140" y="20" width="200" height="200" fill="url(#hachures)" stroke="none" mask="url(#croissant)" opacity=".38"/>
+      <circle cx="240" cy="122" r="92" stroke-width="3"/>
+      <!-- équateur et méridien : moitiés arrière en pointillés -->
+      <path stroke-width="2.4" d="M148 122a92 24 0 0 0 184 0"/>
+      <path stroke-width="2.2" stroke-dasharray="5 6" d="M148 122a92 24 0 0 1 184 0"/>
+      <path stroke-width="2.4" d="M240 30a34 92 0 0 0 0 184"/>
+      <path stroke-width="2.2" stroke-dasharray="5 6" d="M240 30a34 92 0 0 1 0 184"/>
+      <circle cx="240" cy="122" r="2" fill="#f1f1ea"/>
+      <path stroke-width="2.2" marker-end="url(#fleche)" d="M240 122L303 56"/>
+    </g>
+  </g>
+
+  <!-- Écritures à la craie -->
+  <g fill="#f1f1ea" font-family="Georgia, 'Times New Roman', serif" font-style="italic" filter="url(#craie)">
+    <text x="276" y="84" font-size="17" opacity=".85">r</text>
+    <text x="158" y="47" font-size="11" opacity=".55">x</text>
+    <text x="123" y="17" font-size="11" opacity=".55">y</text>
+    <text x="111" y="59" font-size="11" opacity=".55">z</text>
+    <text x="298" y="228" font-size="14" opacity=".6">V = ⁴⁄₃ π r³</text>
+  </g>
+</svg>
