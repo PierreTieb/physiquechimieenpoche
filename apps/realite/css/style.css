@@ -95,7 +95,8 @@ button, a.btn { font: inherit; touch-action: manipulation; }
 }
 .marker-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #9aa3ad, 0 4px 10px rgba(0, 0, 0, .35); }
 .marker-btn:focus-visible { outline: 3px solid #9fd0ff; outline-offset: 3px; }
-.marker-btn img { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+/* taille fixe (aussi dans le HTML) : sinon, sur téléphone, l'image de 1200 px pouvait déborder de tout l'écran */
+.marker-btn svg { display: block; width: 38px; height: 38px; }
 .marker-btn.is-calling { animation: call 1s ease-in-out 2; }
 @keyframes call { 50% { transform: scale(1.15) rotate(-6deg); box-shadow: 0 0 0 8px rgba(159, 208, 255, .45); } }
 
@@ -123,7 +124,7 @@ button, a.btn { font: inherit; touch-action: manipulation; }
   background: #fff; color: #1d2433; text-align: center;
 }
 .marker-show[hidden] { display: none; }
-.marker-show img { display: block; width: min(86vw, 62vh); height: auto; aspect-ratio: 1; image-rendering: pixelated; }
+.marker-show svg { display: block; flex: none; width: min(86vw, 62vh); height: min(86vw, 62vh); }
 .marker-show p { margin: 0; max-width: 30ch; font-size: .95rem; font-weight: 700; color: #566074; }
 .marker-show__close {
   padding: 12px 26px; border: none; border-radius: 999px; cursor: pointer;
