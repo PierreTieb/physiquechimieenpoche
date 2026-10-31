@@ -74,7 +74,9 @@ def copier(nom, source, accueil, classe, style):
     shutil.copytree(src, dst, ignore=IGNORER)
     page = dst / 'index.html'
     html = polices_locales(page.read_text(encoding='utf-8'), nom)
-    lien = '<script src="../../portail/retour.js" data-home="%s" data-class="%s"%s></script>\n' % (
+    # clavier.js : pas de zoom automatique sur iPhone quand on touche une case de texte
+    lien = '<script src="../../portail/clavier.js"></script>\n'
+    lien += '<script src="../../portail/retour.js" data-home="%s" data-class="%s"%s></script>\n' % (
         accueil, classe, ' data-style="%s"' % style if style else '')
     trophees = '<script src="../../portail/trophees.js" data-app="%s"></script>\n' % nom
     if (ICI / 'portail' / 'trophees' / (nom + '.js')).exists():

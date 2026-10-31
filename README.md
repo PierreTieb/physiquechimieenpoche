@@ -14,6 +14,8 @@ et dans `APPLIS` de `mettre_a_jour.py`.
   `portail/encadre-questions.svg` : fond de « ? » de l'encadré Questions Scientifiques.
   `portail/encadre-realite.svg` : tableau noir et figures à la craie de l'encadré Réalité augmentée.
 - `manifest.webmanifest` et `portail/icone-*.png` : nom et icône de l'appli quand elle est ajoutée à l'écran d'accueil du téléphone.
+- `portail/clavier.js` (ajouté dans chaque copie) : sur iPhone et iPad, pas de zoom automatique quand on touche une case de texte ;
+  l'élève peut toujours zoomer lui-même avec deux doigts.
 - `apps/` : une copie de chaque appli. **Ne pas modifier ces fichiers à la main** : ils sont remplacés à chaque mise à jour.
 
 ## Trophées
