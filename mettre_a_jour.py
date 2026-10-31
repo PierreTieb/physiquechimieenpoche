@@ -3,6 +3,7 @@
 # À lancer quand une petite appli est validée : double-clic sur « Mettre à jour les applis.bat ».
 # Pour n'en recopier que certaines : python mettre_a_jour.py chimie ondes
 import re
+import time
 import shutil
 import sys
 from pathlib import Path
@@ -103,6 +104,17 @@ def verifier_trophees(nom, src):
         print('  !! %s : l\'observateur des trophées (portail/trophees/%s.js) ne trouve plus : %s' % (nom, nom, ' | '.join(manquants)))
 
 
+# Les téléphones (surtout l'appli installée sur l'écran d'accueil) gardent longtemps les pages en mémoire :
+# le lien de la page principale vers chaque appli mise à jour reçoit une date (apps/<nom>/index.html?v=...),
+# ce qui oblige le téléphone à recharger la nouvelle version de l'appli.
+def dater_liens(noms):
+    page = ICI / 'index.html'
+    html, v = page.read_text(encoding='utf-8'), time.strftime('%Y%m%d%H%M')
+    for nom in noms:
+        html = re.sub(r'href="apps/%s/index\.html(\?v=\d+)?"' % re.escape(nom), 'href="apps/%s/index.html?v=%s"' % (nom, v), html)
+    page.write_text(html, encoding='utf-8', newline='\n')
+
+
 if __name__ == '__main__':
     print('Mise à jour de Physique Chimie en poche')
     noms = sys.argv[1:] or list(APPLIS)
@@ -110,4 +122,6 @@ if __name__ == '__main__':
     if inconnus:
         print('  !! applis inconnues :', ', '.join(inconnus), '(choix :', ', '.join(APPLIS) + ')')
     ok = not inconnus and all([copier(nom, *APPLIS[nom]) for nom in noms])
+    if not inconnus:
+        dater_liens(noms)
     print('Terminé.' if ok else 'Terminé avec des erreurs (voir ci-dessus).')

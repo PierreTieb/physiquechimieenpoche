@@ -34,4 +34,6 @@ Des accomplissements à débloquer en explorant toutes les applis, **uniquement 
 1. Faire et tester les changements dans le dossier de la petite appli (par exemple `Electricité`).
 2. Double-cliquer sur `Mettre à jour les applis.bat` : toutes les applis sont recopiées dans `apps/`
    (ou seulement certaines : `python mettre_a_jour.py chimie ondes`), avec le lien « ← Choix d'application » ajouté en haut de leur page d'accueil.
+   Le lien de la page principale vers chaque appli mise à jour reçoit une date (`?v=…`) : les téléphones, qui gardent
+   longtemps les pages en mémoire, rechargent alors la nouvelle version de l'appli.
 3. Vérifier en ouvrant `index.html`, puis envoyer sur GitHub (commit + push).
