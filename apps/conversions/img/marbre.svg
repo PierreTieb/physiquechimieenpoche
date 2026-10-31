@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice">
-  <!-- Marbre blanc veiné de gris, fond du bouton « Duel de conversions » -->
+  <!-- Marbre blanc veiné de gris, fond du bouton « Évaluation 3e » -->
   <defs>
     <filter id="veines" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="turbulence" baseFrequency="0.004 0.016" numOctaves="5" seed="11"/>

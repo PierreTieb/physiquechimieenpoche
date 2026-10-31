@@ -173,13 +173,13 @@
             <span class="diff-desc">Cinq conversions classiques chronométrées</span>
             <span class="diff-best" hidden></span>
           </button>
-          <button class="diff-card metal metal--obsidian" data-diff="eval3e" type="button">
+          <button class="diff-card marble" data-diff="eval3e" type="button">
             <span class="diff-name">Évaluation 3e</span>
             <span class="diff-desc">Cinq conversions chronométrées parmi toutes les méthodes possibles</span>
             <span class="diff-best" hidden></span>
           </button>
-          <!-- Duel : marbre cerclé de turquoise, deux silhouettes séparées par un éclair -->
-          <button class="diff-card diff-card--icon marble" data-nav="duel" type="button">
+          <!-- Duel : obsidienne bordée d'or, deux silhouettes séparées par un éclair -->
+          <button class="diff-card diff-card--icon metal metal--obsidian" data-nav="duel" type="button">
             <span class="diff-name">Duel de conversions</span>
             <span class="diff-desc">Les mêmes conversions que ton adversaire, grâce à un code</span>
             <svg class="diff-ico duel-ico" viewBox="0 0 120 56" aria-hidden="true"><circle cx="24" cy="15" r="9" fill="currentColor"/><path d="M8 54v-8a16 16 0 0 1 32 0v8z" fill="currentColor"/><path d="M64 4L50 30h10l-6 22 18-30H61l7-18z" fill="#FFD84D" stroke="#B8860B" stroke-width="2" stroke-linejoin="round"/><circle cx="96" cy="15" r="9" fill="currentColor"/><path d="M80 54v-8a16 16 0 0 1 32 0v8z" fill="currentColor"/></svg>
@@ -195,15 +195,31 @@
         <h1>Duel de conversions</h1>
         <p class="subtitle">Un joueur crée le duel et donne le code à l'autre : vous aurez exactement les mêmes conversions. Le plus rapide gagne !</p>
 
-        <div class="duel-card">
+        <!-- 1re étape : créer ou rejoindre (comme le Duel de la Chimie) -->
+        <div id="duel-step-choice" class="menu-list">
+          <button class="diff-card duel-btn duel-btn--create" data-duel-step="create" type="button">
+            <span class="diff-name">Créer un duel</span>
+            <span class="diff-desc">Choisis les conversions et obtiens un code</span>
+          </button>
+          <button class="diff-card duel-btn duel-btn--join" data-duel-step="join" type="button">
+            <span class="diff-name">Rejoindre un duel</span>
+            <span class="diff-desc">Tape le code de ton adversaire</span>
+          </button>
+        </div>
+
+        <!-- Créer : le choix 4e / 3e n'est donné qu'à celui qui crée le duel -->
+        <div id="duel-step-create" class="duel-card" hidden>
           <h2>Créer un duel</h2>
           <p>Choisis les conversions :</p>
           <div class="duel-levels">
             <button class="btn-secondary" data-duel-create="eval4e" type="button">Évaluation 4e</button>
             <button class="btn-secondary" data-duel-create="eval3e" type="button">Évaluation 3e</button>
           </div>
+          <button class="btn-text duel-change" data-duel-step="choice" type="button">&larr; Changer</button>
         </div>
-        <div class="duel-card">
+
+        <!-- Rejoindre : le code apporte le choix de l'autre joueur -->
+        <div id="duel-step-join" class="duel-card" hidden>
           <h2>Rejoindre un duel</h2>
           <p>Tape le code de ton adversaire :</p>
           <div class="duel-join">
@@ -211,6 +227,7 @@
             <button id="duel-join" class="btn-secondary" type="button">Valider</button>
           </div>
           <p id="duel-err" class="duel-err" hidden>Ce code n'existe pas : vérifie les 4 caractères avec ton adversaire.</p>
+          <button class="btn-text duel-change" data-duel-step="choice" type="button">&larr; Changer</button>
         </div>
 
         <div id="duel-ready" class="duel-ready" hidden>
@@ -219,6 +236,7 @@
           <p id="duel-level" class="duel-level"></p>
           <p class="duel-tip">Quand vous êtes prêts tous les deux, lancez le duel !</p>
           <button id="duel-launch" class="btn-primary" type="button">Lancer le duel</button>
+          <button class="btn-text duel-change" data-duel-step="choice" type="button">Annuler</button>
         </div>
       </div>
     </section>
@@ -500,5 +518,7 @@
   <script src="js/confetti.js"></script>
   <script src="js/app.js"></script>
 <script src="../../portail/retour.js" data-home="#screen-home .home-inner" data-class="btn-text home-back"></script>
+<script src="../../portail/trophees.js" data-app="conversions"></script>
+<script src="../../portail/trophees/conversions.js"></script>
 </body>
 </html>

@@ -18,6 +18,10 @@
 </head>
 <body>
   <main class="portail">
+    <!-- Bouton des trophées (accomplissements dans toutes les applis) : portail/trophees.js et portail/trophees-page.js -->
+    <div class="barre">
+      <button type="button" class="trophees-btn" id="trophees-btn" aria-label="Mes trophées" aria-controls="trophees"></button>
+    </div>
     <header class="titre">
       <h1>Physique Chimie en Poche</h1>
       <p>Toutes les applis de physique-chimie du collège, au même endroit</p>
@@ -58,5 +62,22 @@
       </nav>
     </section>
   </main>
+
+  <!-- Liste des trophées -->
+  <div class="trophees" id="trophees" hidden role="dialog" aria-modal="true" aria-labelledby="trophees-titre">
+    <div class="trophees__boite">
+      <div class="trophees__tete">
+        <div>
+          <h2 id="trophees-titre">Mes trophées</h2>
+          <p id="trophees-compte"></p>
+        </div>
+        <button type="button" class="trophees__fermer" id="trophees-fermer" aria-label="Fermer">✕</button>
+      </div>
+      <ul class="trophees__liste" id="trophees-liste"></ul>
+    </div>
+  </div>
+
+  <script src="portail/trophees.js"></script>
+  <script src="portail/trophees-page.js"></script>
 </body>
 </html>

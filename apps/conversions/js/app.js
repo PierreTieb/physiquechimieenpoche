@@ -461,6 +461,7 @@
 
   function showDuelReady(code, title) {
     duelPending = code;
+    duelStep('ready');
     document.getElementById('duel-ready-title').textContent = title;
     document.getElementById('duel-code').textContent = code;
     document.getElementById('duel-level').textContent = DUEL_NAMES[duelKey(code)];
@@ -471,11 +472,21 @@
     box.style.animation = '';
     box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-  function openDuelScreen() {
-    document.getElementById('duel-ready').hidden = true;
+  // Étapes de l'écran du Duel : 'choice' (créer / rejoindre), 'create', 'join', 'ready' (code affiché)
+  function duelStep(step) {
+    ['choice', 'create', 'join'].forEach((s) => {
+      document.getElementById('duel-step-' + s).hidden = s !== step;
+    });
+    document.getElementById('duel-ready').hidden = step !== 'ready';
     document.getElementById('duel-err').hidden = true;
-    document.getElementById('duel-code-in').value = '';
+    if (step === 'join') {
+      document.getElementById('duel-code-in').value = '';
+      document.getElementById('duel-code-in').focus();
+    }
+  }
+  function openDuelScreen() {
     duelPending = null;
+    duelStep('choice');
   }
   function launchDuel(code) {
     duel = { code: code, key: duelKey(code), slot: -1, att: 0 };
@@ -1765,7 +1776,6 @@
     const ok = duelNum(code) >= 0;
     document.getElementById('duel-err').hidden = ok;
     if (ok) showDuelReady(code, 'Duel trouvé !');
-    else document.getElementById('duel-ready').hidden = true;
   }
   duelCodeIn.addEventListener('input', () => {
     duelCodeIn.value = duelCodeIn.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4);
@@ -1774,6 +1784,9 @@
     if (e.key === 'Enter') { e.preventDefault(); joinDuel(); }
   });
   document.getElementById('duel-join').addEventListener('click', joinDuel);
+  document.querySelectorAll('[data-duel-step]').forEach((b) => {
+    b.addEventListener('click', () => duelStep(b.dataset.duelStep));
+  });
   document.getElementById('duel-launch').addEventListener('click', () => {
     if (duelPending) launchDuel(duelPending);
   });

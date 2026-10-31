@@ -27,6 +27,21 @@ APPLIS = {
 # '*.mid' : morceaux MIDI d'origine des Ondes Sonores, déjà transcrits dans songs.js
 IGNORER = shutil.ignore_patterns('.git', '.github', '.claude', '.vscode', '__pycache__', '*.md', '*.py', '*.bat', '*.mid', 'Thumbs.db', '.DS_Store')
 
+# Trophées : portail/trophees.js (commun) et portail/trophees/<nom>.js (observateur de l'appli) sont ajoutés aux copies
+# seulement. Par défaut en fin de page ; pour l'Électricité, juste après js/lab.js, pour suivre les labos dès leur création.
+TROPHEES_APRES = {'electricite': 'js/lab.js'}
+# Ce que chaque observateur surveille dans l'appli d'origine : si un de ces textes disparaît (appli modifiée),
+# le trophée correspondant ne pourra plus être gagné et le script le signale.
+SURVEILLE = {
+    'chimie': ['ch-pass', 'ch-run', 'eq-coef', 'chimie-duel-launch', 'ch-res__duel', 'chimie-lessons-done',
+               'window.LessonsData', 'window.TempLab', "test: 'flame'", 'flame: {'],
+    'conversions': ['duel-launch', 'screen-exercise', 'screen-mixed', 'duel-ico--big', 'screen-duel'],
+    'ondes': ['m-go', 'mu-go', 'mu-inst', 'mu-song', 'mu-spd', 'fq-val', 'screen-music', 'screen-freq'],
+    'electricite': ['lab-host', "fire('burn')", "'surtension'", 'relation:', 'names:', 'elec-lessons-done', 'window.LessonsData'],
+    'questions': ['id="lvl"', 'Noyau d’atome', 'Atome d’oxygène', 'Voie lactée', "classList.add('strike')", 'c-sun', 'dataset.x', 'OBS=[270,240]'],
+    'realite': ["'rx-banner rx-banner--'", 'Transformation équilibrée !'],
+}
+
 # Les polices Google sont copiées dans portail/polices/ pour que tout marche sans internet :
 # les liens vers fonts.googleapis.com de chaque appli sont remplacés par la copie locale
 POLICES = ICI / 'portail' / 'polices' / 'polices.css'
@@ -60,12 +75,32 @@ def copier(nom, source, accueil, classe, style):
     html = polices_locales(page.read_text(encoding='utf-8'), nom)
     lien = '<script src="../../portail/retour.js" data-home="%s" data-class="%s"%s></script>\n' % (
         accueil, classe, ' data-style="%s"' % style if style else '')
+    trophees = '<script src="../../portail/trophees.js" data-app="%s"></script>\n' % nom
+    if (ICI / 'portail' / 'trophees' / (nom + '.js')).exists():
+        trophees += '<script src="../../portail/trophees/%s.js"></script>\n' % nom
     i = html.lower().rfind('</body>')
+    if nom in TROPHEES_APRES:
+        m = re.search(r'<script[^>]*src="%s"[^>]*></script>\n?' % re.escape(TROPHEES_APRES[nom]), html)
+        if m:
+            html = html[:m.end()] + trophees + html[m.end():]
+            trophees = ''
+        else:
+            print('  !! %s : %s introuvable, trophées ajoutés en fin de page' % (nom, TROPHEES_APRES[nom]))
+    lien += trophees
     html = html[:i] + lien + html[i:] if i >= 0 else html + lien
     page.write_text(html, encoding='utf-8', newline='\n')
     n = sum(1 for f in dst.rglob('*') if f.is_file())
     print('  ok   %-12s <- %s (%d fichiers)' % (nom, source, n))
+    verifier_trophees(nom, src)
     return True
+
+
+def verifier_trophees(nom, src):
+    textes = ''.join(f.read_text(encoding='utf-8', errors='ignore') for f in src.rglob('*')
+                     if f.suffix in ('.js', '.html') and '.git' not in f.parts)
+    manquants = [t for t in SURVEILLE.get(nom, []) if t not in textes]
+    if manquants:
+        print('  !! %s : l\'observateur des trophées (portail/trophees/%s.js) ne trouve plus : %s' % (nom, nom, ' | '.join(manquants)))
 
 
 if __name__ == '__main__':

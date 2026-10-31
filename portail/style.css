@@ -15,6 +15,48 @@ body::before {
   padding: calc(30px + env(safe-area-inset-top, 0px)) 16px calc(36px + env(safe-area-inset-bottom, 0px));
 }
 
+/* ===== Trophées ===== */
+/* Bouton carré aux coins arrondis, en haut à droite, avec un trophée dessiné */
+.barre { display: flex; justify-content: flex-end; margin: -16px 0 4px; }
+.trophees-btn {
+  width: 54px; height: 54px; padding: 6px; border: none; border-radius: 16px; cursor: pointer;
+  background: linear-gradient(160deg, #FFFFFF, #F3EEDD); box-shadow: 0 4px 0 #D49A12, 0 8px 18px rgba(40,46,60,.22), inset 0 0 0 2px #F2D27A;
+  transition: transform .12s, box-shadow .12s;
+}
+.trophees-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #D49A12, 0 4px 10px rgba(40,46,60,.2), inset 0 0 0 2px #F2D27A; }
+.trophees-btn:focus-visible { outline: 4px solid #2E4057; outline-offset: 3px; }
+.trophees-btn svg { display: block; width: 100%; height: 100%; }
+
+/* Fenêtre de la liste */
+body.trophees-ouvert { overflow: hidden; }
+.trophees {
+  position: fixed; inset: 0; z-index: 50; overflow-y: auto; overscroll-behavior: contain;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  background: rgba(30, 38, 52, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.trophees[hidden] { display: none; }
+.trophees__boite { max-width: 640px; margin: 0 auto; padding: 18px 16px 20px; border-radius: 28px; background: #FBFAF6; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.trophees__tete { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin: 0 4px 14px; }
+.trophees__tete h2 { margin: 0; font-family: 'Fredoka', 'Nunito', sans-serif; font-weight: 700; font-size: 1.6rem; color: #2E4057; }
+.trophees__tete p { margin: 2px 0 0; font-weight: 700; color: #6E7C8C; }
+.trophees__fermer { flex: none; width: 42px; height: 42px; border: none; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: 800; color: #2E4057; background: #ECEFF3; }
+.trophees__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+/* Un trophée : rectangle très arrondi cerclé de son métal */
+.trophee {
+  display: flex; align-items: center; gap: 14px; padding: 12px 18px 12px 12px; border-radius: 30px;
+  border: 3.5px solid transparent;
+  background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, linear-gradient(120deg, var(--t3), var(--t1) 30%, var(--t2) 55%, var(--t3) 80%, var(--t4)) border-box;
+  box-shadow: 0 4px 12px rgba(40,46,60,.1);
+}
+.trophee--ok { background: linear-gradient(120deg, #FFFFFF, color-mix(in srgb, var(--t1) 60%, #fff)) padding-box, linear-gradient(120deg, var(--t3), var(--t1) 30%, var(--t2) 55%, var(--t3) 80%, var(--t4)) border-box; }
+.trophee__ico { flex: none; width: 56px; height: 56px; }
+.trophee--ok .trophee__ico { filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+.trophee__titre { display: block; font-family: 'Fredoka', 'Nunito', sans-serif; font-weight: 600; font-size: 1.08rem; line-height: 1.2; color: #2E4057; }
+.trophee__desc { display: block; margin-top: 2px; font-size: .9rem; font-weight: 700; line-height: 1.3; color: #4E5B6A; }
+.trophee__desc--secret { letter-spacing: .15em; color: #9AA4B0; }
+.trophee__metal { display: block; margin-top: 3px; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--t4); }
+.trophee:not(.trophee--ok) .trophee__titre { color: #5E6B7A; }
+
 /* Titre sans encadré, d'une seule couleur : bleu ardoise sombre (halo crème pour rester lisible sur les motifs) */
 .titre { text-align: center; margin: 0 auto 30px; max-width: 680px; }
 .titre h1 {
