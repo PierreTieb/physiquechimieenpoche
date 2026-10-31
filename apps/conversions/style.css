@@ -235,11 +235,63 @@ h1 {
   transition: transform 0.7s ease;
 }
 .metal:hover::after { transform: translateX(30%); }
-.metal--violet {
-  --c-dark: #4E3F7A;
-  background: linear-gradient(160deg, #CFC6E8 0%, #8F7EC2 36%, #B9ADDC 54%, #6C5B9C 100%);
+/* Évaluation 4e : argent poli, bordé du mauve d'origine */
+.metal--silver {
+  --c-dark: #6C5B9C;
+  color: #2E2650; text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+  background: linear-gradient(160deg, #FFFFFF 0%, #C7CDD6 36%, #EEF1F5 54%, #9AA3B0 100%);
+  box-shadow: 0 6px 0 var(--c-dark), 0 12px 22px rgba(46,38,80,0.22), inset 0 0 0 3px #8F7EC2, inset 0 2px 0 rgba(255,255,255,0.9);
 }
-.metal--violet .diff-best { background: rgba(255,255,255,0.22); color: #FFFFFF; }
+.metal--silver:active { box-shadow: 0 2px 0 var(--c-dark), 0 6px 10px rgba(46,38,80,0.2), inset 0 0 0 3px #8F7EC2; }
+.metal--silver .diff-best { background: rgba(255,255,255,0.65); color: #3B2F66; }
+/* Duel : marbre blanc veiné, cerclé de turquoise */
+.marble {
+  --c-dark: #1C9C90; color: #1F3B3A;
+  background: #F6F4F0 url("img/marbre.svg") center / cover no-repeat;
+  box-shadow: 0 6px 0 var(--c-dark), 0 12px 22px rgba(20,90,84,0.22), inset 0 0 0 3px #2EC4B6, inset 0 2px 0 rgba(255,255,255,0.9);
+}
+.marble:active { box-shadow: 0 2px 0 var(--c-dark), 0 6px 10px rgba(20,90,84,0.2), inset 0 0 0 3px #2EC4B6; }
+.marble .diff-name, .marble .diff-desc { text-shadow: 0 0 6px #fff, 0 0 2px #fff; }
+.diff-card > .duel-ico { width: 64px; height: auto; color: #2B4746; }
+.diff-card--icon.marble { padding-right: 92px; }
+
+/* Petite médaille du record, à côté du temps (à la place des emojis) */
+.diff-best { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; }
+.diff-best .medal { width: 18px; height: 23px; margin: -2px 0; animation: none; flex: none; }
+.diff-best .medal__disc { box-shadow: 0 0 0 1px var(--m3), 0 0 0 2px var(--m4); }
+.diff-best .medal__ring { box-shadow: inset 0 1px 2px rgba(0,0,0,0.3); }
+.diff-best .medal__star { font-size: 0.55rem; text-shadow: none; }
+.diff-best .medal__spark, .diff-best .medal__shine { display: none; }
+.res-best .medal { display: inline-block; vertical-align: middle; width: 20px; height: 26px; margin: -4px 4px 0; animation: none; }
+.res-best .medal__disc { box-shadow: 0 0 0 1px var(--m3), 0 0 0 2px var(--m4); }
+.res-best .medal__star { font-size: 0.6rem; text-shadow: none; }
+.res-best .medal__spark, .res-best .medal__shine { display: none; }
+
+/* Écran du duel */
+body[data-theme="duel"] {
+  --bg-tint: linear-gradient(180deg, #F2FBFA 0%, #DFF4F1 55%, #C9ECE7 100%);
+  --theme-accent: #1C9C90;
+}
+.duel-card { width: 100%; margin: 0 0 14px; padding: 14px 16px; border-radius: 20px; background: rgba(255,255,255,0.85); box-shadow: 0 6px 18px rgba(46,58,70,0.1); text-align: center; }
+.duel-card h2 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; }
+.duel-card p { margin: 0 0 10px; font-weight: 700; color: #6E7C8C; }
+.duel-levels, .duel-join { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.duel-code-in {
+  width: 9.5ch; padding: 8px 10px; border: 2.5px solid #B9C4CE; border-radius: 14px; background: #fff; color: inherit;
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; letter-spacing: .25em; text-align: center; text-transform: uppercase;
+}
+.duel-code-in:focus { outline: none; border-color: #2EC4B6; box-shadow: 0 0 0 4px rgba(46,196,182,0.3); }
+.duel-card .duel-err { color: #C0392B; margin: 8px 0 0; }
+.duel-err[hidden], .duel-ready[hidden] { display: none; }
+.duel-ready { width: 100%; padding: 16px; border-radius: 22px; text-align: center; background: #fff; box-shadow: 0 0 0 3px #2EC4B6, 0 10px 26px rgba(20,90,84,0.18); animation: pop 0.4s cubic-bezier(.34,1.56,.64,1); }
+.duel-ready__title { margin: 0; font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+.duel-code {
+  display: inline-block; margin: 8px 0 2px; padding: 6px 18px; border-radius: 16px; font-family: var(--font-display); font-size: 2.6rem; font-weight: 700;
+  letter-spacing: .25em; text-indent: .25em; color: #0F4F49; background: linear-gradient(160deg, #E4FBF8, #7FE0D6); box-shadow: 0 4px 0 #1C9C90;
+}
+.duel-level { margin: 2px 0 6px; font-weight: 800; color: #1C9C90; }
+.duel-tip { margin: 0 0 12px; font-weight: 700; }
+.duel-ico--big { display: block; width: 170px; height: auto; margin: 0 auto 4px; color: #2B4746; }
 .metal--obsidian {
   --c-dark: #8C6A1C;
   background: linear-gradient(160deg, #4C463E 0%, #1E1C1A 38%, #3D372E 55%, #121110 100%);
