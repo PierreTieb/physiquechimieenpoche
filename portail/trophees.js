@@ -157,7 +157,8 @@ window.Trophees = (function () {
       '.pcp-toast svg{flex:none;width:48px;height:48px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}' +
       '.pcp-toast small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pcp-f)}' +
       '.pcp-toast b{display:block;font-size:1.12rem;font-weight:600;line-height:1.2}' +
-      '.pcp-confetti{position:fixed;inset:0;z-index:2147482999;pointer-events:none}';
+      // taille imposée : sans elle, le canevas (2 ou 3 fois plus grand sur téléphone) débordait et les confettis partaient sur le côté
+      '.pcp-confetti{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:2147482999;pointer-events:none}';
     document.head.appendChild(s);
   }
   function notifier(t) {
@@ -193,7 +194,8 @@ window.Trophees = (function () {
     document.body.appendChild(cv);
     var couleurs = [c[0], c[1], c[2], c[3], c[1]], p = [];
     for (var i = 0; i < 90; i++) {
-      p.push({ x: W / 2 + (Math.random() - .5) * 120, y: 50, vx: (Math.random() - .5) * 11, vy: Math.random() * 5 + 1,
+      // gerbe qui jaillit juste sous la notification, au centre de l'écran
+      p.push({ x: W / 2 + (Math.random() - .5) * 140, y: 78, vx: (Math.random() - .5) * 9, vy: -Math.random() * 6 - 1,
         s: Math.random() * 6 + 5, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3, c: couleurs[i % couleurs.length] });
     }
     var t0 = performance.now();

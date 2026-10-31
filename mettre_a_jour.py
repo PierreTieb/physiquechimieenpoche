@@ -35,7 +35,7 @@ TROPHEES_APRES = {'electricite': 'js/lab.js'}
 SURVEILLE = {
     'chimie': ['ch-pass', 'ch-run', 'eq-coef', 'chimie-duel-launch', 'ch-res__duel', 'chimie-lessons-done',
                'window.LessonsData', 'window.TempLab', "test: 'flame'", 'flame: {'],
-    'conversions': ['duel-launch', 'screen-exercise', 'screen-mixed', 'duel-ico--big', 'screen-duel'],
+    'conversions': ['duel-launch', 'screen-exercise', 'screen-mixed', 'duel-ico--big', 'screen-challenge'],
     'ondes': ['m-go', 'mu-go', 'mu-inst', 'mu-song', 'mu-spd', 'fq-val', 'screen-music', 'screen-freq'],
     'electricite': ['lab-host', "fire('burn')", "'surtension'", 'relation:', 'names:', 'elec-lessons-done', 'window.LessonsData'],
     'questions': ['id="lvl"', 'Noyau d’atome', 'Atome d’oxygène', 'Voie lactée', "classList.add('strike')", 'c-sun', 'dataset.x', 'OBS=[270,240]'],
@@ -78,7 +78,6 @@ def copier(nom, source, accueil, classe, style):
     trophees = '<script src="../../portail/trophees.js" data-app="%s"></script>\n' % nom
     if (ICI / 'portail' / 'trophees' / (nom + '.js')).exists():
         trophees += '<script src="../../portail/trophees/%s.js"></script>\n' % nom
-    i = html.lower().rfind('</body>')
     if nom in TROPHEES_APRES:
         m = re.search(r'<script[^>]*src="%s"[^>]*></script>\n?' % re.escape(TROPHEES_APRES[nom]), html)
         if m:
@@ -87,6 +86,7 @@ def copier(nom, source, accueil, classe, style):
         else:
             print('  !! %s : %s introuvable, trophées ajoutés en fin de page' % (nom, TROPHEES_APRES[nom]))
     lien += trophees
+    i = html.lower().rfind('</body>')   # après l'insertion éventuelle des trophées, qui décale la fin de la page
     html = html[:i] + lien + html[i:] if i >= 0 else html + lien
     page.write_text(html, encoding='utf-8', newline='\n')
     n = sum(1 for f in dst.rglob('*') if f.is_file())

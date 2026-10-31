@@ -13,7 +13,7 @@
 
   setInterval(function () {
     if (lance && (actif('screen-exercise') || actif('screen-mixed'))) { T.unlock('duelliste'); lance = false; }
-    if (actif('screen-challenge') || actif('screen-duel') || actif('screen-home')) lance = false;
+    if (actif('screen-challenge') || actif('screen-home')) lance = false;
     // Esprit de compétition : écran de fin d'un duel, compté une fois
     var fin = document.querySelector('#results .duel-ico--big');
     if (fin && !fin.dataset.pcpCompte) { fin.dataset.pcpCompte = '1'; T.compteur('duels'); }

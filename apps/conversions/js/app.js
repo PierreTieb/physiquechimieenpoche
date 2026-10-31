@@ -18,8 +18,7 @@
     tuto: document.getElementById('screen-tuto'),
     tutoTemps: document.getElementById('screen-tuto-temps'),
     tutoVitesse: document.getElementById('screen-tuto-vitesse'),
-    results: document.getElementById('screen-results'),
-    duel: document.getElementById('screen-duel')
+    results: document.getElementById('screen-results')
   };
 
   const diffCards = document.querySelectorAll('.diff-card[data-diff]');
@@ -459,38 +458,40 @@
     Math.random = nativeRandom;
   }
 
-  function showDuelReady(code, title) {
-    duelPending = code;
-    duelStep('ready');
-    document.getElementById('duel-ready-title').textContent = title;
-    document.getElementById('duel-code').textContent = code;
-    document.getElementById('duel-level').textContent = DUEL_NAMES[duelKey(code)];
-    const box = document.getElementById('duel-ready');
-    box.hidden = false;
-    box.style.animation = 'none';
-    void box.offsetWidth;
-    box.style.animation = '';
-    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  // Étapes de l'écran du Duel : 'choice' (créer / rejoindre), 'create', 'join', 'ready' (code affiché)
-  function duelStep(step) {
-    ['choice', 'create', 'join'].forEach((s) => {
-      document.getElementById('duel-step-' + s).hidden = s !== step;
-    });
-    document.getElementById('duel-ready').hidden = step !== 'ready';
+  // Fenêtre du Duel : étapes 'choice' (créer / rejoindre), 'create' (4e / 3e), 'join' (code tapé), 'ready' (code affiché)
+  const duelPop = document.getElementById('duel-pop');
+  const DUEL_TITLES = { choice: 'Mode Duel', create: 'Créer un duel', join: 'Rejoindre un duel' };
+  function duelStep(step, title) {
+    duelPop.querySelectorAll('.duel-step').forEach((s) => { s.hidden = s.dataset.step !== step; });
+    document.getElementById('duel-pop-title').textContent = title || DUEL_TITLES[step];
     document.getElementById('duel-err').hidden = true;
+    duelPop.hidden = false;
     if (step === 'join') {
       document.getElementById('duel-code-in').value = '';
       document.getElementById('duel-code-in').focus();
     }
   }
-  function openDuelScreen() {
+  function openDuelPop() {
     duelPending = null;
     duelStep('choice');
   }
+  function closeDuelPop() {
+    duelPop.hidden = true;
+    duelPending = null;
+  }
+  function showDuelReady(code, title, created) {
+    duelPending = code;
+    document.getElementById('duel-code').textContent = code;
+    document.getElementById('duel-level').textContent = DUEL_NAMES[duelKey(code)];
+    document.getElementById('duel-tip').textContent = created
+      ? 'Donne ce code à ton adversaire. Quand vous êtes prêts tous les deux, lancez le duel !'
+      : 'Quand vous êtes prêts tous les deux, lancez le duel !';
+    duelStep('ready', title);
+  }
   function launchDuel(code) {
+    closeDuelPop();
     duel = { code: code, key: duelKey(code), slot: -1, att: 0 };
-    if (duel.key === 'eval4e') startSession('evaluation', { returnTo: 'duel', theme: 'eval4e', evalKey: 'eval4e' });
+    if (duel.key === 'eval4e') startSession('evaluation', { returnTo: 'challenge', theme: 'eval4e', evalKey: 'eval4e' });
     else startEvaluation3e();
   }
 
@@ -513,7 +514,7 @@
       '</tbody></table>' +
       '<div class="results-actions">' +
       '<button class="btn-primary" data-do="rematch" data-code="' + rematchCode(code) + '" type="button">Revanche</button>' +
-      '<button class="btn-secondary" data-do="duel" type="button">Retour au Duel</button>' +
+      '<button class="btn-secondary" data-do="duel" type="button">Nouveau duel</button>' +
       '</div>' +
       '<p class="res-msg">Revanche : de nouvelles conversions, les mêmes pour vous deux si vous la lancez tous les deux.</p>';
     setTheme('duel');
@@ -579,7 +580,7 @@
     }
   }
 
-  // Retour à un menu (accueil, Tutoriels, Entraînements, Challenge) : tableau blanc ; écran du Duel : turquoise.
+  // Retour à un menu (accueil, Tutoriels, Entraînements, Challenge) : tableau blanc.
   // Quitter une partie arrête le duel en cours (le tirage redevient vraiment aléatoire).
   function goToMenu(name) {
     clearPendingTimers();
@@ -587,8 +588,7 @@
     endDuel();
     scoreDisplayEl.classList.add('hidden');
     mixedScoreDisplayEl.classList.add('hidden');
-    setTheme(name === 'duel' ? 'duel' : '');
-    if (name === 'duel') openDuelScreen();
+    setTheme('');
     showScreen(name);
   }
 
@@ -1553,7 +1553,7 @@
 
   function beginMixedEvaluation() {
     mixedMode = 'evaluation';
-    exerciseReturnScreen = duel ? 'duel' : 'challenge';
+    exerciseReturnScreen = 'challenge';
     seedDuel(true);
     mixedTypeQueue = buildExpertQueue();
     mixedScoreDisplayEl.classList.add('hidden');
@@ -1689,7 +1689,7 @@
 
   // --- Écouteurs d'événements : mode mixte ---
   btnBackMixedReady.addEventListener('click', () => {
-    goToMenu(pendingMixedStart === 'evaluation' ? (duel ? 'duel' : 'challenge') : 'trainMenu');
+    goToMenu(pendingMixedStart === 'evaluation' ? 'challenge' : 'trainMenu');
   });
   btnMixedReady.addEventListener('click', () => {
     if (pendingMixedStart === 'entrainement') {
@@ -1754,10 +1754,11 @@
     if (btn.dataset.do === 'again') {
       evalRun.restart();
     } else if (btn.dataset.do === 'rematch') {
-      goToMenu('duel');
+      goToMenu('challenge');
       showDuelReady(btn.dataset.code, 'Revanche !');
     } else if (btn.dataset.do === 'duel') {
-      goToMenu('duel');
+      goToMenu('challenge');
+      openDuelPop();
     } else {
       goToMenu('challenge');
     }
@@ -1767,8 +1768,7 @@
   const duelCodeIn = document.getElementById('duel-code-in');
   document.querySelectorAll('[data-duel-create]').forEach((b) => {
     b.addEventListener('click', () => {
-      document.getElementById('duel-err').hidden = true;
-      showDuelReady(newDuelCode(b.dataset.duelCreate), 'Ton code de duel : donne-le à ton adversaire');
+      showDuelReady(newDuelCode(b.dataset.duelCreate), 'Ton code de duel', true);
     });
   });
   function joinDuel() {
@@ -1787,6 +1787,9 @@
   document.querySelectorAll('[data-duel-step]').forEach((b) => {
     b.addEventListener('click', () => duelStep(b.dataset.duelStep));
   });
+  document.getElementById('btn-duel').addEventListener('click', openDuelPop);
+  duelPop.querySelectorAll('[data-duel-close]').forEach((b) => b.addEventListener('click', closeDuelPop));
+  duelPop.addEventListener('click', (e) => { if (e.target === duelPop) closeDuelPop(); });
   document.getElementById('duel-launch').addEventListener('click', () => {
     if (duelPending) launchDuel(duelPending);
   });
