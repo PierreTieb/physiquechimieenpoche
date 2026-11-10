@@ -160,7 +160,8 @@
 #screen-sonar .btn-emettre{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 
 /* Bande « Identifier : Obstacle A, B… » */
-#screen-sonar .ident{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+/* coins à rayon fixe (comme les cartes) : avec beaucoup d'obstacles, la bande s'agrandit sans devenir un ovale */
+#screen-sonar .ident{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line)}
 #screen-sonar .ident__lbl{font-size:.82rem;font-weight:800;color:var(--ink-soft);padding-left:4px}
 #screen-sonar .ident__btns{display:flex;flex-wrap:wrap;gap:6px}
 #screen-sonar .ident-btn.ok{background:var(--acc);color:var(--acc-text);border-color:var(--acc)}

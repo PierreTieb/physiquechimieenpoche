@@ -32,9 +32,10 @@ window.App=(function(){
   // QR code du sonar (#sonar) ou lien d'un réglage (#c=… / #s=…) : on ouvre directement Sonar et Écho
   if(/^#(sonar|c=|s=)/.test(location.hash))showScreen('screen-sonar');
   // Pas de zoom au double appui ou au double clic (touch-action: manipulation dans le style), sans empêcher
-  // d'appuyer très vite sur un bouton (Émettre) : seuls les doubles appuis hors des commandes sont bloqués
+  // d'appuyer très vite sur un bouton (Émettre) ou sur le titre du sonar (5 appuis : mode professeur) :
+  // seuls les doubles appuis hors des commandes sont bloqués
   var lastTouch=0;
-  document.addEventListener('touchend',function(e){var n=Date.now();if(n-lastTouch<350&&!e.target.closest('button,a,input,textarea,select,label,canvas'))e.preventDefault();lastTouch=n},{passive:false});
+  document.addEventListener('touchend',function(e){var n=Date.now();if(n-lastTouch<350&&!e.target.closest('button,a,input,textarea,select,label,canvas,#titre'))e.preventDefault();lastTouch=n},{passive:false});
   document.addEventListener('dblclick',function(e){e.preventDefault()});
   return{showScreen:showScreen};
 })();
