@@ -6,12 +6,6 @@
   var $ = function (id) { return document.getElementById(id); };
   var actif = function (id) { var s = $(id); return !!s && s.classList.contains('active'); };
 
-  // Radar : la distance calculée avec la formule est validée (mode « Mesurer des distances »)
-  document.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('#m-go');
-    if (b && !b.disabled) T.unlock('radar');
-  }, true);
-
   // La musique dans la peau : un morceau joué jusqu'au bout (le bouton ■ redevient ▶ sans que l'élève l'ait arrêté)
   var coupe = false, joue = false;
   document.addEventListener('click', function (e) {
@@ -36,5 +30,27 @@
     if (!a314) depuis = 0;
     else if (!depuis) depuis = performance.now();
     else if (performance.now() - depuis >= 3140) T.unlock('pile-poil');
+
+    sonar();
   }, 100);
+
+  // Sonar et Écho (js/sonar/) : la simulation Sim et l'écran #screen-sonar, dont data-scen vaut 'libre' ou le n° du scénario
+  var mode = null, compte = 0, vues = 0;
+  function sonar() {
+    var ecran = $('screen-sonar');
+    if (!ecran || typeof Sim === 'undefined') return;
+    var ems = Sim.emissions(), m = ecran.dataset.scen;
+    // Obstacle repéré ! : un écho revenu au sonar
+    if (ems.some(function (e) { return e.recus.length; })) T.unlock('obstacle-repere');
+    // Je peux pas le perdre : 30 émissions sans changer de scénario ni de mode (« Réinitialiser » vide la liste sans remettre à zéro)
+    if (m !== mode) { mode = m; compte = 0; vues = ems.length; }
+    if (ems.length > vues) compte += ems.length - vues;
+    vues = ems.length;
+    if (compte >= 30) T.unlock('perdre');
+    // Armada ! : en mode libre, une émission vers 10 obstacles ou plus dont tous les échos sont revenus
+    if (m === 'libre' && ems.some(function (e) { return e.echos.length >= 10 && e.recus.length === e.echos.length; })) T.unlock('armada');
+    // Ça va, il est loin / Il arrive... : bonne distance ou bonne vitesse validée dans un scénario
+    var r = $('id-res');
+    if (r && !r.hidden && m !== 'libre' && r.classList.contains('id-res--ok')) T.unlock(r.dataset.type === 'distance' ? 'loin' : 'arrive');
+  }
 })();

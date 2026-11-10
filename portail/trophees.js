@@ -26,7 +26,7 @@ window.Trophees = (function () {
     { id: 'premiers-pas', metal: 'bronze', titre: 'Premiers pas', desc: 'Ouvre au moins une fois toutes les applications' },
     { id: 'chimiste-herbe', metal: 'bronze', titre: 'Chimiste en herbe', desc: 'Termine 3 leçons de Chimie' },
     { id: 'electricien-herbe', metal: 'bronze', titre: 'Électricien(ne) en herbe', desc: 'Termine 3 leçons d\'Électricité' },
-    { id: 'radar', metal: 'bronze', titre: 'Radar', desc: 'Calcule ta première distance à l\'aide du son' },
+    { id: 'obstacle-repere', metal: 'bronze', titre: 'Obstacle repéré !', desc: 'Repère un obstacle avec ton sonar' },
     { id: 'bon-debut', metal: 'bronze', titre: 'Un bon début', desc: 'Obtiens 3 médailles de bronze' },
     { id: 'petit-pas', metal: 'bronze', titre: 'Un petit pas pour l\'Homme...', desc: 'Passe de l\'atome à la galaxie pour la première fois' },
     { id: 'chaud1', metal: 'bronze', titre: 'Attention c\'est chaud !', secret: true },          // brûler complètement un fil par court-circuit, au Laboratoire de l'Électricité
@@ -36,6 +36,8 @@ window.Trophees = (function () {
     { id: 'musique', metal: 'argent', titre: 'La musique dans la peau', desc: 'Joue un morceau de musique en entier' },
     { id: 'belle-avancee', metal: 'argent', titre: 'Une belle avancée', desc: 'Obtiens 3 médailles d\'argent' },
     { id: 'chargez', metal: 'argent', titre: 'Chargez !', desc: 'Fais tomber la foudre' },
+    { id: 'loin', metal: 'argent', titre: 'Ça va, il est loin', desc: 'Calcule la distance d\'un obstacle à l\'aide du sonar' },   // dans un scénario seulement
+    { id: 'perdre', metal: 'argent', titre: 'Je peux pas le perdre', secret: true },             // 30 émissions sur le même scénario (mode libre compris)
     { id: 'chaud2', metal: 'argent', titre: 'Attention très chaud !!', secret: true },            // voir toutes les couleurs de flamme des ions au bec Bunsen
     { id: 'tremblotte', metal: 'argent', titre: 'J\'ai la tremblotte', secret: true },          // une lampe, un moteur et une DEL qui tremblent en même temps
     { id: 'specialiste-chimie', metal: 'or', titre: 'Spécialiste de la Chimie', desc: 'Termine toutes les leçons de Chimie' },
@@ -44,11 +46,13 @@ window.Trophees = (function () {
     { id: 'maestro', metal: 'or', titre: 'Maestro !', desc: 'Branche 6 buzzers en dérivation en même temps' },
     { id: 'duelliste', metal: 'or', titre: 'Joyeux duelliste', desc: 'Affronte un adversaire dans un mode Duel' },
     { id: 'coucher-soleil', metal: 'or', titre: 'Un coucher de Soleil', desc: 'Observe la couleur du ciel au coucher du Soleil' },
+    { id: 'arrive', metal: 'or', titre: 'Il arrive...', desc: 'Calcule la vitesse d\'un obstacle à l\'aide du sonar' },          // dans un scénario seulement
     { id: 'pile-poil', metal: 'or', titre: '(Pi)le poil la bonne fréquence', secret: true },      // rester à 314 Hz pendant au moins 3,14 s
     { id: 'trop', metal: 'or', titre: 'Non là c\'est trop', secret: true },                      // des coefficients 9 dans toutes les cases d'une équation à équilibrer
     { id: 'chaud3', metal: 'or', titre: 'Attention super chaud !!!', secret: true },             // atteindre la température maximale (500 °C) du graphique de température
     { id: 'competition', metal: 'platine', titre: 'Esprit de compétition', desc: 'Termine 5 parties en mode Duel' },
     { id: 'chimie-augmentee', metal: 'platine', titre: 'Chimie augmentée', desc: 'Équilibre une équation chimique en réalité augmentée' },
+    { id: 'armada', metal: 'platine', titre: 'Armada !', secret: true },                         // mode libre : 10 obstacles ou plus, une émission dont tous les échos reviennent au sonar
     { id: 'respect', metal: 'platine', titre: 'Alors là, respect !', secret: true },             // obtenir 3 médailles de platine
     { id: 'chaud4', metal: 'platine', titre: 'ATTENTION CHAUD CHAUD CHAUD !!!', secret: true }   // 3 résistances qui tremblent en même temps avec un seul générateur
   ];

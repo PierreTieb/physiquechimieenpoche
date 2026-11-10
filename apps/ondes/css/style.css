@@ -244,3 +244,12 @@ input[type=range].thin::-moz-range-thumb{width:18px;height:18px}
 .tg--off .tg__needle{display:none}
 .tg__lab{display:flex;justify-content:space-between;align-items:center;font-size:.68rem;font-weight:800;color:var(--ink-soft)}
 .tg__lab b{font-size:.95rem;color:var(--ink)}.tg__lab b.is-ok{color:#6FE3A0}
+
+/* ===== Propagation du son et Sonar et Écho : bleus =====
+   Boutons : bleu foncé mais pâle pour la propagation, un peu plus foncé pour le sonar
+   (même écart entre les deux bleus qu'entre les deux oranges de la 1re ligne) */
+.mode-btn--blue{--c-light:#B4C6E2;--c-mid:#7F9CC6;--c-dark:#4A6590;--c-text:#0E1B30}
+.mode-btn--sonar{--c-light:#97AED4;--c-mid:#5F7EB0;--c-dark:#36507C;--c-text:#08132A}
+.screen--blue{--acc-light:#BFD4F4;--acc-mid:#7FA8E4;--acc-dark:#3E6196;--acc-text:#0B1830;--acc-hi:#9DC2F5}
+/* Fond des écrans bleus : lueur et bas de page bleus (le papier peint et l'onde du fond sont teintés par js/app.js) */
+body[data-theme="blue"],body[data-theme="sonar"]{--bg-bottom:#102746;--glow:radial-gradient(ellipse 120% 42% at 50% 100%,rgba(80,145,235,.55),transparent 75%)}
